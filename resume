@@ -1,1 +1,53 @@
-
+<!DOCTYPE html>
+<html>
+<head>
+<title>CV/Resume</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+<link rel="stylesheet" type="text/css" href="https://plantillashtmlgratis.com/wp-content/themes/helium-child/vista_previa/page188/onepage/assets/css/style.css">
+ </head>
+<body>
+ 
+<div class="container">
+  <section class="start-page parallax-background" id="home">
+    <div class="opacity"></div>
+    <div class="content">
+      <div class="text">
+        <h1>Welcome<br>
+          to our <span>website</span></h1>
+        <p>Please familiarize yourself with our offer</p>
+        <a href="#about-us">
+        <div class="read-more">Read more</div>
+        </a> </div>
+      <div class="arrow-down"></div>
+    </div>
+  </section>
+  <section class="menu-media">
+    <div class="menu-content">
+      <div class="logo">Onepage</div>
+      <div class="icon"><a href="#"><img src="https://plantillashtmlgratis.com/wp-content/themes/helium-child/vista_previa/page188/onepage/img/icons/menu-media.png" alt="website template image"></a></div>
+    </div>
+  </section>
+  <ul class="menu-click">
+    <a href="#home">
+    <li href="#home">HOME</li>
+    </a> <a href="#about-us">
+    <li href="#about-us">ABOUT US</li>
+    </a> <a href="#portfolio">
+    <li href="#portfolio">PORTFOLIO</li>
+    </a> <a href="#contact">
+    <li href="#contact">CONTACT</li>
+    </a>
+  </ul>
+  <section class="menu">
+    <div class="menu-content">
+      <div class="logo">Onepage</div>
+      <ul id="menu">
+        <li><a href="#home">HOME</a></li>
+        <li><a href="#about-us">ABOUT US</a></li>
+        <li><a href="#portfolio">PORTFOLIO</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+      </ul>
+    </div>
+  </section>
