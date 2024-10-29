@@ -1,16 +1,34 @@
 <!DOCTYPE html>
-<html lang='en' class=''>
+<html lang="en" >
 
 <head>
+  <meta charset="UTF-8">
+  
 
-  <meta charset='UTF-8'>
-  <title>CodePen Demo</title>
+    <link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png" />
 
-  <meta name="robots" content="noindex">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <meta name="apple-mobile-web-app-title" content="CodePen">
 
-  <style id="INLINE_PEN_STYLESHEET_ID">
-    body {
+    <link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico" />
+
+    <link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-b4b4269c16397ad2f0f7a01bcdf513a1994f4c94b8af2f191c09eb0d601762b1.svg" color="#111" />
+
+
+
+  
+    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+
+
+  <title>CodePen - ChartJS Horizontal Bar chart with multiple Vertical target lines</title>
+
+    <link rel="canonical" href="https://codepen.io/devi-r/pen/EMrKPL">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+  
+  
+<style>
+body {
   background: #1D1F20;
   padding: 16px;
 }
@@ -51,17 +69,18 @@
   max-width: 800px;
   margin: auto;
 }
-  </style>
+</style>
+
+  <script>
+  window.console = window.console || function(t) {};
+</script>
 
   
-<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
-<script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeConsoleRunner-6d8bf8b4b479137260842506acbb12717dace0823c023e08b96360e60b0840d9.js"></script>
-<script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRefreshCSS-44fe83e49b63affec96918c9af88c0d80b209a862cf87ac46bc933074b8c557d.js"></script>
-<script src="https://cpwebassets.codepen.io/assets/editor/iframe/iframeRuntimeErrors-4f205f2c14e769b448bcf477de2938c681660d5038bc464e3700256713ebe261.js"></script>
+  
 </head>
 
-<body>
-  <div class="title">Movie Ratings in 2024</div>
+<body translate="no">
+  <div class="title">Movie Ratings in Percentage</div>
 
 <div class="tooltip">
   <div class="box box1"></div>
@@ -74,11 +93,165 @@
 
 <div class="chart-container bar-line">    <canvas id="HorizontalBarWithLines" width="700"></canvas>
 </div>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+      <script id="rendered-js" >
+var movies = {
+  0: {
+    movieName: "Inception",
+    moviePercentage: 100 },
+
+  1: {
+    movieName: "Forest Gump",
+    moviePercentage: 80 },
+
+  2: {
+    movieName: "The Gift",
+    moviePercentage: 92 },
+
+  3: {
+    movieName: "It Follows",
+    moviePercentage: 36 },
+
+  4: {
+    movieName: "Split",
+    moviePercentage: 54 },
+
+  5: {
+    movieName: "The Shawshank Redemption",
+    moviePercentage: 98 },
+
+  6: {
+    movieName: "Nocturnal Animals",
+    moviePercentage: 86 },
+
+  7: {
+    movieName: "Sixth Sense",
+    moviePercentage: 91 } };
+
+
+var moviesLength = Object.keys(movies).length;
+
+var callBarChart = function () {
+  var barLine = null;
+
+  $("canvas#HorizontalBarWithLines").remove();
+  $("div.bar-line").append(
+  '<canvas id="HorizontalBarWithLines" width="700"></canvas>');
+
+
+  var canvas = document.getElementById("HorizontalBarWithLines");
+  canvas.height = moviesLength * 50;
+
+  var movieName = [];
+  var moviePercentage = [];
+
+  for (var i = 0; i < moviesLength; i++) {if (window.CP.shouldStopExecution(0)) break;
+    movieName.push(movies[i]["movieName"]);
+    moviePercentage.push(movies[i]["moviePercentage"]);
+  }window.CP.exitedLoop(0);
+
+  var data = {
+    labels: movieName,
+    datasets: [
+    {
+      label: "Percentage",
+      backgroundColor: "#0EBEFF",
+      fill: true,
+      data: moviePercentage }] };
+
+
+
+
+  var ctx = document.getElementById("HorizontalBarWithLines").getContext("2d");
+
+  const verticalLine = {
+    renderVerticalLine: function (chartInstance, pointIndex, i) {
+      const xaxis = chartInstance.scales["x-axis-0"];
+      const yaxis = chartInstance.scales["y-axis-0"];
+      const context = chartInstance.chart.ctx;
+
+      // render vertical line
+      context.beginPath();
+
+      if (i === 0) {
+        context.strokeStyle = "#DA1726";
+      } else if (i === 1) {
+        context.strokeStyle = "#FFDD40";
+      } else if (i === 2) {
+        context.strokeStyle = "#47CF73";
+      }
+
+      context.moveTo(xaxis.getPixelForValue(pointIndex), yaxis.top);
+      context.lineTo(xaxis.getPixelForValue(pointIndex), yaxis.bottom);
+      context.stroke();
+    },
+
+    afterDatasetsDraw: function (chart, easing) {
+      if (chart.config.lineAtIndex) {
+        var index = [];
+        index = chart.config.lineAtIndex;
+        for (i = 0; i < index.length; i++) {if (window.CP.shouldStopExecution(1)) break;
+          this.renderVerticalLine(chart, index[i], i);
+        }window.CP.exitedLoop(1);
+      }
+    } };
+
+
+  Chart.plugins.register(verticalLine);
+
+  if (barLine != null) {
+    barLine.remove();
+  }
+
+  barLine = new Chart(ctx, {
+    type: "horizontalBar",
+    data: data,
+    options: {
+      responsive: true,
+      legend: {
+        display: false },
+
+      scales: {
+        xAxes: [
+        {
+          display: true,
+          ticks: {
+            display: true,
+            fontColor: "#fff",
+            beginAtZero: true,
+            stepSize: 10,
+            max: 100 },
+
+          gridLines: {
+            display: false } }],
+
+
+
+        yAxes: [
+        {
+          barPercentage: 0.4,
+          ticks: {
+            display: true,
+            fontColor: "#fff" },
+
+          gridLines: {
+            display: false } }] } },
+
+
+
+
+
+    label: "Progress",
+    lineAtIndex: [40, 60, 80] });
+
+};
+
+callBarChart();
+//# sourceURL=pen.js
+    </script>
 
   
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script  src="https://cdpn.io/cpe/boomboom/pen.js?key=pen.js-aa505e4f-8a09-a455-978f-47ce75572bcf" crossorigin></script>
 </body>
 
 </html>
