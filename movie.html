@@ -1,1 +1,182 @@
+<!DOCTYPE html>
+<html lang='en' class=''>
 
+<head>
+
+  <meta charset='UTF-8'>
+  <title>CodePen Demo</title>
+
+  <meta name="robots" content="noindex">
+</head>
+
+<body>
+  <div class="title">Movie Ratings in 2024</div>
+
+<div class="tooltip">
+  <div class="box box1"></div>
+  <div class="text">40% lower bound</div>
+                                         <div class="box box2"></div>
+  <div class="text">60% average</div>
+                                         <div class="box box3"></div>
+  <div class="text">80% upper bound</div>   
+</div>
+
+<div class="chart-container bar-line">    <canvas id="HorizontalBarWithLines" width="700"></canvas>
+</div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>var movies = {
+  0: {
+    movieName: "Dune: Part Two",
+    moviePercentage: 100 },
+
+  1: {
+    movieName: "Inside Out 2",
+    moviePercentage: 80 },
+
+  2: {
+    movieName: "Furiosa: A Mad Max Saga",
+    moviePercentage: 92 },
+
+  3: {
+    movieName: "Beetlejuice Beetlejuice",
+    moviePercentage: 36 },
+
+  4: {
+    movieName: "Love bleeds",
+    moviePercentage: 54 },
+
+  5: {
+    movieName: "Challengers",
+    moviePercentage: 98 },
+
+  6: {
+    movieName: "Ghostlight",
+    moviePercentage: 86 },
+
+  7: {
+    movieName: "Young Woman and the Sea",
+    moviePercentage: 91 } };
+
+
+var moviesLength = Object.keys(movies).length;
+
+var callBarChart = function () {
+  var barLine = null;
+
+  $("canvas#HorizontalBarWithLines").remove();
+  $("div.bar-line").append(
+  '<canvas id="HorizontalBarWithLines" width="700"></canvas>');
+
+
+  var canvas = document.getElementById("HorizontalBarWithLines");
+  canvas.height = moviesLength * 50;
+
+  var movieName = [];
+  var moviePercentage = [];
+
+  for (var i = 0; i < moviesLength; i++) {if (window.CP.shouldStopExecution(0)) break;
+    movieName.push(movies[i]["movieName"]);
+    moviePercentage.push(movies[i]["moviePercentage"]);
+  }window.CP.exitedLoop(0);
+
+  var data = {
+    labels: movieName,
+    datasets: [
+    {
+      label: "Percentage",
+      backgroundColor: "#0EBEFF",
+      fill: true,
+      data: moviePercentage }] };
+
+
+
+
+  var ctx = document.getElementById("HorizontalBarWithLines").getContext("2d");
+
+  const verticalLine = {
+    renderVerticalLine: function (chartInstance, pointIndex, i) {
+      const xaxis = chartInstance.scales["x-axis-0"];
+      const yaxis = chartInstance.scales["y-axis-0"];
+      const context = chartInstance.chart.ctx;
+
+      // render vertical line
+      context.beginPath();
+
+      if (i === 0) {
+        context.strokeStyle = "#DA1726";
+      } else if (i === 1) {
+        context.strokeStyle = "#FFDD40";
+      } else if (i === 2) {
+        context.strokeStyle = "#47CF73";
+      }
+
+      context.moveTo(xaxis.getPixelForValue(pointIndex), yaxis.top);
+      context.lineTo(xaxis.getPixelForValue(pointIndex), yaxis.bottom);
+      context.stroke();
+    },
+
+    afterDatasetsDraw: function (chart, easing) {
+      if (chart.config.lineAtIndex) {
+        var index = [];
+        index = chart.config.lineAtIndex;
+        for (i = 0; i < index.length; i++) {if (window.CP.shouldStopExecution(1)) break;
+          this.renderVerticalLine(chart, index[i], i);
+        }window.CP.exitedLoop(1);
+      }
+    } };
+
+
+  Chart.plugins.register(verticalLine);
+
+  if (barLine != null) {
+    barLine.remove();
+  }
+
+  barLine = new Chart(ctx, {
+    type: "horizontalBar",
+    data: data,
+    options: {
+      responsive: true,
+      legend: {
+        display: false },
+
+      scales: {
+        xAxes: [
+        {
+          display: true,
+          ticks: {
+            display: true,
+            fontColor: "#fff",
+            beginAtZero: true,
+            stepSize: 10,
+            max: 100 },
+
+          gridLines: {
+            display: false } }],
+
+
+
+        yAxes: [
+        {
+          barPercentage: 0.4,
+          ticks: {
+            display: true,
+            fontColor: "#fff" },
+
+          gridLines: {
+            display: false } }] } },
+
+
+
+
+
+    label: "Progress",
+    lineAtIndex: [40, 60, 80] });
+
+};
+
+callBarChart();</script>    
+  </body>
+
+</html>
