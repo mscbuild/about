@@ -17,7 +17,7 @@
     }
 
     body {
-      background-color: var(--bluish-gray);
+      background-color: var(--dark);
       color: var(--light);
       overflow-x: hidden;
       position: relative;
