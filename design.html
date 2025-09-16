@@ -201,7 +201,27 @@
     <script>
         feather.replace();
     </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const menuBtn = document.getElementById('menuBtn');
+        const closeButtons = document.querySelectorAll('.close-menu-activation, .closeTrigger');
+        const popupMenu = document.querySelector('.popup-mobile-menu');
 
+        // Open menu
+        menuBtn.addEventListener('click', function() {
+            popupMenu.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        });
+
+        // Close menu
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                popupMenu.classList.remove('active');
+                document.body.style.overflow = ''; // Restore scrolling
+            });
+        });
+    });
+</script>
 </body>
 
 </html>
