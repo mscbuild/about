@@ -19,6 +19,78 @@
     <link rel="stylesheet" href="https://rainbowit.net/html/inbio/assets/css/plugins/feature.css">
     <!-- Style css -->
     <link rel="stylesheet" href="https://rainbowit.net/html/inbio/assets/css/style.css">
+    
+    <style>
+        /* Custom mobile menu styles */
+        .popup-mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: none; /* Hidden by default */
+            z-index: 999;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .popup-mobile-menu .inner {
+            padding: 30px;
+        }
+
+        .popup-mobile-menu .menu-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .popup-mobile-menu .primary-menu {
+            list-style: none;
+            padding: 0;
+            margin-top: 30px;
+        }
+
+        .popup-mobile-menu .primary-menu li {
+            margin: 10px 0;
+        }
+
+        .popup-mobile-menu .primary-menu li a {
+            text-decoration: none;
+            font-size: 18px;
+            color: #333;
+            display: block;
+            padding: 10px 0;
+        }
+
+        .popup-mobile-menu .primary-menu li a:hover {
+            color: #007bff;
+        }
+
+        .popup-mobile-menu .social-share {
+            margin-top: 40px;
+        }
+
+        .popup-mobile-menu .social-share li a {
+            font-size: 24px;
+            margin-right: 15px;
+        }
+        
+        /* Close button */
+        .close-menu-activation {
+            background: none;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: #333;
+        }
+
+        /* Fix Hamburger Menu Icon */
+        .feather-menu {
+            font-size: 30px;
+            color: #333;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body class="template-color-1 spybody" data-spy="scroll" data-target=".navbar-example2" data-offset="70">
@@ -42,12 +114,7 @@
                     <div class="header-right">
                         <a class="rn-btn" target="_blank" href="#"><span>BUY NOW</span></a>
                         <div class="hamberger-menu d-block d-xl-none">
-                            <i id="menuBtn" class="feather-menu humberger-menu"></i>
-                        </div>
-                        <div class="close-menu d-block">
-                            <span class="closeTrigger">
-                                <i data-feather="x"></i>
-                            </span>
+                            <i id="menuBtn" class="feather-menu"></i>
                         </div>
                     </div>
                     <!-- End Header Right  -->
@@ -63,17 +130,12 @@
     <div class="popup-mobile-menu" id="popupMobileMenu">
         <div class="inner">
             <div class="menu-top">
-                <div class="menu-header">
-                    <a class="logo" href="index.html">
-                        <span class="logo-name">Yuri Dev</span>
-                    </a>
-                    <div class="close-button">
-                        <button class="close-menu-activation close" id="closeMenuBtn">
-                            <i data-feather="x"></i>
-                        </button>
-                    </div>
-                </div>
-                <p class="discription">Yuri Dev is a personal portfolio template.</p>
+                <a class="logo" href="index.html">
+                    <span class="logo-name">Yuri Dev</span>
+                </a>
+                <button class="close-menu-activation" id="closeMenuBtn">
+                    <i data-feather="x"></i>
+                </button>
             </div>
             <div class="content">
                 <ul class="primary-menu nav nav-pills onepagenav">
@@ -96,7 +158,6 @@
     <!-- End Popup Mobile Menu  -->
 
     <main class="main-page-wrapper">
-
         <!-- Start Slider Area -->
         <div id="home" class="rn-slider-area">
             <div class="slide slider-style-1">
@@ -123,28 +184,6 @@
                                     </h1>
                                     <div>
                                         <p class="description">I create beautiful, responsive websites and applications that help businesses grow and succeed in the digital world. I create code to meet specific needs and share my experiences online.</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-12">
-                                        <div class="social-share-inner-left">
-                                            <span class="title">find with me</span>
-                                            <ul class="social-share d-flex liststyle">
-                                                <li class="facebook"><a href="#"><i data-feather="facebook"></i></a></li>
-                                                <li class="github"><a href="https://github.com/mscbuild"><i data-feather="github"></i></a></li>
-                                                <li class="linkedin"><a href="https://www.linkedin.com/in/jurijsrck"><i data-feather="linkedin"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 col-xl-6 col-md-6 col-sm-6 col-12 mt_mobile--30">
-                                        <div class="skill-share-inner">
-                                            <span class="title">best skill on</span>
-                                            <ul class="skill-share d-flex liststyle">
-                                                <li><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-original.svg" alt="Icons Images"></li>
-                                                <li><img src="https://rainbowit.net/html/inbio/assets/images/icons/icons-03.png" alt="Icons Images"></li>
-                                                <li><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="Icons Images"></li>
-                                            </ul>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -181,14 +220,15 @@
     <script>
         // Mobile menu toggle functionality
         $('#menuBtn').click(function () {
-            $('#popupMobileMenu').addClass('d-block').removeClass('d-none');
+            $('#popupMobileMenu').fadeIn();
         });
 
         $('#closeMenuBtn').click(function () {
-            $('#popupMobileMenu').addClass('d-none').removeClass('d-block');
+            $('#popupMobileMenu').fadeOut();
         });
     </script>
 
 </body>
 
 </html>
+
