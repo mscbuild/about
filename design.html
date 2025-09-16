@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+ <html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -8,7 +8,6 @@
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="referrer" content="no-referrer">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="https://mscbuild.github.io/about/favicon.ico">
     <!-- CSS 
@@ -35,8 +34,10 @@
                         <!-- Start Mainmanu Nav -->
                         <ul class="primary-menu nav nav-pills">
                             <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-                           <li class="nav-item"><a class="nav-link" href="#">Portfolio</a></li>
-                          <li class="nav-item"><a class="nav-link" href="https://jurijs-ruko.youcanbook.me/">Contact</a></li>
+                           <li 
+class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
+  
+                            <li class="nav-item"><a class="nav-link" href="#contacts">Contact</a></li>
                         </ul>
                         <!-- End Mainmanu Nav -->
                     </nav>
@@ -44,55 +45,23 @@
                     <div class="header-right">
                         <a class="rn-btn" target="_blank" href="#"><span>BUY NOW</span></a>
                         <div class="hamberger-menu d-block d-xl-none">
-                            <i id="menuBtn" data-feather="menu" class="hamburger-menu"></i>
+                            <i id="menuBtn" class="feather-menu humberger-menu"></i>
                         </div>
                         <div class="close-menu d-block">
                             <span class="closeTrigger">
-                                <i data-feather="x"></i>
-                            </span>
+                            <i data-feather="x"></i>
+                        </span>
                         </div>
                     </div>
                     <!-- End Header Right  -->
+
                 </div>
             </div>
             <!-- End Header Center -->
         </div>
     </header>
     <!-- End Header Area -->
-    <style>
-    .popup-mobile-menu {
-        visibility: hidden;
-        opacity: 0;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: #fff; /* or your theme color */
-        z-index: 9999;
-        transition: all 0.3s ease;
-        transform: translateX(-100%);
-    }
-
-    .popup-mobile-menu.active {
-        visibility: visible;
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-    /* Optional: overlay background */
-    .popup-mobile-menu::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index: -1;
-    }
-</style>
-     <!-- Start Popup Mobile Menu  -->
+    <!-- Start Popup Mobile Menu  -->
     <div class="popup-mobile-menu">
         <div class="inner">
             <div class="menu-top">
@@ -104,15 +73,20 @@
                         <button class="close-menu-activation close"><i data-feather="x"></i></button>
                     </div>
                 </div>
-                <p class="description">Yuri Dev is a personal portfolio template.</p>
+                <p class="discription">Yuri Dev is a personal portfolio template.</p>
             </div>
             <div class="content">
                 <ul class="primary-menu nav nav-pills onepagenav">
-                    <li class="nav-item"><a class="nav-link smoth-animation" href="#home">Home</a></li>
-                    <li class="nav-item"><a class="nav-link smoth-animation" href="#">Portfolio</a></li>
-                    <li class="nav-item"><a class="nav-link smoth-animation" href="https://jurijs-ruko.youcanbook.me/">Contact</a></li>
+                    <li class="nav-item current"><a class="nav-link smoth-animation active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link smoth-animation" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link smoth-animation" href="#portfolio">Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link smoth-animation" href="#resume">Resume</a></li>
+                    <li class="nav-item"><a class="nav-link smoth-animation" href="#clients">Clients</a></li>
+                    <li class="nav-item"><a class="nav-link smoth-animation" href="#pricing">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link smoth-animation" href="#blog">blog</a></li>
+                    <li class="nav-item"><a class="nav-link smoth-animation" href="#contacts">Contact</a></li>
                 </ul>
-                <!-- social share area -->
+                <!-- social sharea area -->
                 <div class="social-share-style-1 mt--40">
                     <span class="title">find with me</span>
                     <ul class="social-share d-flex liststyle">
@@ -140,6 +114,9 @@
     </div>
     <!-- End Popup Mobile Menu  -->
 
+
+
+
     <main class="main-page-wrapper">
 
         <!-- Start Slider Area -->
@@ -156,14 +133,14 @@
                                             <!-- type headline start-->
                                             <span class="cd-headline clip is-full-width">
                                                 <span>a </span>
-                                                <!-- ROTATING TEXT -->
-                                                <span class="cd-words-wrapper">
+                                        <!-- ROTATING TEXT -->
+                                        <span class="cd-words-wrapper">
                                                     <b class="is-visible">Web Developer.</b>
                                                     <b class="is-hidden">Designer.</b>
                                                     <b class="is-hidden">Developer.</b>
                                                 </span>
-                                            </span>
-                                            <!-- type headline end -->
+                                        </span>
+                                        <!-- type headline end -->
                                         </span>
                                     </h1>
 
@@ -191,10 +168,10 @@
                                         <div class="skill-share-inner">
                                             <span class="title">best skill on</span>
                                             <ul class="skill-share d-flex liststyle">
-                                                <li><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-original.svg" alt="Icons Images"></li>
+                                                                              <li><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-original.svg" alt="Icons Images"></li>
                                                 <li><img src="https://rainbowit.net/html/inbio/assets/images/icons/icons-03.png" alt="Icons Images"></li>
-                                                <li><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="Icons Images"></li>
-                                            </ul>
+     
+  <li><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original.svg" alt="Icons Images"></li>                                        </ul>
                                         </div>
                                     </div>
                                 </div>
@@ -213,9 +190,7 @@
             </div>
         </div>
         <!-- End Slider Area -->
-    </main>
-
-    <!-- JS ============================================ -->
+      <!-- JS ============================================ -->
     <script src="https://rainbowit.net/html/inbio/assets/js/vendor/jquery.js"></script>
     <script src="https://rainbowit.net/html/inbio/assets/js/vendor/modernizer.min.js"></script>
     <script src="https://rainbowit.net/html/inbio/assets/js/vendor/feather.min.js"></script>
@@ -228,32 +203,8 @@
     <script src="https://rainbowit.net/html/inbio/assets/js/vendor/jquery-one-page-nav.js"></script>
     <!-- main JS -->
     <script src="https://rainbowit.net/html/inbio/assets/js/main.js"></script>
-
-    <!-- Initialize Feather Icons -->
-    <script>
-        feather.replace();
-    </script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const menuBtn = document.getElementById('menuBtn');
-        const closeButtons = document.querySelectorAll('.close-menu-activation, .closeTrigger');
-        const popupMenu = document.querySelector('.popup-mobile-menu');
-
-        // Open menu
-        menuBtn.addEventListener('click', function() {
-            popupMenu.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent background scrolling
-        });
-
-        // Close menu
-        closeButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                popupMenu.classList.remove('active');
-                document.body.style.overflow = ''; // Restore scrolling
-            });
-        });
-    });
-</script>
 </body>
 
 </html>
+
+ 
