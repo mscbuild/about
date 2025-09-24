@@ -177,7 +177,7 @@
  
 <!-- In the second section we will have our contact form -->
 	  
-   <form method="POST" id="form">Name
+ <form method="POST" id="form">Name
       
     <input type="hidden" name="access_key" value="e4fb776d-e6d3-436b-873f-d74e87cd5d26">
 
@@ -185,12 +185,14 @@
     <input type="email" name="email" required>Text
     <textarea name="message" required></textarea> 
     <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-	<input type="checkbox" class="custom-control-input" id="gdprConsent" required>
-    <label class="custom-control-label" for="gdprConsent">
-                  I agree with <a href="/privacy-policy" target="_blank">the rules for processing personal data</a>
+      <div class="form-group">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="gdprConsent" required>
+                <label class="custom-control-label" for="gdprConsent">
+                  Я согласен с <a href="/privacy-policy" target="_blank">Политикой конфиденциальности</a> и даю согласие на обработку моих персональных данных.
                 </label>
-                            </div>
-
+              </div>
+   
                             <!-- Submit Button -->
                             <button name="submit" type="submit" id="submit" class="rn-btn">
                                 <span>SEND MESSAGE</span>
@@ -225,14 +227,25 @@
     });
   }, false);
 })();
-	// Проверка, что чекбокс с согласием GDPR отмечен
+</script>
+<script>
+  $(document).ready(function() {
+    // Обработчик отправки формы
+    $('#registrationForm').on('submit', function(event) {
+      event.preventDefault(); // Отменяем стандартную отправку формы
+
+      // Проверка, что чекбокс с согласием GDPR отмечен
       if ($('#gdprConsent').prop('checked')) {
-         
+        // Если форма валидна и GDPR согласие есть
+        $('#success-msg').fadeIn(); // Показываем сообщение об успешной регистрации
+        $('#registrationForm')[0].reset(); // Очищаем форму
+        $('#already-submitted-msg').hide(); // Скрываем сообщение об отправке
+        // Если согласие не отмечено, показываем ошибку
+        alert('Пожалуйста, подтвердите согласие с политикой конфиденциальности.');
       }
     });
   });
-</script>
- 
+</script> 
 
 <script>
 const form = document.getElementById('form');
