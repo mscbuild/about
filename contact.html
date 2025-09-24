@@ -232,12 +232,7 @@
 })();
 </script>
 <script>
-  $(document).ready(function() {
-    // Обработчик отправки формы
-    $('#registrationForm').on('submit', function(event) {
-      event.preventDefault(); // Отменяем стандартную отправку формы
-
-      // Проверка, что чекбокс с согласием GDPR отмечен
+  // Проверка, что чекбокс с согласием GDPR отмечен
       if ($('#gdprConsent').prop('checked')) {
         // Если форма валидна и GDPR согласие есть
         $('#success-msg').fadeIn(); // Показываем сообщение об успешной регистрации
