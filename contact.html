@@ -168,13 +168,30 @@
                 <div class="contact-form-wrapper">
                     <div class="introduce">
                         <!-- Scripts -->
-                        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-                        <script src="form.js"></script>
+                        <script src="https://www.google.com/recaptcha/api.js?render=6LcMReAqAAAAAExWRTmSR0h4qfBuVPrIi3kadtFk"></script>
+<script>
+    grecaptcha.ready(function() {
+    // do request for recaptcha token
+    // response is promise with passed token
+        grecaptcha.execute('6LcMReAqAAAAAExWRTmSR0h4qfBuVPrIi3kadtFk', {action:'validate_captcha'})
+                  .then(function(token) {
+            // add token value to form
+            document.getElementById('g-recaptcha-response').value = token;
+        });
+    });
+</script>
 
-                        <<!-- In the second section we will have our contact form -->
-	<form method="POST" id="form">Name
+<!-- References for the optional jQuery function to enhance end-user prompts -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="form.js"></script>		
+ 
+<!-- In the second section we will have our contact form -->
+	  
+   <form method="POST" id="form">Name
+      
     <input type="hidden" name="access_key" value="e4fb776d-e6d3-436b-873f-d74e87cd5d26">
-     <input type="text" name="name" required>Email
+
+    <input type="text" name="name" required>Email
     <input type="email" name="email" required>Text
     <textarea name="message" required></textarea> 
     <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
