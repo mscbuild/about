@@ -167,34 +167,25 @@
             <div data-aos-delay="600" class="col-lg-7 contact-input">
                 <div class="contact-form-wrapper">
                     <div class="introduce">
-                        <!-- Scripts (лучше вынести в конец body, но оставим здесь как в оригинале) -->
+                        <!-- Scripts -->
                         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
                         <script src="form.js"></script>
 
-                        <form method="POST" id="form">
-                            <!-- Hidden access key -->
-                            <input type="hidden" name="access_key" value="e4fb776d-e6d3-436b-873f-d74e87cd5d26">
+                        <<!-- In the second section we will have our contact form -->
+	  
+   <form method="POST" id="form">Name
+      
+    <input type="hidden" name="access_key" value="e4fb776d-e6d3-436b-873f-d74e87cd5d26">
 
-                            <!-- Name -->
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" required>
-
-                            <!-- Email -->
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-
-                            <!-- Message -->
-                            <label for="message">Text</label>
-                            <textarea id="message" name="message" required></textarea>
-
-                            <!-- Anti-bot honeypot -->
-                            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-
-                            <!-- GDPR Consent -->
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="gdprConsent" required>
-                                <input type="checkbox" class="custom-control-input" id="gdprConsent" required>
-                                <label class="custom-control-label" for="gdprConsent">
+    <input type="text" name="name" required>Email
+    <input type="email" name="email" required>Text
+    <textarea name="message" required></textarea> 
+    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+    <button type="submit">Submit Form</button>
+   
+    <div id="result"></div>
+  
+    <label class="custom-control-label" for="gdprConsent">
                   I agree with <a href="/privacy-policy" target="_blank">the rules for processing personal data</a>
                 </label>
                             </div>
