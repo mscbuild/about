@@ -232,19 +232,6 @@
 })();
 </script>
 <script>
-  // Проверка, что чекбокс с согласием GDPR отмечен
-      if ($('#gdprConsent').prop('checked')) {
-        // Если форма валидна и GDPR согласие есть
-        $('#success-msg').fadeIn(); // Показываем сообщение об успешной регистрации
-        $('#registrationForm')[0].reset(); // Очищаем форму
-        $('#already-submitted-msg').hide(); // Скрываем сообщение об отправке
-        // Если согласие не отмечено, показываем ошибку
-        alert('Пожалуйста, подтвердите согласие с политикой конфиденциальности.');
-      }
-    });
-  });
-</script>	
-<script>
 const form = document.getElementById('form');
 const result = document.getElementById('result');
 
