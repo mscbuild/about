@@ -778,43 +778,30 @@
  
 <!-- In the second section we will have our contact form -->
 	  
-<form method="POST" action="https://example.com/your-endpoint" id="form">
+<form method="POST" id="form">Name
+      
+    <input type="hidden" name="access_key" value="e4fb776d-e6d3-436b-873f-d74e87cd5d26">
 
-  <input type="hidden" name="access_key" value="e4fb776d-e6d3-436b-873f-d74e87cd5d26">
-
-  
-    <label for="name">Имя</label>
-    <input type="text" id="name" name="name" placeholder="Name" required>
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" placeholder="Email" required>
-    <label for="message">Сообщение</label>
-    <textarea id="message" name="message" placeholder="Text" required></textarea>
-
-    <!-- GDPR согласие -->
-    <label for="gdpr" style="display: block; margin-top: 1em;">
-        <input type="checkbox" id="gdpr" name="gdpr_consent" required>
-        I agree with <a href="/privacy-policy" target="_blank">the privacy policy</a>
-    </label>
-
-    <!-- Honeypot поле (невидимое для пользователей) -->
-    <input type="text" name="botcheck" style="display: none;" autocomplete="off" tabindex="-1">
-
-    <!-- Кнопка отправки -->
+    <input type="text" name="name" required>Email
+    <input type="email" name="email" required>Text
+    <textarea name="message" required></textarea> 
+    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+	</div>
+    <!-- Submit Button -->
     <button name="submit" type="submit" id="submit" class="rn-btn">
-        <span>SEND MESSAGE</span>
-        <i data-feather="arrow-right"></i>
-    </button>
+                                <span>SEND MESSAGE</span>
+                                <i data-feather="arrow-right"></i>
+								</button>
 
-    <!-- Место для отображения результата -->
-    <div id="result"></div>
-</form>
-   
+                            <!-- Result placeholder -->
+                            <div id="result"></div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>		
+</div>	
 <script>
 // Disable form submissions if there are invalid fields
 (function() {
