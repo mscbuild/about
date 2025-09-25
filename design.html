@@ -727,65 +727,153 @@
                 <i data-feather="arrow-up"></i>
             </div>
         </div>
-         <!-- Rn footer area Start -->
-    <div id="footer" class="rn-footer-area footer-style-2 rn-section-gapTop section-separator">
-        <div class="container pb--80 pb_sm--40 plr_sm--20">
-            <div class="row">
-                <div class="col-xl-3 col-12 col-lg-3 col-md-6 col-sm-6 col-12">
-                     <div class="social-icone-wrapper">
-                        <ul class="social-share d-flex liststyle">
-                            <li class="codepen"><a href="https://codepen.io/jrck"><i data-feather="codepen"></i></a>
-                            </li>
-                            <li class="github"><a href="https://github.com/mscbuild"><i data-feather="github"></i></a>
-                            </li>
-                            <li class="linkedin"><a href="https://www.linkedin.com/in/jurijsrck"><i data-feather="linkedin"></i></a>
-                            </li>
-                        </ul>
+        <!-- Start Contact section -->
+        <div class="rn-contact-area rn-section-gap section-separator" id="contacts">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-title text-center">
+                            <span class="subtitle">Contact</span>
+                            <h2 class="title">Contact With Me</h2>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sl-3 col-12 mt_sm--20 col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="menu-wrapper">
-                        <div class="menu-title">
-                            <h6>Product</h6>
+
+                <div class="row mt--50 mt_md--40 mt_sm--40 mt-contact-sm">
+                    <div class="col-lg-5">
+                        <div class="contact-about-area">
+                            <div class="thumbnail">
+                                 
+                            </div>
+                            <div class="title-area">
+                                <h4 class="title">Yuri Dev</h4>
+                                <span>Chief Operating Officer</span>
+                            </div>
+                            <div class="description">
+                                <p>Whether you have a question, want to start a project or simply want to connect. Feel free to send me a message in the contact form.
+                                </p>
+                                <span class="phone">Phone: <a href="tel:01941043264">+01234567890</a></span>
+                                <span class="mail">Email: <a href="mailto:admin@example.com">admin@example.com</a></span>
+                            </div>
+                            <div class="social-area">
+                                <div class="name">FIND ME</div>
+                                <div class="social-icone">
+                                    <a href="https://codepen.io/jrck"><i data-feather="codepen"></i></a>
+                                    <a href="https://www.linkedin.com/in/jurijsrck"><i data-feather="linkedin"></i></a>
+                                    <a href="https://github.com/mscbuild"><i data-feather="github"></i></a>
+                                </div>
+                            </div>
                         </div>
-                        <ul class="menu-footer">
-                            <li><a href="#">Database</a></li>
-                            <li><a href="#">Authentication</a></li>
-                            <li><a href="#">Storage</a></li>
-                        </ul>
                     </div>
-                </div>
-                <div class="col-sl-3 col-12 mt_sm--20 col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="menu-wrapper">
-                        <div class="menu-title">
-                            <h6>Resources</h6>
-                        </div>
-                        <ul class="menu-footer">
-                            <li><a href="#">Authentication</a></li>
-                            <li><a href="#">System Status</a></li>
-                            <li><a href="#">Terms of service</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-sl-3 col-12 mt_sm--20 col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="menu-wrapper">
-                        <div class="menu-title">
-                            <h6>Developers</h6>
-                        </div>
-                        <ul class="menu-footer">
-                            <li><a href="https://github.com/mscbuild">Documentation</a></li>
-                            <li><a href="#">Support</a></li>
-                            <li><a href="https://github.com/mscbuild">Open Source</a></li>
-                        </ul>
+                    <div data-aos-delay="600" class="col-lg-7 contact-input">
+                        <div class="contact-form-wrapper">
+                            <div class="introduce">
+                        <!-- Scripts -->
+                        
+ 
+
+<!-- References for the optional jQuery function to enhance end-user prompts -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="form.js"></script>		
+ 
+<!-- In the second section we will have our contact form -->
+	  
+ <form method="POST" id="form">Name
+      
+    <input type="hidden" name="access_key" value="e4fb776d-e6d3-436b-873f-d74e87cd5d26">
+
+    <input type="text" name="name" required>Email
+    <input type="email" name="email" required>Text
+    <textarea name="message" required></textarea> 
+    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+    <!-- Submit Button -->
+    <button name="submit" type="submit" id="submit" class="rn-btn">
+                                <span>SEND MESSAGE</span>
+                                <i data-feather="arrow-right"></i>
+								</button>
+
+                            <!-- Result placeholder -->
+                            <div id="result"></div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="copyright text-center ptb--40 section-separator">
+    </div>
+</div>						
+<script>
+// Disable form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Get the forms we want to add validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+<script>
+const form = document.getElementById('form');
+const result = document.getElementById('result');
+
+form.addEventListener('submit', function(e) {
+    const formData = new FormData(form);
+    e.preventDefault();
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    result.innerHTML = "Please wait..."
+
+    fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: json
+        })
+        .then(async (response) => {
+            let json = await response.json();
+            if (response.status === 200) {
+                result.innerHTML = json.message;
+            } else {
+                console.log(response);
+                result.innerHTML = json.message;
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            result.innerHTML = "Something went wrong!";
+        })
+        .then(function() {
+            form.reset();
+            setTimeout(() => {
+                result.style.display = "none";
+            }, 3000);
+        });
+});
+</script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	<div class="copyright text-center ptb--40 section-separator">
             <p class="description">© 2025. All rights reserved by <a target="_blank" href="#">Mscbuild.</a></p>
         </div>
     </div>
-    <!-- Rn footer area end -->
+        <!-- End Contuct section -->
     </main>
 
     <!-- JS ============================================ -->
