@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resume Builder Pro</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontsource-inter@5/index.css">
+<link rel="stylesheet" href="css/cv.css">
+</head>
+<body>
+
+<header class="app-header">
+  <h1>
+    <svg viewBox="0 0 32 32" fill="none">
+      <rect x="4" y="2" width="24" height="28" rx="3" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="2"/>
+      <line x1="9" y1="9" x2="23" y2="9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      <line x1="9" y1="14" x2="20" y2="14" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      <line x1="9" y1="19" x2="23" y2="19" stroke="white" stroke-width="2" stroke-linecap="round"/>
+      <line x1="9" y1="24" x2="17" y2="24" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span id="appTitle">Resume Builder Pro</span>
+  </h1>
+  <div class="header-actions">
+    <select class="lang-select" id="langSelect" onchange="changeLanguage(this.value)">
+      <option value="en">🇺🇸 English</option>
+      <option value="lv">🇱🇻 Latviešu</option>
+    </select>
+    <button class="btn btn-outline" onclick="clearAll()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+      <span data-i18n="clearAll">Clear All</span>
+    </button>
+    <button class="btn btn-success" onclick="exportPDF()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      <span data-i18n="downloadPDF">Download PDF</span>
+    </button>
+  </div>
+</header>
+
+<div class="template-bar">
+  <span style="font-size:13px;font-weight:700;color:var(--text-light);margin-right:8px;display:flex;align-items:center;" data-i18n="template">Template:</span>
+  <div class="template-option active" onclick="setTemplate('classic')" data-i18n="templateClassic">Classic</div>
+  <div class="template-option" onclick="setTemplate('modern')" data-i18n="templateModern">Modern</div>
+  <div class="template-option" onclick="setTemplate('minimal')" data-i18n="templateMinimal">Minimal</div>
+  <div style="flex:1"></div>
+  <div class="color-picker-row">
+    <label style="font-size:12px;font-weight:700;color:var(--text-light);" data-i18n="color">Color:</label>
+    <div class="color-swatches">
+      <div class="color-swatch active" style="background:#2c3e6b" onclick="setColor('#2c3e6b','#3d5a99','#4a90d9',this)"></div>
+      <div class="color-swatch" style="background:#1a5c3a" onclick="setColor('#1a5c3a','#2a7c50','#27ae60',this)"></div>
+      <div class="color-swatch" style="background:#7b2d3b" onclick="setColor('#7b2d3b','#9c3d50','#e74c3c',this)"></div>
+      <div class="color-swatch" style="background:#4a3068" onclick="setColor('#4a3068','#6a4088','#8e44ad',this)"></div>
+      <div class="color-swatch" style="background:#2c3e50" onclick="setColor('#2c3e50','#34495e','#3498db',this)"></div>
+      <div class="color-swatch" style="background:#d4870e" onclick="setColor('#d4870e','#e69a20','#f39c12',this)"></div>
+    </div>
+  </div>
+</div>
+
+<div class="main-layout">
+  <div class="editor-panel">
+    <div class="progress-text"><span data-i18n="resumeCompletion">Resume Completion:</span> <span id="progressPercent">0%</span></div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title">
+        <div class="icon">👤</div>
+        <span data-i18n="personalInfo">Personal Information</span>
+      </div>
+      <div style="display:flex;gap:24px;align-items:flex-start;">
+        <div class="photo-upload" onclick="document.getElementById('photoInput').click()">
+          <div class="upload-icon">📷</div>
+          <div class="upload-text" data-i18n="uploadPhoto">Upload Photo</div>
+          <input type="file" id="photoInput" accept="image/*" style="display:none" onchange="handlePhoto(event)">
+        </div>
+        <div style="flex:1;">
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="firstName">First Name</label>
+              <input type="text" id="firstName" data-i18n-placeholder="firstName" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+              <label data-i18n="lastName">Last Name</label>
+              <input type="text" id="lastName" data-i18n-placeholder="lastName" oninput="updatePreview()">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label data-i18n="jobTitle">Job Title</label>
+              <input type="text" id="jobTitle" data-i18n-placeholder="jobTitle" oninput="updatePreview()">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:16px;">
+        <div class="form-row">
+          <div class="form-group">
+            <label data-i18n="email">Email</label>
+            <input type="email" id="email" data-i18n-placeholder="email" oninput="updatePreview()">
+          </div>
+          <div class="form-group">
+            <label data-i18n="phone">Phone</label>
+            <input type="tel" id="phone" data-i18n-placeholder="phone" oninput="updatePreview()">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label data-i18n="location">Location</label>
+            <input type="text" id="location" data-i18n-placeholder="location" oninput="updatePreview()">
+          </div>
+          <div class="form-group">
+            <label data-i18n="linkedin">LinkedIn</label>
+            <input type="text" id="linkedin" data-i18n-placeholder="linkedin" oninput="updatePreview()">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label data-i18n="website">Website</label>
+            <input type="text" id="website" data-i18n-placeholder="website" oninput="updatePreview()">
+          </div>
+          <div class="form-group">
+            <label data-i18n="github">GitHub</label>
+            <input type="text" id="github" data-i18n-placeholder="github" oninput="updatePreview()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title">
+        <div class="icon">📝</div>
+        <span data-i18n="summary">Professional Summary</span>
+      </div>
+      <div class="form-group">
+        <textarea id="summary" rows="4" data-i18n-placeholder="summaryPlaceholder" oninput="updatePreview()"></textarea>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title">
+        <div class="icon">💼</div>
+        <span data-i18n="workExperience">Work Experience</span>
+      </div>
+      <div id="experienceList"></div>
+      <button class="add-btn" onclick="addExperience()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span data-i18n="addExperience">Add Experience</span>
+      </button>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title">
+        <div class="icon">🎓</div>
+        <span data-i18n="education">Education</span>
+      </div>
+      <div id="educationList"></div>
+      <button class="add-btn" onclick="addEducation()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span data-i18n="addEducation">Add Education</span>
+      </button>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title">
+        <div class="icon">⚡</div>
+        <span data-i18n="skills">Skills</span>
+      </div>
+      <div class="skill-tags-container" id="skillTags"></div>
+      <div class="skill-input-row">
+        <input type="text" id="skillInput" data-i18n-placeholder="skillPlaceholder" onkeydown="handleSkillKey(event)">
+        <select id="skillLevel" style="padding:10px 14px;border:2px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;background:#fafbfc;">
+          <option value="90" data-i18n="expert">Expert</option>
+          <option value="75" selected data-i18n="advanced">Advanced</option>
+          <option value="60" data-i18n="intermediate">Intermediate</option>
+          <option value="40" data-i18n="beginner">Beginner</option>
+        </select>
+        <button class="btn btn-primary btn-sm" onclick="addSkill()" data-i18n="add">Add</button>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title">
+        <div class="icon">🚀</div>
+        <span data-i18n="projects">Projects</span>
+      </div>
+      <div id="projectsList"></div>
+      <button class="add-btn" onclick="addProject()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span data-i18n="addProject">Add Project</span>
+      </button>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title">
+        <div class="icon">🌍</div>
+        <span data-i18n="languages">Languages</span>
+      </div>
+      <div id="languagesList"></div>
+      <button class="add-btn" onclick="addLanguage()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span data-i18n="addLanguage">Add Language</span>
+      </button>
+    </div>
+
+    <div class="section-card">
+      <div class="section-title">
+        <div class="icon">🏆</div>
+        <span data-i18n="certifications">Certifications</span>
+      </div>
+      <div id="certsList"></div>
+      <button class="add-btn" onclick="addCert()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span data-i18n="addCert">Add Certification</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="preview-panel">
+    <div class="resume-preview-wrapper">
+      <div id="resumeContent" class="resume-page">
+        <div class="resume-header-section">
+          <div class="resume-photo" id="resumePhoto">
+            <span class="no-photo">👤</span>
+          </div>
+          <div class="resume-header-info">
+            <h2 id="resumeName">Your Name</h2>
+            <div class="job-title" id="resumeJobTitle">Your Job Title</div>
+            <div class="resume-contact-grid" id="resumeContact"></div>
+          </div>
+        </div>
+        <div class="resume-body">
+          <div class="resume-main" id="resumeMain"></div>
+          <div class="resume-sidebar" id="resumeSidebar"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="assets/js/cv.js"></script>
+</body>
+</html>
