@@ -156,6 +156,7 @@ let currentTemplate = 'classic';
 let primaryColor = '#2c3e6b';
 let primaryLight = '#3d5a99';
 let accentColor = '#4a90d9';
+let previewTimeout = null;
 
 let resumeData = {
   photo: '',
@@ -207,6 +208,10 @@ function updateAllTranslations() {
 function handlePhoto(event) {
   const file = event.target.files[0];
   if (file) {
+    if (file.size > 5 * 1024 * 1024) {
+      showToast('Image too large. Max 5MB.');
+      return;
+    }
     const reader = new FileReader();
     reader.onload = function(e) {
       resumeData.photo = e.target.result;
@@ -214,6 +219,13 @@ function handlePhoto(event) {
     };
     reader.readAsDataURL(file);
   }
+}
+
+// Debounced preview update for mobile performance
+function debouncedUpdatePreview() {
+  clearTimeout(previewTimeout);
+  const delay = window.innerWidth < 768 ? 300 : 0;
+  previewTimeout = setTimeout(updatePreview, delay);
 }
 
 function addExperience() {
@@ -241,31 +253,31 @@ function renderExperienceForms() {
     <div class="entry-item">
       <div class="entry-header">
         <span class="entry-number">${t('experience')} #${idx + 1}</span>
-        <button class="remove-btn" onclick="removeExperience(${idx})">×</button>
+        <button class="remove-btn" onclick="removeExperience(${idx})" aria-label="Remove experience ${idx + 1}">×</button>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label>${t('jobTitle')}</label>
-          <input type="text" value="${exp.title}" data-i18n-placeholder="jobTitlePlaceholder" oninput="resumeData.experience[${idx}].title=this.value;updatePreview()">
+          <input type="text" value="${exp.title}" data-i18n-placeholder="jobTitlePlaceholder" oninput="resumeData.experience[${idx}].title=this.value;debouncedUpdatePreview()">
         </div>
         <div class="form-group">
           <label>${currentLang==='lv'?'Uzņēmums':'Company'}</label>
-          <input type="text" value="${exp.company}" data-i18n-placeholder="companyPlaceholder" oninput="resumeData.experience[${idx}].company=this.value;updatePreview()">
+          <input type="text" value="${exp.company}" data-i18n-placeholder="companyPlaceholder" oninput="resumeData.experience[${idx}].company=this.value;debouncedUpdatePreview()">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label>${t('startDate')}</label>
-          <input type="text" value="${exp.startDate}" data-i18n-placeholder="datePlaceholder" oninput="resumeData.experience[${idx}].startDate=this.value;updatePreview()">
+          <input type="text" value="${exp.startDate}" data-i18n-placeholder="datePlaceholder" oninput="resumeData.experience[${idx}].startDate=this.value;debouncedUpdatePreview()">
         </div>
         <div class="form-group">
           <label>${t('endDate')}</label>
-          <input type="text" value="${exp.endDate}" data-i18n-placeholder="present" oninput="resumeData.experience[${idx}].endDate=this.value;resumeData.experience[${idx}].isCurrent=(this.value==='${t('present')}')||(this.value==='');updatePreview()">
+          <input type="text" value="${exp.endDate}" data-i18n-placeholder="present" oninput="resumeData.experience[${idx}].endDate=this.value;resumeData.experience[${idx}].isCurrent=(this.value==='${t('present')}')||(this.value==='');debouncedUpdatePreview()">
         </div>
       </div>
       <div class="form-group">
         <label>${t('description')}</label>
-        <textarea rows="3" data-i18n-placeholder="descPlaceholder" oninput="resumeData.experience[${idx}].description=this.value;updatePreview()">${exp.description}</textarea>
+        <textarea rows="3" data-i18n-placeholder="descPlaceholder" oninput="resumeData.experience[${idx}].description=this.value;debouncedUpdatePreview()">${exp.description}</textarea>
       </div>
     </div>
   `).join('');
@@ -296,35 +308,35 @@ function renderEducationForms() {
     <div class="entry-item">
       <div class="entry-header">
         <span class="entry-number">${t('education')} #${idx + 1}</span>
-        <button class="remove-btn" onclick="removeEducation(${idx})">×</button>
+        <button class="remove-btn" onclick="removeEducation(${idx})" aria-label="Remove education ${idx + 1}">×</button>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label>${t('degree')}</label>
-          <input type="text" value="${edu.degree}" placeholder="${currentLang==='lv'?'Bakalaurs, Datorzinātne':'B.S. Computer Science'}" oninput="resumeData.education[${idx}].degree=this.value;updatePreview()">
+          <input type="text" value="${edu.degree}" placeholder="${currentLang==='lv'?'Bakalaurs, Datorzinātne':'B.S. Computer Science'}" oninput="resumeData.education[${idx}].degree=this.value;debouncedUpdatePreview()">
         </div>
         <div class="form-group">
           <label>${t('school')}</label>
-          <input type="text" value="${edu.school}" placeholder="${currentLang==='lv'?'Latvijas Universitāte':'MIT'}" oninput="resumeData.education[${idx}].school=this.value;updatePreview()">
+          <input type="text" value="${edu.school}" placeholder="${currentLang==='lv'?'Latvijas Universitāte':'MIT'}" oninput="resumeData.education[${idx}].school=this.value;debouncedUpdatePreview()">
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label>${t('startDate')}</label>
-          <input type="text" value="${edu.startDate}" placeholder="${currentLang==='lv'?'2016. g. sep':'Sep 2016'}" oninput="resumeData.education[${idx}].startDate=this.value;updatePreview()">
+          <input type="text" value="${edu.startDate}" placeholder="${currentLang==='lv'?'2016. g. sep':'Sep 2016'}" oninput="resumeData.education[${idx}].startDate=this.value;debouncedUpdatePreview()">
         </div>
         <div class="form-group">
           <label>${t('endDate')}</label>
-          <input type="text" value="${edu.endDate}" placeholder="${currentLang==='lv'?'2020. g. maijs':'May 2020'}" oninput="resumeData.education[${idx}].endDate=this.value;updatePreview()">
+          <input type="text" value="${edu.endDate}" placeholder="${currentLang==='lv'?'2020. g. maijs':'May 2020'}" oninput="resumeData.education[${idx}].endDate=this.value;debouncedUpdatePreview()">
         </div>
         <div class="form-group">
           <label>${t('gpa')}</label>
-          <input type="text" value="${edu.gpa}" placeholder="3.9/4.0" oninput="resumeData.education[${idx}].gpa=this.value;updatePreview()">
+          <input type="text" value="${edu.gpa}" placeholder="3.9/4.0" oninput="resumeData.education[${idx}].gpa=this.value;debouncedUpdatePreview()">
         </div>
       </div>
       <div class="form-group">
         <label>${t('description')}</label>
-        <textarea rows="2" data-i18n-placeholder="eduDescPlaceholder" oninput="resumeData.education[${idx}].description=this.value;updatePreview()">${edu.description}</textarea>
+        <textarea rows="2" data-i18n-placeholder="eduDescPlaceholder" oninput="resumeData.education[${idx}].description=this.value;debouncedUpdatePreview()">${edu.description}</textarea>
       </div>
     </div>
   `).join('');
@@ -358,9 +370,9 @@ function handleSkillKey(event) {
 function renderSkillTags() {
   const container = document.getElementById('skillTags');
   container.innerHTML = resumeData.skills.map((skill, idx) => `
-    <span class="skill-tag">
+    <span class="skill-tag" role="listitem">
       ${skill.name}
-      <span class="remove-tag" onclick="removeSkill(${idx})">×</span>
+      <span class="remove-tag" onclick="removeSkill(${idx})" aria-label="Remove ${skill.name}" tabindex="0">×</span>
     </span>
   `).join('');
 }
@@ -388,25 +400,25 @@ function renderProjectForms() {
     <div class="entry-item">
       <div class="entry-header">
         <span class="entry-number">${t('projects')} #${idx + 1}</span>
-        <button class="remove-btn" onclick="removeProject(${idx})">×</button>
+        <button class="remove-btn" onclick="removeProject(${idx})" aria-label="Remove project ${idx + 1}">×</button>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label>${t('projectName')}</label>
-          <input type="text" value="${proj.name}" data-i18n-placeholder="projectName" oninput="resumeData.projects[${idx}].name=this.value;updatePreview()">
+          <input type="text" value="${proj.name}" data-i18n-placeholder="projectName" oninput="resumeData.projects[${idx}].name=this.value;debouncedUpdatePreview()">
         </div>
         <div class="form-group">
           <label>${t('url')}</label>
-          <input type="text" value="${proj.url}" placeholder="github.com/project" oninput="resumeData.projects[${idx}].url=this.value;updatePreview()">
+          <input type="url" value="${proj.url}" placeholder="github.com/project" oninput="resumeData.projects[${idx}].url=this.value;debouncedUpdatePreview()">
         </div>
       </div>
       <div class="form-group" style="margin-bottom:12px;">
         <label>${t('technologies')}</label>
-        <input type="text" value="${proj.technologies}" data-i18n-placeholder="techPlaceholder" oninput="resumeData.projects[${idx}].technologies=this.value;updatePreview()">
+        <input type="text" value="${proj.technologies}" data-i18n-placeholder="techPlaceholder" oninput="resumeData.projects[${idx}].technologies=this.value;debouncedUpdatePreview()">
       </div>
       <div class="form-group">
         <label>${t('description')}</label>
-        <textarea rows="2" data-i18n-placeholder="projDescPlaceholder" oninput="resumeData.projects[${idx}].description=this.value;updatePreview()">${proj.description}</textarea>
+        <textarea rows="2" data-i18n-placeholder="projDescPlaceholder" oninput="resumeData.projects[${idx}].description=this.value;debouncedUpdatePreview()">${proj.description}</textarea>
       </div>
     </div>
   `).join('');
@@ -431,16 +443,16 @@ function renderLanguageForms() {
     <div class="entry-item">
       <div class="entry-header">
         <span class="entry-number">${t('languages')} #${idx + 1}</span>
-        <button class="remove-btn" onclick="removeLanguage(${idx})">×</button>
+        <button class="remove-btn" onclick="removeLanguage(${idx})" aria-label="Remove language ${idx + 1}">×</button>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label>${t('language')}</label>
-          <input type="text" value="${lang.name}" placeholder="${currentLang==='lv'?'Angļu':'English'}" oninput="resumeData.languages[${idx}].name=this.value;updatePreview()">
+          <input type="text" value="${lang.name}" placeholder="${currentLang==='lv'?'Angļu':'English'}" oninput="resumeData.languages[${idx}].name=this.value;debouncedUpdatePreview()">
         </div>
         <div class="form-group">
           <label>${t('proficiency')}</label>
-          <select oninput="resumeData.languages[${idx}].level=this.value;updatePreview()">
+          <select oninput="resumeData.languages[${idx}].level=this.value;debouncedUpdatePreview()">
             ${levels.map(l => `<option value="${l}" ${lang.level===l?'selected':''}>${t(l)}</option>`).join('')}
           </select>
         </div>
@@ -467,20 +479,20 @@ function renderCertForms() {
     <div class="entry-item">
       <div class="entry-header">
         <span class="entry-number">${t('certifications')} #${idx + 1}</span>
-        <button class="remove-btn" onclick="removeCert(${idx})">×</button>
+        <button class="remove-btn" onclick="removeCert(${idx})" aria-label="Remove certification ${idx + 1}">×</button>
       </div>
       <div class="form-row">
         <div class="form-group">
           <label>${t('certName')}</label>
-          <input type="text" value="${cert.name}" data-i18n-placeholder="certName" oninput="resumeData.certifications[${idx}].name=this.value;updatePreview()">
+          <input type="text" value="${cert.name}" data-i18n-placeholder="certName" oninput="resumeData.certifications[${idx}].name=this.value;debouncedUpdatePreview()">
         </div>
         <div class="form-group">
           <label>${t('issuer')}</label>
-          <input type="text" value="${cert.issuer}" data-i18n-placeholder="issuer" oninput="resumeData.certifications[${idx}].issuer=this.value;updatePreview()">
+          <input type="text" value="${cert.issuer}" data-i18n-placeholder="issuer" oninput="resumeData.certifications[${idx}].issuer=this.value;debouncedUpdatePreview()">
         </div>
         <div class="form-group">
           <label>${t('date')}</label>
-          <input type="text" value="${cert.date}" placeholder="2024" oninput="resumeData.certifications[${idx}].date=this.value;updatePreview()">
+          <input type="text" value="${cert.date}" placeholder="2024" oninput="resumeData.certifications[${idx}].date=this.value;debouncedUpdatePreview()">
         </div>
       </div>
     </div>
@@ -490,7 +502,7 @@ function renderCertForms() {
 function setTemplate(template) {
   currentTemplate = template;
   document.querySelectorAll('.template-option').forEach(el => el.classList.remove('active'));
-  event.target.classList.add('active');
+  event.currentTarget.classList.add('active');
   const resume = document.getElementById('resumeContent');
   resume.className = 'resume-page';
   if (template !== 'classic') resume.classList.add('template-' + template);
@@ -507,6 +519,32 @@ function setColor(p, pl, a, el) {
   document.documentElement.style.setProperty('--primary-light', pl);
   document.documentElement.style.setProperty('--accent', a);
   updatePreview();
+}
+
+// Dynamic resume scaling for mobile
+function adjustResumeScale() {
+  const resume = document.getElementById('resumeContent');
+  const previewPanel = document.querySelector('.preview-panel');
+  
+  if (!resume || !previewPanel) return;
+  
+  if (window.innerWidth < 768) {
+    const panelWidth = previewPanel.clientWidth - 32;
+    const baseWidth = 320;
+    const scale = Math.min(1, Math.max(0.4, panelWidth / baseWidth));
+    resume.style.transform = `scale(${scale})`;
+    resume.style.transformOrigin = 'top left';
+    resume.style.width = `${baseWidth}px`;
+  } else if (window.innerWidth < 1200) {
+    resume.style.transform = 'scale(0.85)';
+    resume.style.transformOrigin = 'top center';
+    resume.style.width = '100%';
+    resume.style.maxWidth = '700px';
+  } else {
+    resume.style.transform = 'none';
+    resume.style.width = '210mm';
+    resume.style.maxWidth = 'none';
+  }
 }
 
 function updatePreview() {
@@ -527,19 +565,19 @@ function updatePreview() {
 
   const photoEl = document.getElementById('resumePhoto');
   if (resumeData.photo) {
-    photoEl.innerHTML = `<img src="${resumeData.photo}" alt="Photo">`;
+    photoEl.innerHTML = `<img src="${resumeData.photo}" alt="Profile photo">`;
   } else {
-    photoEl.innerHTML = '<span class="no-photo">👤</span>';
+    photoEl.innerHTML = '<span class="no-photo" aria-hidden="true">👤</span>';
   }
 
   const contactEl = document.getElementById('resumeContact');
   let contactHTML = '';
-  if (resumeData.email) contactHTML += `<div class="resume-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>${resumeData.email}</div>`;
-  if (resumeData.phone) contactHTML += `<div class="resume-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>${resumeData.phone}</div>`;
-  if (resumeData.location) contactHTML += `<div class="resume-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${resumeData.location}</div>`;
-  if (resumeData.linkedin) contactHTML += `<div class="resume-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>${resumeData.linkedin}</div>`;
-  if (resumeData.website) contactHTML += `<div class="resume-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>${resumeData.website}</div>`;
-  if (resumeData.github) contactHTML += `<div class="resume-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>${resumeData.github}</div>`;
+  if (resumeData.email) contactHTML += `<div class="resume-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>${resumeData.email}</div>`;
+  if (resumeData.phone) contactHTML += `<div class="resume-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>${resumeData.phone}</div>`;
+  if (resumeData.location) contactHTML += `<div class="resume-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${resumeData.location}</div>`;
+  if (resumeData.linkedin) contactHTML += `<div class="resume-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>${resumeData.linkedin}</div>`;
+  if (resumeData.website) contactHTML += `<div class="resume-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>${resumeData.website}</div>`;
+  if (resumeData.github) contactHTML += `<div class="resume-contact-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>${resumeData.github}</div>`;
   contactEl.innerHTML = contactHTML;
 
   let mainHTML = '';
@@ -662,6 +700,7 @@ function updatePreview() {
 
   document.getElementById('resumeSidebar').innerHTML = sidebarHTML;
   updateProgress();
+  adjustResumeScale();
 }
 
 function updateProgress() {
@@ -684,11 +723,33 @@ function updateProgress() {
   document.getElementById('progressFill').style.width = percent + '%';
 }
 
-function exportPDF() {
+async function exportPDF() {
   const element = document.getElementById('resumeContent');
   const name = (resumeData.firstName + ' ' + resumeData.lastName).trim() || 'CV';
   
   showToast(t('generatingPDF'));
+  
+  // Lazy load html2pdf if not already loaded
+  if (typeof html2pdf === 'undefined') {
+    await new Promise((resolve) => {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+      script.onload = resolve;
+      script.onerror = () => {
+        showToast(t('pdfError'));
+        resolve();
+      };
+      document.body.appendChild(script);
+    });
+  }
+  
+  if (typeof html2pdf === 'undefined') {
+    showToast(t('pdfError'));
+    return;
+  }
+  
+  const originalTransform = element.style.transform;
+  element.style.transform = 'none';
   
   const opt = {
     margin: 0,
@@ -697,7 +758,8 @@ function exportPDF() {
     html2canvas: { 
       scale: 2,
       useCORS: true,
-      letterRendering: true
+      letterRendering: true,
+      logging: false
     },
     jsPDF: { 
       unit: 'mm', 
@@ -706,12 +768,16 @@ function exportPDF() {
     }
   };
 
-  html2pdf().set(opt).from(element).save().then(() => {
+  try {
+    await html2pdf().set(opt).from(element).save();
     showToast(t('pdfDownloaded'));
-  }).catch(err => {
+  } catch (err) {
     showToast(t('pdfError'));
-    console.error(err);
-  });
+    console.error('PDF export error:', err);
+  } finally {
+    element.style.transform = originalTransform;
+    adjustResumeScale();
+  }
 }
 
 function clearAll() {
@@ -932,6 +998,39 @@ function init() {
   updateAllTranslations();
   updatePreview();
   loadSampleData();
+  
+  // Initialize resize listener for responsive scaling
+  let resizeTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      adjustResumeScale();
+      updateMobileUI();
+    }, 150);
+  });
+  
+  // Add keyboard support for photo upload
+  const photoUpload = document.querySelector('.photo-upload');
+  if (photoUpload) {
+    photoUpload.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        document.getElementById('photoInput').click();
+      }
+    });
+  }
+  
+  // Add keyboard support for skill tag removal
+  document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('remove-tag')) {
+      e.target.blur();
+    }
+  });
 }
 
-init();
+// Initialize on DOM ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
