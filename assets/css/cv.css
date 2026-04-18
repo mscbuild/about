@@ -1,4 +1,4 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
+ * { margin: 0; padding: 0; box-sizing: border-box; }
   
   :root {
     --primary: #2c3e6b;
@@ -15,11 +15,19 @@
     --radius: 12px;
   }
 
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    min-height: 100dvh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   .app-header {
@@ -33,6 +41,7 @@
     position: sticky;
     top: 0;
     z-index: 100;
+    gap: 16px;
   }
 
   .app-header h1 {
@@ -41,17 +50,21 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    white-space: nowrap;
   }
 
   .app-header h1 svg {
     width: 32px;
     height: 32px;
+    flex-shrink: 0;
   }
 
   .header-actions {
     display: flex;
     gap: 12px;
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
   }
 
   .lang-select {
@@ -66,6 +79,7 @@
     font-family: inherit;
     outline: none;
     transition: all 0.3s ease;
+    min-height: 44px;
   }
 
   .lang-select:hover, .lang-select:focus {
@@ -90,22 +104,29 @@
     align-items: center;
     gap: 8px;
     font-family: inherit;
+    min-height: 44px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
   .btn:active { transform: translateY(0); }
+  .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
   .btn-primary { background: var(--accent); color: white; }
   .btn-success { background: var(--success); color: white; }
   .btn-danger { background: var(--danger); color: white; }
   .btn-outline { background: transparent; color: white; border: 2px solid rgba(255,255,255,0.4); }
   .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: white; }
-  .btn-sm { padding: 6px 14px; font-size: 12px; }
+  .btn-sm { padding: 6px 14px; font-size: 12px; min-height: 36px; }
   .btn-ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
   .btn-ghost:hover { background: var(--accent); color: white; }
 
   .main-layout {
     display: flex;
+    height: calc(100dvh - 72px);
     height: calc(100vh - 72px);
     overflow: hidden;
   }
@@ -113,17 +134,24 @@
   .editor-panel {
     width: 50%;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 24px;
     background: var(--bg);
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
 
   .preview-panel {
     width: 50%;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 24px;
     background: #e8eaed;
     display: flex;
     justify-content: center;
+    align-items: flex-start;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
   }
 
   .section-card {
@@ -162,6 +190,7 @@
     justify-content: center;
     color: white;
     font-size: 16px;
+    flex-shrink: 0;
   }
 
   .form-row {
@@ -174,6 +203,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    min-width: 0;
   }
 
   .form-group label {
@@ -191,11 +221,13 @@
     padding: 10px 14px;
     border: 2px solid var(--border);
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 16px;
     font-family: inherit;
     transition: all 0.3s ease;
     background: #fafbfc;
     color: var(--text);
+    min-height: 44px;
+    width: 100%;
   }
 
   .form-group input:focus,
@@ -210,6 +242,7 @@
   .form-group textarea {
     resize: vertical;
     min-height: 80px;
+    line-height: 1.5;
   }
 
   .entry-item {
@@ -232,6 +265,8 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
   }
 
   .entry-number {
@@ -256,6 +291,11 @@
     justify-content: center;
     transition: all 0.3s ease;
     font-size: 18px;
+    flex-shrink: 0;
+    min-width: 44px;
+    min-height: 44px;
+    user-select: none;
+    touch-action: manipulation;
   }
 
   .remove-btn:hover {
@@ -279,6 +319,9 @@
     justify-content: center;
     gap: 8px;
     font-family: inherit;
+    min-height: 44px;
+    user-select: none;
+    touch-action: manipulation;
   }
 
   .add-btn:hover {
@@ -309,6 +352,7 @@
     font-size: 12px;
     font-weight: 600;
     animation: popIn 0.3s ease;
+    max-width: 100%;
   }
 
   @keyframes popIn {
@@ -327,6 +371,7 @@
     background: rgba(255,255,255,0.2);
     font-size: 14px;
     line-height: 1;
+    flex-shrink: 0;
   }
 
   .skill-tag .remove-tag:hover {
@@ -336,22 +381,35 @@
   .skill-input-row {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
   }
 
   .skill-input-row input {
     flex: 1;
+    min-width: 150px;
     padding: 10px 14px;
     border: 2px solid var(--border);
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 16px;
     font-family: inherit;
     transition: all 0.3s ease;
+    min-height: 44px;
   }
 
   .skill-input-row input:focus {
     outline: none;
     border-color: var(--accent);
     box-shadow: 0 0 0 4px rgba(74,144,217,0.1);
+  }
+
+  .skill-input-row select {
+    padding: 10px 14px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fafbfc;
+    min-height: 44px;
   }
 
   .photo-upload {
@@ -368,6 +426,9 @@
     transition: all 0.3s ease;
     position: relative;
     background: #f8f9fb;
+    flex-shrink: 0;
+    user-select: none;
+    touch-action: manipulation;
   }
 
   .photo-upload:hover {
@@ -386,6 +447,7 @@
     color: var(--text-light);
     text-align: center;
     line-height: 1.3;
+    padding: 0 4px;
   }
 
   .photo-upload .upload-icon {
@@ -396,7 +458,10 @@
 
   .resume-preview-wrapper {
     position: sticky;
-    top: 0;
+    top: 24px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
   }
 
   .resume-page {
@@ -407,6 +472,8 @@
     border-radius: 4px;
     overflow: hidden;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    transform-origin: top center;
+    transition: transform 0.2s ease;
   }
 
   .resume-header-section {
@@ -447,6 +514,7 @@
     font-weight: 800;
     margin-bottom: 4px;
     letter-spacing: -0.5px;
+    word-break: break-word;
   }
 
   .resume-header-info .job-title {
@@ -454,6 +522,7 @@
     opacity: 0.85;
     font-weight: 500;
     margin-bottom: 12px;
+    word-break: break-word;
   }
 
   .resume-contact-grid {
@@ -468,12 +537,14 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    word-break: break-all;
   }
 
   .resume-contact-item svg {
     width: 14px;
     height: 14px;
     opacity: 0.7;
+    flex-shrink: 0;
   }
 
   .resume-body {
@@ -484,6 +555,7 @@
 
   .resume-main {
     flex: 1;
+    min-width: 0;
   }
 
   .resume-sidebar {
@@ -515,12 +587,15 @@
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 4px;
+    flex-wrap: wrap;
+    gap: 4px;
   }
 
   .resume-entry-title {
     font-size: 14px;
     font-weight: 700;
     color: var(--text);
+    word-break: break-word;
   }
 
   .resume-entry-date {
@@ -536,12 +611,14 @@
     color: var(--accent);
     font-weight: 600;
     margin-bottom: 4px;
+    word-break: break-word;
   }
 
   .resume-entry-desc {
     font-size: 12px;
     color: var(--text-light);
     line-height: 1.6;
+    word-break: break-word;
   }
 
   .resume-skill-bar {
@@ -584,6 +661,7 @@
     font-size: 12px;
     color: var(--text-light);
     line-height: 1.7;
+    word-break: break-word;
   }
 
   .resume-lang-item {
@@ -608,6 +686,7 @@
   .resume-cert-name {
     font-weight: 700;
     color: var(--text);
+    word-break: break-word;
   }
 
   .resume-cert-org {
@@ -622,7 +701,14 @@
     background: var(--card);
     border-bottom: 1px solid var(--border);
     overflow-x: auto;
+    overflow-y: hidden;
     align-items: center;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  
+  .template-bar::-webkit-scrollbar {
+    display: none;
   }
 
   .template-option {
@@ -636,6 +722,8 @@
     white-space: nowrap;
     background: white;
     color: var(--text-light);
+    user-select: none;
+    touch-action: manipulation;
   }
 
   .template-option:hover {
@@ -654,6 +742,7 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 0;
+    flex-shrink: 0;
   }
 
   .color-picker-row label {
@@ -676,6 +765,9 @@
     cursor: pointer;
     border: 3px solid transparent;
     transition: all 0.3s ease;
+    flex-shrink: 0;
+    user-select: none;
+    touch-action: manipulation;
   }
 
   .color-swatch:hover {
@@ -725,24 +817,13 @@
     font-weight: 600;
   }
 
-  @media (max-width: 1200px) {
-    .main-layout {
-      flex-direction: column;
-      height: auto;
-    }
-    .editor-panel, .preview-panel {
-      width: 100%;
-    }
-    .resume-page {
-      width: 100%;
-      min-height: auto;
-    }
-  }
-
   .toast {
     position: fixed;
     bottom: 30px;
     right: 30px;
+    left: 30px;
+    max-width: 400px;
+    margin: 0 auto;
     background: var(--primary);
     color: white;
     padding: 14px 28px;
@@ -754,6 +835,7 @@
     opacity: 0;
     transition: all 0.4s ease;
     z-index: 1000;
+    text-align: center;
   }
 
   .toast.show {
@@ -779,4 +861,296 @@
 
   .resume-page.template-minimal .resume-skill-fill {
     background: var(--text);
+  }
+
+  /* ========== RESPONSIVE BREAKPOINTS ========== */
+  
+  /* Tablet: 768px - 1199px */
+  @media (max-width: 1199px) and (min-width: 768px) {
+    .app-header {
+      padding: 16px 24px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    
+    .header-actions {
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .form-row {
+      flex-wrap: wrap;
+    }
+    
+    .resume-page {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      transform: scale(0.85);
+    }
+    
+    .resume-body {
+      padding: 20px 24px;
+      flex-direction: column;
+    }
+    
+    .resume-sidebar {
+      width: 100%;
+    }
+    
+    .template-bar {
+      padding: 12px 16px;
+    }
+  }
+
+  /* Mobile: < 768px */
+  @media (max-width: 767px) {
+    .app-header {
+      padding: 12px 16px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 16px;
+      position: relative;
+    }
+    
+    .app-header h1 {
+      font-size: 20px;
+      justify-content: center;
+      width: 100%;
+    }
+    
+    .header-actions {
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .btn {
+      padding: 12px 20px;
+      font-size: 14px;
+      min-height: 48px;
+      width: auto;
+    }
+    
+    .btn-sm {
+      padding: 8px 16px;
+      font-size: 13px;
+      min-height: 40px;
+    }
+    
+    .lang-select {
+      width: 100%;
+      max-width: 220px;
+      margin: 0 auto;
+      font-size: 16px;
+    }
+    
+    .template-bar {
+      padding: 12px 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    
+    .template-option {
+      padding: 10px 14px;
+      font-size: 12px;
+    }
+    
+    .color-picker-row {
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .editor-panel,
+    .preview-panel {
+      padding: 16px;
+      width: 100%;
+    }
+    
+    .section-card {
+      padding: 20px 16px;
+      margin-bottom: 16px;
+    }
+    
+    .form-row {
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      padding: 12px 14px;
+      font-size: 16px;
+      min-height: 48px;
+    }
+    
+    .form-group textarea {
+      min-height: 100px;
+    }
+    
+    .photo-upload {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .photo-upload .upload-text {
+      font-size: 10px;
+    }
+    
+    .resume-preview-wrapper {
+      position: static;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 20px;
+    }
+    
+    .resume-page {
+      width: 320px;
+      min-height: auto;
+      transform: scale(0.65);
+      transform-origin: top left;
+      margin: 0 auto;
+    }
+    
+    .resume-header-section {
+      padding: 24px 20px;
+      flex-direction: column;
+      text-align: center;
+      gap: 16px;
+    }
+    
+    .resume-photo {
+      width: 80px;
+      height: 80px;
+    }
+    
+    .resume-header-info h2 {
+      font-size: 24px;
+    }
+    
+    .resume-body {
+      padding: 20px;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .resume-sidebar {
+      width: 100%;
+    }
+    
+    .resume-section-title {
+      font-size: 12px;
+      letter-spacing: 1px;
+    }
+    
+    .resume-entry-title {
+      font-size: 13px;
+    }
+    
+    .resume-entry-desc,
+    .resume-summary-text {
+      font-size: 11px;
+    }
+    
+    .resume-contact-grid {
+      justify-content: center;
+    }
+    
+    .remove-btn,
+    .add-btn {
+      min-height: 48px;
+      min-width: 48px;
+    }
+    
+    .skill-tag {
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+    
+    .skill-input-row {
+      flex-direction: column;
+    }
+    
+    .skill-input-row input,
+    .skill-input-row select {
+      width: 100%;
+    }
+    
+    .toast {
+      left: 16px;
+      right: 16px;
+      max-width: none;
+    }
+    
+    .entry-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    
+    .section-title {
+      font-size: 15px;
+      gap: 8px;
+    }
+    
+    .section-title .icon {
+      width: 32px;
+      height: 32px;
+      font-size: 14px;
+    }
+  }
+
+  /* Small Mobile: < 400px */
+  @media (max-width: 399px) {
+    .resume-page {
+      transform: scale(0.55);
+    }
+    
+    .entry-item {
+      padding: 16px 12px;
+    }
+    
+    .section-title {
+      font-size: 14px;
+      gap: 8px;
+    }
+    
+    .section-title .icon {
+      width: 30px;
+      height: 30px;
+      font-size: 14px;
+    }
+    
+    .app-header h1 {
+      font-size: 18px;
+    }
+    
+    .btn {
+      padding: 10px 16px;
+      font-size: 13px;
+      min-height: 44px;
+    }
+  }
+
+  /* Print styles */
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #resumeContent, #resumeContent * {
+      visibility: visible;
+    }
+    #resumeContent {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 210mm;
+      min-height: 297mm;
+      transform: none !important;
+      box-shadow: none;
+    }
   }
