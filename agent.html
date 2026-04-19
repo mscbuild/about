@@ -4,13 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NexusAI — Intelligent Agent Platform</title>
-    <meta name="format-detection" content="telephone=no">
-    <meta name="format-detection" content="address=no">
-    <meta name="format-detection" content="email=no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="https://mscbuild.github.io/about/favicon.ico">
     <style>
         *, *::before, *::after {
             margin: 0;
@@ -36,16 +32,13 @@
             --accent-orange: #f59e0b;
             --gradient-primary: linear-gradient(135deg, #3b82f6, #8b5cf6);
             --gradient-hero: linear-gradient(135deg, #06b6d4, #3b82f6, #8b5cf6);
-            --shadow-glow: 0 0 60px rgba(59, 130, 246, 0.15);
             --radius-sm: 8px;
             --radius-md: 12px;
             --radius-lg: 16px;
             --radius-xl: 24px;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -56,7 +49,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: var(--bg-primary); }
         ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 3px; }
@@ -97,6 +89,7 @@
             font-weight: 800;
             font-size: 1.35rem;
             color: var(--text-primary);
+            cursor: pointer;
         }
 
         .logo-icon {
@@ -133,9 +126,7 @@
             position: relative;
         }
 
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
+        .nav-links a:hover { color: var(--text-primary); }
 
         .nav-links a::after {
             content: '';
@@ -149,9 +140,7 @@
             border-radius: 1px;
         }
 
-        .nav-links a:hover::after {
-            width: 100%;
-        }
+        .nav-links a:hover::after { width: 100%; }
 
         .nav-actions {
             display: flex;
@@ -234,17 +223,45 @@
             transition: all 0.3s;
         }
 
-        .mobile-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
+        .mobile-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .mobile-toggle.active span:nth-child(2) { opacity: 0; }
+        .mobile-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+        /* ===== MOBILE NAV ===== */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 72px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(6, 8, 13, 0.97);
+            backdrop-filter: blur(20px);
+            z-index: 999;
+            padding: 2rem;
+            flex-direction: column;
+            overflow-y: auto;
         }
 
-        .mobile-toggle.active span:nth-child(2) {
-            opacity: 0;
+        .mobile-nav.active { display: flex; }
+
+        .mobile-nav a {
+            display: block;
+            padding: 16px 0;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-bottom: 1px solid var(--border-color);
+            transition: color 0.3s;
         }
 
-        .mobile-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
+        .mobile-nav a:hover { color: var(--text-primary); }
+        .mobile-nav .btn { margin-top: 1rem; width: 100%; }
+
+        /* ===== PAGE SECTIONS ===== */
+        .page-section { display: none; }
+        .page-section.active { display: block; }
 
         /* ===== HERO ===== */
         .hero {
@@ -289,19 +306,8 @@
             pointer-events: none;
         }
 
-        .hero-glow-1 {
-            top: -200px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #3b82f6;
-        }
-
-        .hero-glow-2 {
-            bottom: -200px;
-            right: -100px;
-            background: #8b5cf6;
-            opacity: 0.08;
-        }
+        .hero-glow-1 { top: -200px; left: 50%; transform: translateX(-50%); background: #3b82f6; }
+        .hero-glow-2 { bottom: -200px; right: -100px; background: #8b5cf6; opacity: 0.08; }
 
         .hero-content {
             position: relative;
@@ -381,9 +387,7 @@
             animation: fadeInUp 0.8s ease-out 0.4s both;
         }
 
-        .hero-stat {
-            text-align: center;
-        }
+        .hero-stat { text-align: center; }
 
         .hero-stat-value {
             font-size: 2rem;
@@ -394,38 +398,18 @@
             background-clip: text;
         }
 
-        .hero-stat-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
+        .hero-stat-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* ===== SECTION COMMON ===== */
-        .section {
-            padding: 100px 2rem;
-            position: relative;
-        }
+        .section { padding: 100px 2rem; position: relative; }
+        .section-inner { max-width: 1280px; margin: 0 auto; }
 
-        .section-inner {
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
+        .section-header { text-align: center; margin-bottom: 4rem; }
 
         .section-label {
             display: inline-flex;
@@ -439,8 +423,7 @@
             margin-bottom: 1rem;
         }
 
-        .section-label::before,
-        .section-label::after {
+        .section-label::before, .section-label::after {
             content: '';
             width: 20px;
             height: 1px;
@@ -462,11 +445,7 @@
             margin: 0 auto;
         }
 
-        .divider {
-            width: 100%;
-            height: 1px;
-            background: var(--border-color);
-        }
+        .divider { width: 100%; height: 1px; background: var(--border-color); }
 
         /* ===== AGENTS ===== */
         .agents-grid {
@@ -489,9 +468,7 @@
         .agent-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 3px;
             background: var(--card-accent, var(--gradient-primary));
             opacity: 0;
@@ -505,18 +482,12 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
-        .agent-card:hover::before {
-            opacity: 1;
-        }
+        .agent-card:hover::before { opacity: 1; }
 
         .agent-icon {
             width: 56px;
             height: 56px;
             border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
             margin-bottom: 1.25rem;
             position: relative;
             overflow: hidden;
@@ -536,24 +507,10 @@
             border-radius: var(--radius-md);
         }
 
-        .agent-card h3 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
+        .agent-card h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .agent-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.25rem; }
 
-        .agent-card p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 1.25rem;
-        }
-
-        .agent-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
+        .agent-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 
         .agent-tag {
             padding: 4px 12px;
@@ -565,9 +522,7 @@
             font-weight: 500;
         }
 
-        .agent-card:hover .agent-tag {
-            border-color: var(--border-hover);
-        }
+        .agent-card:hover .agent-tag { border-color: var(--border-hover); }
 
         /* ===== PROJECTS ===== */
         .projects-grid {
@@ -604,9 +559,7 @@
             transition: transform 0.6s;
         }
 
-        .project-card:hover .project-image img {
-            transform: scale(1.05);
-        }
+        .project-card:hover .project-image img { transform: scale(1.05); }
 
         .project-image-overlay {
             position: absolute;
@@ -614,16 +567,9 @@
             background: linear-gradient(180deg, transparent 50%, rgba(6, 8, 13, 0.8) 100%);
         }
 
-        .project-body {
-            padding: 1.5rem;
-        }
+        .project-body { padding: 1.5rem; }
 
-        .project-meta {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 0.75rem;
-        }
+        .project-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 0.75rem; }
 
         .project-category {
             padding: 4px 10px;
@@ -637,35 +583,13 @@
             letter-spacing: 0.05em;
         }
 
-        .project-date {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
+        .project-date { font-size: 0.8rem; color: var(--text-muted); }
+        .project-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .project-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.25rem; }
 
-        .project-card h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
+        .project-footer { display: flex; align-items: center; justify-content: space-between; }
 
-        .project-card p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 1.25rem;
-        }
-
-        .project-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .project-author {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .project-author { display: flex; align-items: center; gap: 10px; }
 
         .project-avatar {
             width: 32px;
@@ -679,10 +603,7 @@
             font-weight: 700;
         }
 
-        .project-author-name {
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
+        .project-author-name { font-size: 0.85rem; font-weight: 600; }
 
         .project-link {
             display: inline-flex;
@@ -695,11 +616,9 @@
             transition: gap 0.3s;
         }
 
-        .project-link:hover {
-            gap: 10px;
-        }
+        .project-link:hover { gap: 10px; }
 
-        /* ===== DOCUMENTATION ===== */
+        /* ===== DOCS SECTION ===== */
         .docs-section {
             background: var(--bg-secondary);
             border-top: 1px solid var(--border-color);
@@ -741,18 +660,9 @@
             margin-bottom: 2rem;
         }
 
-        .docs-features {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 2rem;
-        }
+        .docs-features { display: flex; flex-direction: column; gap: 16px; margin-bottom: 2rem; }
 
-        .docs-feature {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
+        .docs-feature { display: flex; align-items: flex-start; gap: 12px; }
 
         .docs-feature-icon {
             width: 28px;
@@ -769,18 +679,10 @@
             margin-top: 2px;
         }
 
-        .docs-feature-text h4 {
-            font-size: 0.95rem;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
+        .docs-feature-text h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; }
+        .docs-feature-text p { font-size: 0.85rem; color: var(--text-muted); }
 
-        .docs-feature-text p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* ===== PRICING PREVIEW ===== */
+        /* ===== PRICING ===== */
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -822,41 +724,14 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
-        .pricing-name {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
+        .pricing-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .pricing-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; }
 
-        .pricing-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
+        .pricing-price { display: flex; align-items: baseline; gap: 4px; margin-bottom: 2rem; }
 
-        .pricing-price {
-            display: flex;
-            align-items: baseline;
-            gap: 4px;
-            margin-bottom: 2rem;
-        }
-
-        .pricing-currency {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-        }
-
-        .pricing-amount {
-            font-size: 3rem;
-            font-weight: 900;
-            letter-spacing: -0.03em;
-        }
-
-        .pricing-period {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
+        .pricing-currency { font-size: 1.25rem; font-weight: 600; color: var(--text-secondary); }
+        .pricing-amount { font-size: 3rem; font-weight: 900; letter-spacing: -0.03em; }
+        .pricing-period { font-size: 0.9rem; color: var(--text-muted); }
 
         .pricing-features {
             list-style: none;
@@ -881,16 +756,10 @@
             font-size: 0.85rem;
         }
 
-        .pricing-card .btn {
-            width: 100%;
-        }
+        .pricing-card .btn { width: 100%; }
 
         /* ===== CTA ===== */
-        .cta-section {
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+        .cta-section { text-align: center; position: relative; overflow: hidden; }
 
         .cta-bg {
             position: absolute;
@@ -898,35 +767,13 @@
             background: radial-gradient(ellipse at center, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
         }
 
-        .cta-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-title {
-            font-size: clamp(2rem, 4vw, 3rem);
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-        }
-
-        .cta-desc {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            max-width: 500px;
-            margin: 0 auto 2rem;
-        }
+        .cta-content { position: relative; z-index: 1; }
+        .cta-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1rem; }
+        .cta-desc { font-size: 1.1rem; color: var(--text-secondary); max-width: 500px; margin: 0 auto 2rem; }
 
         /* ===== FOOTER ===== */
-        .footer {
-            padding: 60px 2rem 30px;
-            border-top: 1px solid var(--border-color);
-        }
-
-        .footer-inner {
-            max-width: 1280px;
-            margin: 0 auto;
-        }
+        .footer { padding: 60px 2rem 30px; border-top: 1px solid var(--border-color); }
+        .footer-inner { max-width: 1280px; margin: 0 auto; }
 
         .footer-grid {
             display: grid;
@@ -952,23 +799,17 @@
             margin-bottom: 1.25rem;
         }
 
-        .footer-col ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
 
         .footer-col a {
             text-decoration: none;
             color: var(--text-muted);
             font-size: 0.9rem;
             transition: color 0.3s;
+            cursor: pointer;
         }
 
-        .footer-col a:hover {
-            color: var(--text-primary);
-        }
+        .footer-col a:hover { color: var(--text-primary); }
 
         .footer-bottom {
             display: flex;
@@ -980,10 +821,7 @@
             color: var(--text-muted);
         }
 
-        .footer-socials {
-            display: flex;
-            gap: 16px;
-        }
+        .footer-socials { display: flex; gap: 16px; }
 
         .footer-socials a {
             width: 36px;
@@ -1022,10 +860,7 @@
             transition: all 0.3s;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
 
         .modal {
             background: var(--bg-card);
@@ -1037,12 +872,9 @@
             overflow-y: auto;
             transform: scale(0.95) translateY(20px);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
         }
 
-        .modal-overlay.active .modal {
-            transform: scale(1) translateY(0);
-        }
+        .modal-overlay.active .modal { transform: scale(1) translateY(0); }
 
         .modal-header {
             padding: 2rem 2rem 0;
@@ -1051,16 +883,8 @@
             justify-content: space-between;
         }
 
-        .modal-header h2 {
-            font-size: 1.5rem;
-            font-weight: 800;
-        }
-
-        .modal-header p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-        }
+        .modal-header h2 { font-size: 1.5rem; font-weight: 800; }
+        .modal-header p { font-size: 0.9rem; color: var(--text-muted); margin-top: 4px; }
 
         .modal-close {
             width: 36px;
@@ -1075,7 +899,6 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s;
-            flex-shrink: 0;
         }
 
         .modal-close:hover {
@@ -1083,21 +906,9 @@
             color: var(--text-primary);
         }
 
-        .modal-body {
-            padding: 1.5rem 2rem 2rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            margin-bottom: 6px;
-        }
+        .modal-body { padding: 1.5rem 2rem 2rem; }
+        .form-group { margin-bottom: 1.25rem; }
+        .form-label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
 
         .form-input {
             width: 100%;
@@ -1117,56 +928,25 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        .form-input::placeholder {
-            color: var(--text-muted);
-        }
+        .form-input::placeholder { color: var(--text-muted); }
 
         .form-select {
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+            background-image: url("image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 14px center;
             padding-right: 36px;
         }
 
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-        .form-checkbox {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            cursor: pointer;
-        }
+        .form-checkbox { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; }
+        .form-checkbox input { margin-top: 3px; accent-color: var(--accent-blue); width: 16px; height: 16px; }
+        .form-checkbox span { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+        .form-checkbox a { color: var(--accent-blue); text-decoration: none; }
 
-        .form-checkbox input {
-            margin-top: 3px;
-            accent-color: var(--accent-blue);
-            width: 16px;
-            height: 16px;
-        }
-
-        .form-checkbox span {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        .form-checkbox a {
-            color: var(--accent-blue);
-            text-decoration: none;
-        }
-
-        .modal-footer {
-            padding: 0 2rem 2rem;
-        }
-
-        .modal-footer .btn {
-            width: 100%;
-        }
+        .modal-footer { padding: 0 2rem 2rem; }
+        .modal-footer .btn { width: 100%; }
 
         .modal-divider {
             display: flex;
@@ -1177,18 +957,14 @@
             font-size: 0.8rem;
         }
 
-        .modal-divider::before,
-        .modal-divider::after {
+        .modal-divider::before, .modal-divider::after {
             content: '';
             flex: 1;
             height: 1px;
             background: var(--border-color);
         }
 
-        .social-login {
-            display: flex;
-            gap: 10px;
-        }
+        .social-login { display: flex; gap: 10px; }
 
         .social-btn {
             flex: 1;
@@ -1210,18 +986,14 @@
             border-color: var(--border-hover);
         }
 
-        /* ===== SCROLL ANIMATIONS ===== */
+        /* ===== SCROLL REVEAL ===== */
         .reveal {
             opacity: 0;
             transform: translateY(40px);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        .reveal.visible { opacity: 1; transform: translateY(0); }
         .reveal-delay-1 { transition-delay: 0.1s; }
         .reveal-delay-2 { transition-delay: 0.2s; }
         .reveal-delay-3 { transition-delay: 0.3s; }
@@ -1229,186 +1001,198 @@
         .reveal-delay-5 { transition-delay: 0.5s; }
         .reveal-delay-6 { transition-delay: 0.6s; }
 
-        /* ===== MOBILE NAV ===== */
-        .mobile-nav {
-            display: none;
-            position: fixed;
-            top: 72px;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(6, 8, 13, 0.97);
-            backdrop-filter: blur(20px);
-            z-index: 999;
-            padding: 2rem;
-            flex-direction: column;
-            gap: 0;
-            overflow-y: auto;
+        /* ===== SUB PAGES (Docs, API, Privacy, Terms) ===== */
+        .sub-page {
+            padding-top: 120px;
+            min-height: 100vh;
         }
 
-        .mobile-nav.active {
-            display: flex;
+        .sub-page-header {
+            max-width: 900px;
+            margin: 0 auto 3rem;
         }
 
-        .mobile-nav a {
-            display: block;
-            padding: 16px 0;
-            text-decoration: none;
-            color: var(--text-secondary);
+        .sub-page-header h1 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+
+        .sub-page-header p {
             font-size: 1.1rem;
-            font-weight: 500;
-            border-bottom: 1px solid var(--border-color);
-            transition: color 0.3s;
+            color: var(--text-secondary);
+            line-height: 1.7;
         }
 
-        .mobile-nav a:hover {
+        .sub-page-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding-bottom: 80px;
+        }
+
+        .sub-page-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2.5rem 0 1rem;
             color: var(--text-primary);
         }
 
-        .mobile-nav .btn {
-            margin-top: 1rem;
-            width: 100%;
+        .sub-page-content h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 2rem 0 0.75rem;
+            color: var(--text-secondary);
         }
+
+        .sub-page-content p, .sub-page-content li {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .sub-page-content ul, .sub-page-content ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .sub-page-content li { margin-bottom: 0.5rem; }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: gap 0.3s;
+        }
+
+        .back-btn:hover { gap: 12px; }
+
+        .code-block {
+            background: #0d1117;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: #e6edf3;
+        }
+
+        .code-block .keyword { color: #ff7b72; }
+        .code-block .string { color: #a5d6ff; }
+        .code-block .comment { color: #8b949e; }
+        .code-block .function { color: #d2a8ff; }
+        .code-block .number { color: #79c0ff; }
+
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .api-table th, .api-table td {
+            text-align: left;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+
+        .api-table th {
+            background: var(--bg-card);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .api-table td { color: var(--text-secondary); }
+
+        .method-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .method-get { background: rgba(16, 185, 129, 0.15); color: #10b981; }
+        .method-post { background: rgba(59, 130, 246, 0.15); color: #3b82f6; }
+        .method-delete { background: rgba(239, 68, 68, 0.15); color: #ef4444; }
+
+        .toc-sidebar {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .toc-link {
+            display: block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border-color);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .toc-link.active {
+            background: var(--accent-blue);
+            box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+        }
+
+        .toc-link:hover { background: var(--accent-blue); }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
-            .docs-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .docs-image {
-                max-height: 350px;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 2rem;
-            }
+            .docs-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .docs-image { max-height: 350px; }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+            .toc-sidebar { display: none; }
         }
 
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .nav-actions .btn-ghost,
-            .nav-actions .btn-primary {
-                display: none;
-            }
-
-            .mobile-toggle {
-                display: flex;
-            }
-
-            .hero {
-                padding: 100px 1.5rem 60px;
-                min-height: auto;
-            }
-
-            .hero-stats {
-                gap: 1.5rem;
-            }
-
-            .hero-stat-value {
-                font-size: 1.5rem;
-            }
-
-            .section {
-                padding: 60px 1.5rem;
-            }
-
-            .agents-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .pricing-grid {
-                grid-template-columns: 1fr;
-                max-width: 400px;
-            }
-
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                gap: 1rem;
-                text-align: center;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .modal {
-                max-width: 100%;
-                border-radius: var(--radius-lg);
-            }
-
-            .modal-header,
-            .modal-body,
-            .modal-footer {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
-            }
-
-            .hero-actions {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .hero-actions .btn {
-                width: 100%;
-            }
+            .nav-links { display: none; }
+            .nav-actions .btn-ghost, .nav-actions .btn-primary { display: none; }
+            .mobile-toggle { display: flex; }
+            .hero { padding: 100px 1.5rem 60px; min-height: auto; }
+            .hero-stats { gap: 1.5rem; }
+            .hero-stat-value { font-size: 1.5rem; }
+            .section { padding: 60px 1.5rem; }
+            .agents-grid { grid-template-columns: 1fr; }
+            .projects-grid { grid-template-columns: 1fr; }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+            .form-row { grid-template-columns: 1fr; }
+            .modal { max-width: 100%; border-radius: var(--radius-lg); }
+            .modal-header, .modal-body, .modal-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+            .hero-actions { flex-direction: column; width: 100%; }
+            .hero-actions .btn { width: 100%; }
+            .sub-page-content { padding: 0 0 60px; }
+            .sub-page-header { padding: 0 1.5rem; }
+            .sub-page-content { padding: 0 1.5rem 60px; }
         }
 
         @media (max-width: 480px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .hero-stats {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .agents-grid {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .agent-card {
-                padding: 1.5rem;
-            }
+            .hero-title { font-size: 2rem; }
+            .hero-stats { flex-direction: column; gap: 1rem; }
+            .agents-grid { grid-template-columns: 1fr; gap: 16px; }
+            .agent-card { padding: 1.5rem; }
         }
 
-        /* ===== ANIMATIONS ===== */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        .shimmer-text {
-            background: linear-gradient(90deg, var(--text-primary) 0%, rgba(255,255,255,0.4) 50%, var(--text-primary) 100%);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: shimmer 3s infinite;
-        }
-
-        /* Particles canvas */
         #particles-canvas {
             position: absolute;
             inset: 0;
@@ -1422,23 +1206,22 @@
     <!-- NAVBAR -->
     <nav class="navbar" id="navbar">
         <div class="navbar-inner">
-            <a href="#" class="logo">
+            <div class="logo" onclick="navigateTo('home')">
                 <div class="logo-icon">⚡</div>
                 <span>NexusAI</span>
-            </a>
+            </div>
             <ul class="nav-links">
-                <li><a href="#agents">Agents</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#docs">Documentation</a></li>
-                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#" onclick="navigateTo('home'); return false;">Home</a></li>
+                <li><a href="#agents" onclick="navigateTo('home', 'agents'); return false;">Agents</a></li>
+                <li><a href="#" onclick="navigateTo('docs'); return false;">Documentation</a></li>
+                <li><a href="#" onclick="navigateTo('api'); return false;">API Reference</a></li>
+                <li><a href="#pricing" onclick="navigateTo('home', 'pricing'); return false;">Pricing</a></li>
             </ul>
             <div class="nav-actions">
                 <button class="btn btn-ghost" onclick="openModal('login')">Sign In</button>
                 <button class="btn btn-primary" onclick="openModal('register')">Get Started</button>
                 <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                    <span></span><span></span><span></span>
                 </button>
             </div>
         </div>
@@ -1446,470 +1229,689 @@
 
     <!-- MOBILE NAV -->
     <div class="mobile-nav" id="mobileNav">
-        <a href="#agents" onclick="closeMobileNav()">Agents</a>
-        <a href="#projects" onclick="closeMobileNav()">Projects</a>
-        <a href="#docs" onclick="closeMobileNav()">Documentation</a>
-        <a href="#pricing" onclick="closeMobileNav()">Pricing</a>
-        <button class="btn btn-ghost" style="margin-top:1rem" onclick="openModal('login'); closeMobileNav()">Sign In</button>
+        <a href="#" onclick="navigateTo('home'); closeMobileNav(); return false;">Home</a>
+        <a href="#" onclick="navigateTo('home', 'agents'); closeMobileNav(); return false;">Agents</a>
+        <a href="#" onclick="navigateTo('docs'); closeMobileNav(); return false;">Documentation</a>
+        <a href="#" onclick="navigateTo('api'); closeMobileNav(); return false;">API Reference</a>
+        <a href="#" onclick="navigateTo('home', 'pricing'); closeMobileNav(); return false;">Pricing</a>
+        <button class="btn btn-ghost" onclick="openModal('login'); closeMobileNav()">Sign In</button>
         <button class="btn btn-primary" onclick="openModal('register'); closeMobileNav()">Get Started Free</button>
     </div>
 
-    <!-- HERO -->
-    <section class="hero" id="hero">
-        <div class="hero-bg">
-            <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/145019cda-f2bd-43b4-b7fd-b1f0b0987833.png" alt="AI Neural Network">
-        </div>
-        <div class="hero-glow hero-glow-1"></div>
-        <div class="hero-glow hero-glow-2"></div>
-        <canvas id="particles-canvas"></canvas>
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span class="hero-badge-dot"></span>
-                Now with multi-agent orchestration
-            </div>
-            <h1 class="hero-title">
-                Deploy AI Agents<br>
-                <span class="gradient-text">That Scale Your Business</span>
-            </h1>
-            <p class="hero-subtitle">
-                Build, deploy, and manage intelligent AI agents for every workflow. From analytics to security, our platform empowers teams to automate complex tasks with precision.
-            </p>
-            <div class="hero-actions">
-                <button class="btn btn-primary btn-large" onclick="openModal('register')">
-                    Start Building Free →
-                </button>
-                <a href="#agents" class="btn btn-outline btn-large">
-                    Explore Agents
-                </a>
-            </div>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="hero-stat-value" id="statAgents">50+</div>
-                    <div class="hero-stat-label">AI Agents</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-value" id="statUsers">12K+</div>
-                    <div class="hero-stat-label">Active Users</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-value" id="statTasks">2M+</div>
-                    <div class="hero-stat-label">Tasks Completed</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-value" id="statUptime">99.9%</div>
-                    <div class="hero-stat-label">Uptime SLA</div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- ==================== HOME PAGE ==================== -->
+    <div id="page-home" class="page-section active">
 
-    <div class="divider"></div>
-
-    <!-- AGENTS -->
-    <section class="section" id="agents">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-label">
-                    AI Agents
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-bg">
+                <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/145019cda-f2bd-43b4-b7fd-b1f0b0987833.png" alt="AI Neural Network">
+            </div>
+            <div class="hero-glow hero-glow-1"></div>
+            <div class="hero-glow hero-glow-2"></div>
+            <canvas id="particles-canvas"></canvas>
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="hero-badge-dot"></span>
+                    Now with multi-agent orchestration
                 </div>
-                <h2 class="section-title">Choose Your Agent</h2>
-                <p class="section-desc">
-                    Specialized AI agents designed for every business function. Each agent is pre-trained and ready to deploy in minutes.
+                <h1 class="hero-title">
+                    Deploy AI Agents<br>
+                    <span class="gradient-text">That Scale Your Business</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Build, deploy, and manage intelligent AI agents for every workflow. From analytics to security, our platform empowers teams to automate complex tasks with precision.
                 </p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary btn-large" onclick="openModal('register')">Start Building Free →</button>
+                    <a href="#agents" class="btn btn-outline btn-large" onclick="document.getElementById('agents')?.scrollIntoView({behavior:'smooth'}); return false;">Explore Agents</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat"><div class="hero-stat-value" id="statAgents">50+</div><div class="hero-stat-label">AI Agents</div></div>
+                    <div class="hero-stat"><div class="hero-stat-value" id="statUsers">12K+</div><div class="hero-stat-label">Active Users</div></div>
+                    <div class="hero-stat"><div class="hero-stat-value" id="statTasks">2M+</div><div class="hero-stat-label">Tasks Completed</div></div>
+                    <div class="hero-stat"><div class="hero-stat-value" id="statUptime">99.9%</div><div class="hero-stat-label">Uptime SLA</div></div>
+                </div>
             </div>
-            <div class="agents-grid">
-                <!-- Business Agent -->
-                <div class="agent-card reveal reveal-delay-1" style="--card-accent: linear-gradient(135deg, #3b82f6, #06b6d4)">
-                    <div class="agent-icon">
-                        <div class="agent-icon-bg" style="background: linear-gradient(135deg, #3b82f6, #06b6d4)"></div>
-                        <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/15c927c7f-bcc1-4337-8f74-b3e5ee62664e.png" alt="Business AI Agent">
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- AGENTS -->
+        <section class="section" id="agents">
+            <div class="section-inner">
+                <div class="section-header reveal">
+                    <div class="section-label">AI Agents</div>
+                    <h2 class="section-title">Choose Your Agent</h2>
+                    <p class="section-desc">Specialized AI agents designed for every business function. Each agent is pre-trained and ready to deploy in minutes.</p>
+                </div>
+                <div class="agents-grid">
+                    <div class="agent-card reveal reveal-delay-1" style="--card-accent: linear-gradient(135deg, #3b82f6, #06b6d4)">
+                        <div class="agent-icon">
+                            <div class="agent-icon-bg" style="background: linear-gradient(135deg, #3b82f6, #06b6d4)"></div>
+                            <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/15c927c7f-bcc1-4337-8f74-b3e5ee62664e.png" alt="Business AI Agent">
+                        </div>
+                        <h3>Business Agent</h3>
+                        <p>Automate strategic planning, market analysis, and business intelligence. Make data-driven decisions with AI-powered insights.</p>
+                        <div class="agent-tags"><span class="agent-tag">Strategy</span><span class="agent-tag">Planning</span><span class="agent-tag">BI</span></div>
                     </div>
-                    <h3>Business Agent</h3>
-                    <p>Automate strategic planning, market analysis, and business intelligence. Make data-driven decisions with AI-powered insights.</p>
-                    <div class="agent-tags">
-                        <span class="agent-tag">Strategy</span>
-                        <span class="agent-tag">Planning</span>
-                        <span class="agent-tag">BI</span>
+                    <div class="agent-card reveal reveal-delay-2" style="--card-accent: linear-gradient(135deg, #8b5cf6, #ec4899)">
+                        <div class="agent-icon">
+                            <div class="agent-icon-bg" style="background: linear-gradient(135deg, #8b5cf6, #ec4899)"></div>
+                            <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/1b5fa7e8c-7c24-470b-acf3-730feb8663fb.png" alt="Analytics AI Agent">
+                        </div>
+                        <h3>Analytics Agent</h3>
+                        <p>Deep data analysis, predictive modeling, and real-time dashboard generation. Transform raw data into actionable intelligence.</p>
+                        <div class="agent-tags"><span class="agent-tag">Data</span><span class="agent-tag">Predictions</span><span class="agent-tag">Dashboards</span></div>
                     </div>
+                    <div class="agent-card reveal reveal-delay-3" style="--card-accent: linear-gradient(135deg, #ec4899, #f59e0b)">
+                        <div class="agent-icon">
+                            <div class="agent-icon-bg" style="background: linear-gradient(135deg, #ec4899, #f59e0b)"></div>
+                            <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/14de2b228-9ab6-4855-925e-97666c850eb0.png" alt="Video AI Agent">
+                        </div>
+                        <h3>Video Agent</h3>
+                        <p>Generate, edit, and optimize video content with AI. From scripts to final renders, automate your entire video pipeline.</p>
+                        <div class="agent-tags"><span class="agent-tag">Generation</span><span class="agent-tag">Editing</span><span class="agent-tag">Optimization</span></div>
+                    </div>
+                    <div class="agent-card reveal reveal-delay-4" style="--card-accent: linear-gradient(135deg, #10b981, #06b6d4)">
+                        <div class="agent-icon">
+                            <div class="agent-icon-bg" style="background: linear-gradient(135deg, #10b981, #06b6d4)"></div>
+                            <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/1ee43b7a6-37ee-4621-ab5f-0b6b38ebd8f8.png" alt="Social Media AI Agent">
+                        </div>
+                        <h3>Social Media Agent</h3>
+                        <p>Content scheduling, engagement analysis, and trend prediction across all major social platforms. Grow your audience on autopilot.</p>
+                        <div class="agent-tags"><span class="agent-tag">Scheduling</span><span class="agent-tag">Engagement</span><span class="agent-tag">Trends</span></div>
+                    </div>
+                    <div class="agent-card reveal reveal-delay-5" style="--card-accent: linear-gradient(135deg, #ef4444, #f59e0b)">
+                        <div class="agent-icon">
+                            <div class="agent-icon-bg" style="background: linear-gradient(135deg, #ef4444, #f59e0b)"></div>
+                            <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/10a564f92-d1e4-4cb2-bc55-66a2199be930.png" alt="Security AI Agent">
+                        </div>
+                        <h3>Security Agent</h3>
+                        <p>Threat detection, vulnerability scanning, and automated incident response. Protect your infrastructure with AI-powered security.</p>
+                        <div class="agent-tags"><span class="agent-tag">Threats</span><span class="agent-tag">Scanning</span><span class="agent-tag">Response</span></div>
+                    </div>
+                    <div class="agent-card reveal reveal-delay-6" style="--card-accent: linear-gradient(135deg, #06b6d4, #3b82f6)">
+                        <div class="agent-icon">
+                            <div class="agent-icon-bg" style="background: linear-gradient(135deg, #06b6d4, #3b82f6)"></div>
+                            <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/1d8e6b0c8-aa97-40d1-ad54-9fee9a1cb745.png" alt="Code AI Agent">
+                        </div>
+                        <h3>Code Agent</h3>
+                        <p>Code generation, debugging, and refactoring assistance. Write better code faster with AI-powered development workflows.</p>
+                        <div class="agent-tags"><span class="agent-tag">Generation</span><span class="agent-tag">Debugging</span><span class="agent-tag">Review</span></div>
+                    </div>
+                    <div class="agent-card reveal reveal-delay-1" style="--card-accent: linear-gradient(135deg, #ec4899, #8b5cf6)">
+                        <div class="agent-icon">
+                            <div class="agent-icon-bg" style="background: linear-gradient(135deg, #ec4899, #8b5cf6)"></div>
+                            <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/17d9e9907-03fb-4ba7-97fd-50e1a1abf128.png" alt="Design AI Agent">
+                        </div>
+                        <h3>Design Agent</h3>
+                        <p>UI/UX design generation, brand consistency, and creative asset production. Create stunning visuals with AI assistance.</p>
+                        <div class="agent-tags"><span class="agent-tag">UI/UX</span><span class="agent-tag">Branding</span><span class="agent-tag">Assets</span></div>
+                    </div>
+                    <div class="agent-card reveal reveal-delay-2" style="--card-accent: linear-gradient(135deg, #f59e0b, #10b981)">
+                        <div class="agent-icon">
+                            <div class="agent-icon-bg" style="background: linear-gradient(135deg, #f59e0b, #10b981)"></div>
+                            <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/15bd2ac47-b3c2-494a-9fbf-4018fa57e5b5.png" alt="Marketing AI Agent">
+                        </div>
+                        <h3>Marketing Agent</h3>
+                        <p>Campaign optimization, audience segmentation, and conversion tracking. Maximize ROI with intelligent marketing automation.</p>
+                        <div class="agent-tags"><span class="agent-tag">Campaigns</span><span class="agent-tag">SEO</span><span class="agent-tag">ROI</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- PROJECTS -->
+        <section class="section" id="projects">
+            <div class="section-inner">
+                <div class="section-header reveal">
+                    <div class="section-label">Projects</div>
+                    <h2 class="section-title">Community Projects</h2>
+                    <p class="section-desc">Explore real-world implementations built by our community. Get inspired and start building your own.</p>
+                </div>
+                <div class="projects-grid">
+                    <div class="project-card reveal reveal-delay-1">
+                        <div class="project-image">
+                            <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/13a765d4b-12d3-40ef-b412-72d64d3465ce.png" alt="Project Dashboard">
+                            <div class="project-image-overlay"></div>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <span class="project-category">Analytics</span>
+                                <span class="project-date">2 days ago</span>
+                            </div>
+                            <h3>Real-Time Market Intelligence Dashboard</h3>
+                            <p>Automated market analysis pipeline that processes 10M+ data points daily, delivering actionable insights to trading teams in real-time.</p>
+                            <div class="project-footer">
+                                <div class="project-author"><div class="project-avatar">AK</div><span class="project-author-name">Alex Kim</span></div>
+                                <a href="#" class="project-link">View Project →</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card reveal reveal-delay-2">
+                        <div class="project-image">
+                            <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/14de2b228-9ab6-4855-925e-97666c850eb0.png" alt="Video Project">
+                            <div class="project-image-overlay"></div>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <span class="project-category" style="background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.2);color:#ec4899">Video</span>
+                                <span class="project-date">5 days ago</span>
+                            </div>
+                            <h3>AI-Powered Content Creation Pipeline</h3>
+                            <p>End-to-end video production system that generates, edits, and publishes social media content autonomously across 12 platforms.</p>
+                            <div class="project-footer">
+                                <div class="project-author"><div class="project-avatar" style="background:linear-gradient(135deg,#ec4899,#f59e0b)">SR</div><span class="project-author-name">Sarah Rivera</span></div>
+                                <a href="#" class="project-link">View Project →</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card reveal reveal-delay-3">
+                        <div class="project-image">
+                            <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/10a564f92-d1e4-4cb2-bc55-66a2199be930.png" alt="Security Project">
+                            <div class="project-image-overlay"></div>
+                        </div>
+                        <div class="project-body">
+                            <div class="project-meta">
+                                <span class="project-category" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.2);color:#ef4444">Security</span>
+                                <span class="project-date">1 week ago</span>
+                            </div>
+                            <h3>Enterprise Threat Detection System</h3>
+                            <p>Multi-agent security framework that monitors, detects, and responds to threats across cloud infrastructure with 99.7% accuracy.</p>
+                            <div class="project-footer">
+                                <div class="project-author"><div class="project-avatar" style="background:linear-gradient(135deg,#ef4444,#f59e0b)">MP</div><span class="project-author-name">Marcus Park</span></div>
+                                <a href="#" class="project-link">View Project →</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- DOCUMENTATION PREVIEW -->
+        <section class="section docs-section">
+            <div class="section-inner">
+                <div class="docs-grid">
+                    <div class="docs-image reveal">
+                        <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/1a17a48d9-8170-4635-a83b-4f7e424786e9.png" alt="Documentation">
+                    </div>
+                    <div class="docs-content reveal reveal-delay-2">
+                        <div class="section-label" style="justify-content:flex-start">Documentation</div>
+                        <h2>Everything You Need to <span class="gradient-text">Get Started</span></h2>
+                        <p>Comprehensive guides, API references, and interactive tutorials to help you build and deploy AI agents in minutes, not months.</p>
+                        <div class="docs-features">
+                            <div class="docs-feature">
+                                <div class="docs-feature-icon">📖</div>
+                                <div class="docs-feature-text">
+                                    <h4>Quick Start Guide</h4>
+                                    <p>Deploy your first agent in under 5 minutes with our step-by-step tutorial.</p>
+                                </div>
+                            </div>
+                            <div class="docs-feature">
+                                <div class="docs-feature-icon">⚡</div>
+                                <div class="docs-feature-text">
+                                    <h4>API Reference</h4>
+                                    <p>Complete REST API documentation with interactive examples and code snippets.</p>
+                                </div>
+                            </div>
+                            <div class="docs-feature">
+                                <div class="docs-feature-icon">🔧</div>
+                                <div class="docs-feature-text">
+                                    <h4>SDK & Integrations</h4>
+                                    <p>Python, JavaScript, and Go SDKs with seamless platform integrations.</p>
+                                </div>
+                            </div>
+                            <div class="docs-feature">
+                                <div class="docs-feature-icon">🎬</div>
+                                <div class="docs-feature-text">
+                                    <h4>Video Tutorials</h4>
+                                    <p>In-depth video courses covering advanced agent orchestration patterns.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="display:flex;gap:12px;flex-wrap:wrap">
+                            <button class="btn btn-primary" onclick="navigateTo('docs')">Read Docs</button>
+                            <button class="btn btn-outline" onclick="navigateTo('api')">API Reference</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- PRICING -->
+        <section class="section" id="pricing">
+            <div class="section-inner">
+                <div class="section-header reveal">
+                    <div class="section-label">Pricing</div>
+                    <h2 class="section-title">Simple, Transparent Pricing</h2>
+                    <p class="section-desc">Start free and scale as you grow. No hidden fees, no surprises.</p>
+                </div>
+                <div class="pricing-grid">
+                    <div class="pricing-card reveal reveal-delay-1">
+                        <div class="pricing-name">Starter</div>
+                        <div class="pricing-desc">Perfect for exploring AI agents</div>
+                        <div class="pricing-price"><span class="pricing-currency">$</span><span class="pricing-amount">0</span><span class="pricing-period">/month</span></div>
+                        <ul class="pricing-features">
+                            <li>3 AI agents</li>
+                            <li>1,000 tasks/month</li>
+                            <li>Community support</li>
+                            <li>Basic analytics</li>
+                            <li>API access</li>
+                        </ul>
+                        <button class="btn btn-outline" onclick="openModal('register')">Get Started</button>
+                    </div>
+                    <div class="pricing-card featured reveal reveal-delay-2">
+                        <div class="pricing-name">Professional</div>
+                        <div class="pricing-desc">For growing teams and businesses</div>
+                        <div class="pricing-price"><span class="pricing-currency">$</span><span class="pricing-amount">49</span><span class="pricing-period">/month</span></div>
+                        <ul class="pricing-features">
+                            <li>Unlimited AI agents</li>
+                            <li>50,000 tasks/month</li>
+                            <li>Priority support</li>
+                            <li>Advanced analytics</li>
+                            <li>Custom integrations</li>
+                            <li>Team collaboration</li>
+                        </ul>
+                        <button class="btn btn-primary" onclick="openModal('register')">Start Free Trial</button>
+                    </div>
+                    <div class="pricing-card reveal reveal-delay-3">
+                        <div class="pricing-name">Enterprise</div>
+                        <div class="pricing-desc">For large-scale deployments</div>
+                        <div class="pricing-price"><span class="pricing-currency">$</span><span class="pricing-amount">199</span><span class="pricing-period">/month</span></div>
+                        <ul class="pricing-features">
+                            <li>Everything in Pro</li>
+                            <li>Unlimited tasks</li>
+                            <li>Dedicated support</li>
+                            <li>Custom model training</li>
+                            <li>SLA guarantee</li>
+                            <li>SSO & SAML</li>
+                        </ul>
+                        <button class="btn btn-outline" onclick="openModal('register')">Contact Sales</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="section cta-section">
+            <div class="cta-bg"></div>
+            <div class="section-inner">
+                <div class="cta-content reveal">
+                    <h2 class="cta-title">Ready to Transform Your Workflow?</h2>
+                    <p class="cta-desc">Join thousands of teams already using NexusAI to automate, analyze, and accelerate their business.</p>
+                    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+                        <button class="btn btn-primary btn-large" onclick="openModal('register')">Create Free Account →</button>
+                        <a href="#" class="btn btn-outline btn-large">Schedule a Demo</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ==================== DOCUMENTATION PAGE ==================== -->
+    <div id="page-docs" class="page-section">
+        <div class="sub-page">
+            <div class="sub-page-header reveal">
+                <div class="back-btn" onclick="navigateTo('home')">← Back to Home</div>
+                <div class="section-label">Documentation</div>
+                <h1>Getting Started with NexusAI</h1>
+                <p>Learn how to deploy, configure, and manage AI agents on the NexusAI platform. From quick starts to advanced orchestration patterns.</p>
+            </div>
+            <div class="sub-page-content">
+                <h2 id="doc-quickstart">Quick Start Guide</h2>
+                <p>Get your first AI agent running in under 5 minutes. Follow these steps to deploy a production-ready agent.</p>
+                
+                <h3>Step 1: Install the NexusAI SDK</h3>
+                <p>Install the SDK using your preferred package manager:</p>
+                <div class="code-block">
+<span class="comment"># Using npm</span>
+<span class="function">npm</span> install @nexusai/sdk
+
+<span class="comment"># Using pip</span>
+<span class="function">pip</span> install nexusai-sdk
+
+<span class="comment"># Using go get</span>
+<span class="function">go get</span> github.com/nexusai/go-sdk
                 </div>
 
-                <!-- Analytics Agent -->
-                <div class="agent-card reveal reveal-delay-2" style="--card-accent: linear-gradient(135deg, #8b5cf6, #ec4899)">
-                    <div class="agent-icon">
-                        <div class="agent-icon-bg" style="background: linear-gradient(135deg, #8b5cf6, #ec4899)"></div>
-                        <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/1b5fa7e8c-7c24-470b-acf3-730feb8663fb.png" alt="Analytics AI Agent">
-                    </div>
-                    <h3>Analytics Agent</h3>
-                    <p>Deep data analysis, predictive modeling, and real-time dashboard generation. Transform raw data into actionable intelligence.</p>
-                    <div class="agent-tags">
-                        <span class="agent-tag">Data</span>
-                        <span class="agent-tag">Predictions</span>
-                        <span class="agent-tag">Dashboards</span>
-                    </div>
+                <h3>Step 2: Configure Your API Key</h3>
+                <p>Set your API key as an environment variable:</p>
+                <div class="code-block">
+<span class="function">export</span> NEXUS_API_KEY=<span class="string">"your-api-key-here"</span>
                 </div>
 
-                <!-- Video Agent -->
-                <div class="agent-card reveal reveal-delay-3" style="--card-accent: linear-gradient(135deg, #ec4899, #f59e0b)">
-                    <div class="agent-icon">
-                        <div class="agent-icon-bg" style="background: linear-gradient(135deg, #ec4899, #f59e0b)"></div>
-                        <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/14de2b228-9ab6-4855-925e-97666c850eb0.png" alt="Video AI Agent">
-                    </div>
-                    <h3>Video Agent</h3>
-                    <p>Generate, edit, and optimize video content with AI. From scripts to final renders, automate your entire video pipeline.</p>
-                    <div class="agent-tags">
-                        <span class="agent-tag">Generation</span>
-                        <span class="agent-tag">Editing</span>
-                        <span class="agent-tag">Optimization</span>
-                    </div>
+                <h3>Step 3: Deploy Your First Agent</h3>
+                <p>Initialize and deploy an agent with a few lines of code:</p>
+                <div class="code-block">
+<span class="keyword">import</span> { NexusAgent } <span class="keyword">from</span> <span class="string">'@nexusai/sdk'</span>;
+
+<span class="keyword">const</span> agent = <span class="keyword">new</span> NexusAgent({
+    <span class="function">type</span>: <span class="string">'analytics'</span>,
+    <span class="function">name</span>: <span class="string">'my-analytics-agent'</span>,
+    <span class="function">config</span>: {
+        <span class="function">model</span>: <span class="string">'nexus-v4'</span>,
+        <span class="function">temperature</span>: <span class="number">0.7</span>,
+    }
+});
+
+<span class="keyword">await</span> agent.<span class="function">deploy</span>();
+console.<span class="function">log</span>(<span class="string">`Agent deployed: ${agent.id}`</span>);
                 </div>
 
-                <!-- Social Media Agent -->
-                <div class="agent-card reveal reveal-delay-4" style="--card-accent: linear-gradient(135deg, #10b981, #06b6d4)">
-                    <div class="agent-icon">
-                        <div class="agent-icon-bg" style="background: linear-gradient(135deg, #10b981, #06b6d4)"></div>
-                        <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/1ee43b7a6-37ee-4621-ab5f-0b6b38ebd8f8.png" alt="Social Media AI Agent">
-                    </div>
-                    <h3>Social Media Agent</h3>
-                    <p>Content scheduling, engagement analysis, and trend prediction across all major social platforms. Grow your audience on autopilot.</p>
-                    <div class="agent-tags">
-                        <span class="agent-tag">Scheduling</span>
-                        <span class="agent-tag">Engagement</span>
-                        <span class="agent-tag">Trends</span>
-                    </div>
+                <h2 id="doc-agents">Agent Types</h2>
+                <p>NexusAI provides pre-built agent templates for common use cases:</p>
+                <ul>
+                    <li><strong>Business Agent</strong> — Strategic planning, market analysis, and business intelligence automation</li>
+                    <li><strong>Analytics Agent</strong> — Data analysis, predictive modeling, and dashboard generation</li>
+                    <li><strong>Video Agent</strong> — Content generation, editing, and optimization pipeline</li>
+                    <li><strong>Social Media Agent</strong> — Scheduling, engagement analysis, and trend prediction</li>
+                    <li><strong>Security Agent</strong> — Threat detection, vulnerability scanning, and incident response</li>
+                    <li><strong>Code Agent</strong> — Code generation, debugging, and refactoring assistance</li>
+                    <li><strong>Design Agent</strong> — UI/UX generation, brand consistency, and asset production</li>
+                    <li><strong>Marketing Agent</strong> — Campaign optimization, audience segmentation, and conversion tracking</li>
+                </ul>
+
+                <h2 id="doc-orchestration">Multi-Agent Orchestration</h2>
+                <p>Combine multiple agents to create complex workflows. NexusAI's orchestration engine handles inter-agent communication, data flow, and error recovery.</p>
+                <div class="code-block">
+<span class="keyword">const</span> workflow = <span class="keyword">new</span> NexusWorkflow({
+    <span class="function">name</span>: <span class="string">'marketing-campaign'</span>,
+    <span class="function">agents</span>: [
+        { <span class="function">type</span>: <span class="string">'analytics'</span>, <span class="function">step</span>: <span class="number">1</span>, <span class="function">output</span>: <span class="string">'audience-insights'</span> },
+        { <span class="function">type</span>: <span class="string">'content'</span>, <span class="function">step</span>: <span class="number">2</span>, <span class="function">input</span>: <span class="string">'audience-insights'</span> },
+        { <span class="function">type</span>: <span class="string">'social'</span>, <span class="function">step</span>: <span class="number">3</span>, <span class="function">input</span>: <span class="string">'generated-content'</span> },
+    ]
+});
+
+<span class="keyword">await</span> workflow.<span class="function">execute</span>();
                 </div>
 
-                <!-- Security Agent -->
-                <div class="agent-card reveal reveal-delay-5" style="--card-accent: linear-gradient(135deg, #ef4444, #f59e0b)">
-                    <div class="agent-icon">
-                        <div class="agent-icon-bg" style="background: linear-gradient(135deg, #ef4444, #f59e0b)"></div>
-                        <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/10a564f92-d1e4-4cb2-bc55-66a2199be930.png" alt="Security AI Agent">
-                    </div>
-                    <h3>Security Agent</h3>
-                    <p>Threat detection, vulnerability scanning, and automated incident response. Protect your infrastructure with AI-powered security.</p>
-                    <div class="agent-tags">
-                        <span class="agent-tag">Threats</span>
-                        <span class="agent-tag">Scanning</span>
-                        <span class="agent-tag">Response</span>
-                    </div>
-                </div>
-
-                <!-- Code Agent -->
-                <div class="agent-card reveal reveal-delay-6" style="--card-accent: linear-gradient(135deg, #06b6d4, #3b82f6)">
-                    <div class="agent-icon">
-                        <div class="agent-icon-bg" style="background: linear-gradient(135deg, #06b6d4, #3b82f6)"></div>
-                        <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/1d8e6b0c8-aa97-40d1-ad54-9fee9a1cb745.png" alt="Code AI Agent">
-                    </div>
-                    <h3>Code Agent</h3>
-                    <p>Code generation, debugging, and refactoring assistance. Write better code faster with AI-powered development workflows.</p>
-                    <div class="agent-tags">
-                        <span class="agent-tag">Generation</span>
-                        <span class="agent-tag">Debugging</span>
-                        <span class="agent-tag">Review</span>
-                    </div>
-                </div>
-
-                <!-- Design Agent -->
-                <div class="agent-card reveal reveal-delay-1" style="--card-accent: linear-gradient(135deg, #ec4899, #8b5cf6)">
-                    <div class="agent-icon">
-                        <div class="agent-icon-bg" style="background: linear-gradient(135deg, #ec4899, #8b5cf6)"></div>
-                        <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/17d9e9907-03fb-4ba7-97fd-50e1a1abf128.png" alt="Design AI Agent">
-                    </div>
-                    <h3>Design Agent</h3>
-                    <p>UI/UX design generation, brand consistency, and creative asset production. Create stunning visuals with AI assistance.</p>
-                    <div class="agent-tags">
-                        <span class="agent-tag">UI/UX</span>
-                        <span class="agent-tag">Branding</span>
-                        <span class="agent-tag">Assets</span>
-                    </div>
-                </div>
-
-                 <!-- Marketing Agent -->
-                <div class="agent-card reveal reveal-delay-2" style="--card-accent: linear-gradient(135deg, #f59e0b, #10b981)">
-                    <div class="agent-icon">
-                        <div class="agent-icon-bg" style="background: linear-gradient(135deg, #f59e0b, #10b981)"></div>
-                        <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/15bd2ac47-b3c2-494a-9fbf-4018fa57e5b5.png" alt="Marketing AI Agent">
-                    </div>
-                    <h3>Marketing Agent</h3>
-                    <p>Campaign optimization, audience segmentation, and conversion tracking. Maximize ROI with intelligent marketing automation.</p>
-                    <div class="agent-tags">
-                        <span class="agent-tag">Campaigns</span>
-                        <span class="agent-tag">SEO</span>
-                        <span class="agent-tag">ROI</span>
-                    </div>
-                </div>
+                <h2 id="doc-best">Best Practices</h2>
+                <ul>
+                    <li>Always use environment variables for API keys and secrets</li>
+                    <li>Implement retry logic for agent deployments</li>
+                    <li>Use structured logging for agent execution traces</li>
+                    <li>Monitor agent performance through the dashboard</li>
+                    <li>Implement circuit breakers for external API calls</li>
+                    <li>Use agent versioning for production deployments</li>
+                </ul>
             </div>
         </div>
-    </section>
+    </div>
 
-    <div class="divider"></div>
-
-    <!-- PROJECTS -->
-    <section class="section" id="projects">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-label">
-                    Projects
-                </div>
-                <h2 class="section-title">Community Projects</h2>
-                <p class="section-desc">
-                    Explore real-world implementations built by our community. Get inspired and start building your own.
-                </p>
+    <!-- ==================== API REFERENCE PAGE ==================== -->
+    <div id="page-api" class="page-section">
+        <div class="sub-page">
+            <div class="sub-page-header reveal">
+                <div class="back-btn" onclick="navigateTo('home')">← Back to Home</div>
+                <div class="section-label">API Reference</div>
+                <h1>REST API Documentation</h1>
+                <p>Complete reference for the NexusAI REST API. All endpoints return JSON responses. Base URL: <code style="color:var(--accent-cyan);font-family:'JetBrains Mono',monospace">https://api.nexusai.com/v2</code></p>
             </div>
-            <div class="projects-grid">
-                <!-- Project 1 -->
-                <div class="project-card reveal reveal-delay-1">
-                    <div class="project-image">
-                        <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/13a765d4b-12d3-40ef-b412-72d64d3465ce.png" alt="Project Dashboard">
-                        <div class="project-image-overlay"></div>
-                    </div>
-                    <div class="project-body">
-                        <div class="project-meta">
-                            <span class="project-category">Analytics</span>
-                            <span class="project-date">2 days ago</span>
-                        </div>
-                        <h3>Real-Time Market Intelligence Dashboard</h3>
-                        <p>Automated market analysis pipeline that processes 10M+ data points daily, delivering actionable insights to trading teams in real-time.</p>
-                        <div class="project-footer">
-                            <div class="project-author">
-                                <div class="project-avatar">AK</div>
-                                <span class="project-author-name">Alex Kim</span>
-                            </div>
-                            <a href="#" class="project-link">View Project →</a>
-                        </div>
-                    </div>
+            <div class="sub-page-content">
+                <h2>Authentication</h2>
+                <p>All API requests require authentication using a Bearer token in the Authorization header.</p>
+                <div class="code-block">
+<span class="function">curl</span> -X GET https://api.nexusai.com/v2/agents \\
+  -H <span class="string">"Authorization: Bearer YOUR_API_KEY"</span> \\
+  -H <span class="string">"Content-Type: application/json"</span>
                 </div>
 
-                <!-- Project 2 -->
-                <div class="project-card reveal reveal-delay-2">
-                    <div class="project-image">
-                        <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/14de2b228-9ab6-4855-925e-97666c850eb0.png" alt="Video Project">
-                        <div class="project-image-overlay"></div>
-                    </div>
-                    <div class="project-body">
-                        <div class="project-meta">
-                            <span class="project-category" style="background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.2);color:#ec4899">Video</span>
-                            <span class="project-date">5 days ago</span>
-                        </div>
-                        <h3>AI-Powered Content Creation Pipeline</h3>
-                        <p>End-to-end video production system that generates, edits, and publishes social media content autonomously across 12 platforms.</p>
-                        <div class="project-footer">
-                            <div class="project-author">
-                                <div class="project-avatar" style="background:linear-gradient(135deg,#ec4899,#f59e0b)">SR</div>
-                                <span class="project-author-name">Sarah Rivera</span>
-                            </div>
-                            <a href="#" class="project-link">View Project →</a>
-                        </div>
-                    </div>
+                <h2>Agents Endpoints</h2>
+                
+                <h3><span class="method-badge method-get">GET</span> /agents</h3>
+                <p>Retrieve a list of all deployed agents with pagination support.</p>
+                <table class="api-table">
+                    <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td>page</td><td>integer</td><td>Page number (default: 1)</td></tr>
+                        <tr><td>limit</td><td>integer</td><td>Items per page (default: 20, max: 100)</td></tr>
+                        <tr><td>type</td><td>string</td><td>Filter by agent type (e.g., analytics, security)</td></tr>
+                        <tr><td>status</td><td>string</td><td>Filter by status: active, inactive, deploying</td></tr>
+                    </tbody>
+                </table>
+
+                <h3><span class="method-badge method-post">POST</span> /agents</h3>
+                <p>Create and deploy a new AI agent.</p>
+                <div class="code-block">
+{
+  <span class="string">"type"</span>: <span class="string">"analytics"</span>,
+  <span class="string">"name"</span>: <span class="string">"sales-dashboard-agent"</span>,
+  <span class="string">"config"</span>: {
+    <span class="string">"model"</span>: <span class="string">"nexus-v4"</span>,
+    <span class="string">"temperature"</span>: <span class="number">0.7</span>,
+    <span class="string">"max_tokens"</span>: <span class="number">4096</span>
+  },
+  <span class="string">"webhooks"</span>: [
+    <span class="string">"https://your-app.com/webhook"</span>
+  ]
+}
                 </div>
 
-                <!-- Project 3 -->
-                <div class="project-card reveal reveal-delay-3">
-                    <div class="project-image">
-                        <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/10a564f92-d1e4-4cb2-bc55-66a2199be930.png" alt="Security Project">
-                        <div class="project-image-overlay"></div>
-                    </div>
-                    <div class="project-body">
-                        <div class="project-meta">
-                            <span class="project-category" style="background:rgba(239,68,68,0.1);border-color:rgba(239,68,68,0.2);color:#ef4444">Security</span>
-                            <span class="project-date">1 week ago</span>
-                        </div>
-                        <h3>Enterprise Threat Detection System</h3>
-                        <p>Multi-agent security framework that monitors, detects, and responds to threats across cloud infrastructure with 99.7% accuracy.</p>
-                        <div class="project-footer">
-                            <div class="project-author">
-                                <div class="project-avatar" style="background:linear-gradient(135deg,#ef4444,#f59e0b)">MP</div>
-                                <span class="project-author-name">Marcus Park</span>
-                            </div>
-                            <a href="#" class="project-link">View Project →</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                <h3><span class="method-badge method-get">GET</span> /agents/:id</h3>
+                <p>Retrieve detailed information about a specific agent, including its current status, configuration, and performance metrics.</p>
 
-    <div class="divider"></div>
+                <h3><span class="method-badge method-delete">DELETE</span> /agents/:id</h3>
+                <p>Permanently delete an agent and all associated data. This action cannot be undone.</p>
 
-    <!-- DOCUMENTATION -->
-    <section class="section docs-section" id="docs">
-        <div class="section-inner">
-            <div class="docs-grid">
-                <div class="docs-image reveal">
-                    <img src="https://image.qwenlm.ai/public_source/458ae398-bb6d-4ecf-8e3f-8ebec2af8dff/1a17a48d9-8170-4635-a83b-4f7e424786e9.png" alt="Documentation">
+                <h2>Tasks Endpoints</h2>
+
+                <h3><span class="method-badge method-post">POST</span> /agents/:id/tasks</h3>
+                <p>Execute a task on a specific agent.</p>
+                <div class="code-block">
+{
+  <span class="string">"input"</span>: <span class="string">"Analyze Q4 sales data and generate insights"</span>,
+  <span class="string">"parameters"</span>: {
+    <span class="string">"data_source"</span>: <span class="string">"s3://bucket/q4-sales.csv"</span>,
+    <span class="string">"output_format"</span>: <span class="string">"dashboard"</span>
+  }
+}
                 </div>
-                <div class="docs-content reveal reveal-delay-2">
-                    <div class="section-label" style="justify-content:flex-start">
-                        Documentation
-                    </div>
-                    <h2>Everything You Need to <span class="gradient-text">Get Started</span></h2>
-                    <p>Comprehensive guides, API references, and interactive tutorials to help you build and deploy AI agents in minutes, not months.</p>
-                    <div class="docs-features">
-                        <div class="docs-feature">
-                            <div class="docs-feature-icon">📖</div>
-                            <div class="docs-feature-text">
-                                <h4>Quick Start Guide</h4>
-                                <p>Deploy your first agent in under 5 minutes with our step-by-step tutorial.</p>
-                            </div>
-                        </div>
-                        <div class="docs-feature">
-                            <div class="docs-feature-icon">⚡</div>
-                            <div class="docs-feature-text">
-                                <h4>API Reference</h4>
-                                <p>Complete REST API documentation with interactive examples and code snippets.</p>
-                            </div>
-                        </div>
-                        <div class="docs-feature">
-                            <div class="docs-feature-icon">🔧</div>
-                            <div class="docs-feature-text">
-                                <h4>SDK & Integrations</h4>
-                                <p>Python, JavaScript, and Go SDKs with seamless platform integrations.</p>
-                            </div>
-                        </div>
-                        <div class="docs-feature">
-                            <div class="docs-feature-icon"></div>
-                            <div class="docs-feature-text">
-                                <h4>Video Tutorials</h4>
-                                <p>In-depth video courses covering advanced agent orchestration patterns.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="display:flex;gap:12px;flex-wrap:wrap">
-                        <a href="#" class="btn btn-primary">Read Docs</a>
-                        <a href="#" class="btn btn-outline">API Reference</a>
-                    </div>
+
+                <h3><span class="method-badge method-get">GET</span> /agents/:id/tasks/:taskId</h3>
+                <p>Check the status and retrieve results of a specific task.</p>
+
+                <h2>Workflows Endpoints</h2>
+
+                <h3><span class="method-badge method-post">POST</span> /workflows</h3>
+                <p>Create a multi-agent workflow for complex task orchestration.</p>
+                <div class="code-block">
+{
+  <span class="string">"name"</span>: <span class="string">"content-pipeline"</span>,
+  <span class="string">"steps"</span>: [
+    {
+      <span class="string">"agent_id"</span>: <span class="string">"agent_analytics_01"</span>,
+      <span class="string">"action"</span>: <span class="string">"analyze_trends"</span>
+    },
+    {
+      <span class="string">"agent_id"</span>: <span class="string">"agent_content_02"</span>,
+      <span class="string">"action"</span>: <span class="string">"generate_posts"</span>,
+      <span class="string">"depends_on"</span>: [<span class="string">"step_1"</span>]
+    }
+  ]
+}
                 </div>
+
+                <h2>Rate Limits</h2>
+                <table class="api-table">
+                    <thead><tr><th>Plan</th><th>Requests/minute</th><th>Tasks/month</th></tr></thead>
+                    <tbody>
+                        <tr><td>Starter</td><td>30</td><td>1,000</td></tr>
+                        <tr><td>Professional</td><td>300</td><td>50,000</td></tr>
+                        <tr><td>Enterprise</td><td>Unlimited</td><td>Unlimited</td></tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </section>
+    </div>
 
-    <div class="divider"></div>
-
-    <!-- PRICING -->
-    <section class="section" id="pricing">
-        <div class="section-inner">
-            <div class="section-header reveal">
-                <div class="section-label">
-                    Pricing
-                </div>
-                <h2 class="section-title">Simple, Transparent Pricing</h2>
-                <p class="section-desc">
-                    Start free and scale as you grow. No hidden fees, no surprises.
-                </p>
+    <!-- ==================== PRIVACY POLICY PAGE ==================== -->
+    <div id="page-privacy" class="page-section">
+        <div class="sub-page">
+            <div class="sub-page-header reveal">
+                <div class="back-btn" onclick="navigateTo('home')">← Back to Home</div>
+                <div class="section-label">Legal</div>
+                <h1>Privacy Policy</h1>
+                <p>Last updated: January 15, 2026. This policy describes how NexusAI collects, uses, and protects your personal information.</p>
             </div>
-            <div class="pricing-grid">
-                <!-- Free -->
-                <div class="pricing-card reveal reveal-delay-1">
-                    <div class="pricing-name">Starter</div>
-                    <div class="pricing-desc">Perfect for exploring AI agents</div>
-                    <div class="pricing-price">
-                        <span class="pricing-currency">$</span>
-                        <span class="pricing-amount">0</span>
-                        <span class="pricing-period">/month</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>3 AI agents</li>
-                        <li>1,000 tasks/month</li>
-                        <li>Community support</li>
-                        <li>Basic analytics</li>
-                        <li>API access</li>
-                    </ul>
-                    <button class="btn btn-outline" onclick="openModal('register')">Get Started</button>
-                </div>
+            <div class="sub-page-content">
+                <h2>1. Information We Collect</h2>
+                <p>We collect information you provide directly, such as:</p>
+                <ul>
+                    <li><strong>Account Information:</strong> Name, email address, company name, and password when you register</li>
+                    <li><strong>Usage Data:</strong> How you interact with our agents, API endpoints accessed, and task execution logs</li>
+                    <li><strong>Payment Information:</strong> Billing details processed securely through our payment provider</li>
+                    <li><strong>Technical Data:</strong> IP address, browser type, operating system, and device information</li>
+                </ul>
 
-                <!-- Pro -->
-                <div class="pricing-card featured reveal reveal-delay-2">
-                    <div class="pricing-name">Professional</div>
-                    <div class="pricing-desc">For growing teams and businesses</div>
-                    <div class="pricing-price">
-                        <span class="pricing-currency">$</span>
-                        <span class="pricing-amount">49</span>
-                        <span class="pricing-period">/month</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>Unlimited AI agents</li>
-                        <li>50,000 tasks/month</li>
-                        <li>Priority support</li>
-                        <li>Advanced analytics</li>
-                        <li>Custom integrations</li>
-                        <li>Team collaboration</li>
-                    </ul>
-                    <button class="btn btn-primary" onclick="openModal('register')">Start Free Trial</button>
-                </div>
+                <h2>2. How We Use Your Information</h2>
+                <p>We use the collected information to:</p>
+                <ul>
+                    <li>Provide, maintain, and improve our AI agent platform</li>
+                    <li>Process and complete transactions</li>
+                    <li>Send technical notices, updates, and support messages</li>
+                    <li>Monitor and analyze usage patterns and trends</li>
+                    <li>Detect, investigate, and prevent security incidents</li>
+                    <li>Comply with legal obligations</li>
+                </ul>
 
-                <!-- Enterprise -->
-                <div class="pricing-card reveal reveal-delay-3">
-                    <div class="pricing-name">Enterprise</div>
-                    <div class="pricing-desc">For large-scale deployments</div>
-                    <div class="pricing-price">
-                        <span class="pricing-currency">$</span>
-                        <span class="pricing-amount">199</span>
-                        <span class="pricing-period">/month</span>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>Everything in Pro</li>
-                        <li>Unlimited tasks</li>
-                        <li>Dedicated support</li>
-                        <li>Custom model training</li>
-                        <li>SLA guarantee</li>
-                        <li>SSO & SAML</li>
-                    </ul>
-                    <button class="btn btn-outline" onclick="openModal('register')">Contact Sales</button>
-                </div>
+                <h2>3. Data Sharing</h2>
+                <p>We do not sell your personal information. We may share data with:</p>
+                <ul>
+                    <li><strong>Service Providers:</strong> Third-party vendors who assist in platform operations</li>
+                    <li><strong>Legal Requirements:</strong> When required by law or to protect our rights</li>
+                    <li><strong>Business Transfers:</strong> In connection with mergers or acquisitions</li>
+                </ul>
+
+                <h2>4. Data Security</h2>
+                <p>We implement industry-standard security measures including:</p>
+                <ul>
+                    <li>Encryption of data in transit (TLS 1.3) and at rest (AES-256)</li>
+                    <li>Regular security audits and penetration testing</li>
+                    <li>Access controls and authentication requirements</li>
+                    <li>Automated threat detection and response systems</li>
+                </ul>
+
+                <h2>5. Your Rights</h2>
+                <p>Depending on your location, you may have the right to:</p>
+                <ul>
+                    <li>Access, correct, or delete your personal data</li>
+                    <li>Object to or restrict certain processing activities</li>
+                    <li>Data portability in a machine-readable format</li>
+                    <li>Withdraw consent at any time</li>
+                </ul>
+
+                <h2>6. Data Retention</h2>
+                <p>We retain your data for as long as your account is active or as needed to provide services. After account deletion, data is removed within 30 days unless legal obligations require longer retention.</p>
+
+                <h2>7. Contact Us</h2>
+                <p>For privacy-related inquiries, contact us at:</p>
+                <p><strong>Email:</strong> privacy@nexusai.com<br><strong>Address:</strong> 100 AI Boulevard, Suite 500, San Francisco, CA 94105</p>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- CTA -->
-    <section class="section cta-section">
-        <div class="cta-bg"></div>
-        <div class="section-inner">
-            <div class="cta-content reveal">
-                <h2 class="cta-title">Ready to Transform Your Workflow?</h2>
-                <p class="cta-desc">Join thousands of teams already using NexusAI to automate, analyze, and accelerate their business.</p>
-                <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-                    <button class="btn btn-primary btn-large" onclick="openModal('register')">Create Free Account →</button>
-                    <a href="#" class="btn btn-outline btn-large">Schedule a Demo</a>
-                </div>
+    <!-- ==================== TERMS OF SERVICE PAGE ==================== -->
+    <div id="page-terms" class="page-section">
+        <div class="sub-page">
+            <div class="sub-page-header reveal">
+                <div class="back-btn" onclick="navigateTo('home')">← Back to Home</div>
+                <div class="section-label">Legal</div>
+                <h1>Terms of Service</h1>
+                <p>Last updated: January 15, 2026. By accessing or using NexusAI, you agree to be bound by these terms.</p>
+            </div>
+            <div class="sub-page-content">
+                <h2>1. Acceptance of Terms</h2>
+                <p>By accessing, registering for, or using the NexusAI platform ("Service"), you agree to be bound by these Terms of Service. If you do not agree, do not use the Service.</p>
+
+                <h2>2. Account Registration</h2>
+                <ul>
+                    <li>You must be at least 18 years old to use this service</li>
+                    <li>You must provide accurate and complete registration information</li>
+                    <li>You are responsible for maintaining the security of your account</li>
+                    <li>One account per individual or organization unless otherwise agreed</li>
+                </ul>
+
+                <h2>3. Acceptable Use</h2>
+                <p>You agree not to:</p>
+                <ul>
+                    <li>Use the service for illegal purposes or in violation of any laws</li>
+                    <li>Attempt to gain unauthorized access to the platform or other accounts</li>
+                    <li>Use agents to generate harmful, abusive, or deceptive content</li>
+                    <li>Reverse engineer or attempt to extract source code</li>
+                    <li>Exceed rate limits or abuse API endpoints</li>
+                    <li>Resell or redistribute the service without authorization</li>
+                </ul>
+
+                <h2>4. Intellectual Property</h2>
+                <p>NexusAI retains all intellectual property rights to the platform, SDKs, and underlying technology. Content generated by agents belongs to the user who initiated the generation, subject to applicable law.</p>
+
+                <h2>5. Payment and Billing</h2>
+                <ul>
+                    <li>Subscription fees are billed in advance on a monthly or annual basis</li>
+                    <li>All fees are non-refundable except as required by law</li>
+                    <li>You authorize automatic charges to your payment method</li>
+                    <li>Prices may change with 30 days notice to your account email</li>
+                </ul>
+
+                <h2>6. Service Availability</h2>
+                <p>We aim for 99.9% uptime as specified in our SLA. Scheduled maintenance will be announced at least 48 hours in advance. We are not liable for temporary service interruptions beyond our reasonable control.</p>
+
+                <h2>7. Limitation of Liability</h2>
+                <p>To the maximum extent permitted by law, NexusAI shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the service. Our total liability shall not exceed the amount paid by you in the 12 months preceding the claim.</p>
+
+                <h2>8. Termination</h2>
+                <p>We may suspend or terminate your access to the service immediately if you breach these terms. Upon termination, your right to use the service ceases and we may delete your data after 30 days.</p>
+
+                <h2>9. Changes to Terms</h2>
+                <p>We may modify these terms at any time. Material changes will be communicated via email or platform notification at least 14 days before they take effect. Continued use after changes constitutes acceptance.</p>
+
+                <h2>10. Contact</h2>
+                <p>For questions about these terms, contact: <strong>legal@nexusai.com</strong></p>
             </div>
         </div>
-    </section>
+    </div>
 
     <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-inner">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <a href="#" class="logo">
+                    <div class="logo" onclick="navigateTo('home')">
                         <div class="logo-icon">⚡</div>
                         <span>NexusAI</span>
-                    </a>
+                    </div>
                     <p>Empowering businesses with intelligent AI agents that automate, analyze, and accelerate growth.</p>
                 </div>
                 <div class="footer-col">
                     <h4>Product</h4>
                     <ul>
-                        <li><a href="#agents">AI Agents</a></li>
-                        <li><a href="#projects">Projects</a></li>
-                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a onclick="navigateTo('home', 'agents')">AI Agents</a></li>
+                        <li><a onclick="navigateTo('home', 'projects')">Projects</a></li>
+                        <li><a onclick="navigateTo('home', 'pricing')">Pricing</a></li>
                         <li><a href="#">Changelog</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h4>Resources</h4>
                     <ul>
-                        <li><a href="#docs">Documentation</a></li>
-                        <li><a href="#">API Reference</a></li>
+                        <li><a onclick="navigateTo('docs')">Documentation</a></li>
+                        <li><a onclick="navigateTo('api')">API Reference</a></li>
                         <li><a href="#">Tutorials</a></li>
                         <li><a href="#">Blog</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h4>Company</h4>
+                    <h4>Legal</h4>
                     <ul>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                        <li><a onclick="navigateTo('privacy')">Privacy Policy</a></li>
+                        <li><a onclick="navigateTo('terms')">Terms of Service</a></li>
                     </ul>
                 </div>
             </div>
@@ -1917,7 +1919,7 @@
                 <span>© 2026 NexusAI. All rights reserved.</span>
                 <div class="footer-socials">
                     <a href="#" aria-label="Twitter">𝕏</a>
-                    <a href="https://github.com/mscbuild/" aria-label="GitHub">G</a>
+                    <a href="https://github.com/mscbuild/" aria-label="GitHub">H</a>
                     <a href="#" aria-label="Discord">D</a>
                     <a href="#" aria-label="LinkedIn">in</a>
                 </div>
@@ -1925,7 +1927,7 @@
         </div>
     </footer>
 
-    <!-- REGISTRATION MODAL -->
+    <!-- AUTH MODAL -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <div class="modal-header">
@@ -1979,7 +1981,7 @@
                     <div class="form-group">
                         <label class="form-checkbox">
                             <input type="checkbox" id="termsCheck" required>
-                            <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                            <span>I agree to the <a onclick="navigateTo('terms'); closeModal()" style="color:var(--accent-blue);text-decoration:none;cursor:pointer">Terms of Service</a> and <a onclick="navigateTo('privacy'); closeModal()" style="color:var(--accent-blue);text-decoration:none;cursor:pointer">Privacy Policy</a></span>
                         </label>
                     </div>
                 </form>
@@ -1995,18 +1997,31 @@
     </div>
 
     <script>
-        // ===== NAVBAR SCROLL =====
-        const navbar = document.getElementById('navbar');
-        let lastScroll = 0;
+        // ===== NAVIGATION =====
+        function navigateTo(page, section) {
+            document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('page-' + page).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            
+            // Re-trigger reveal animations
+            document.querySelectorAll('.reveal').forEach(el => el.classList.remove('visible'));
+            setTimeout(() => {
+                document.querySelectorAll('#page-' + page + ' .reveal').forEach(el => {
+                    revealObserver.observe(el);
+                });
+            }, 100);
 
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            if (currentScroll > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
+            if (section) {
+                setTimeout(() => {
+                    const target = document.getElementById(section);
+                    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 200);
             }
-            lastScroll = currentScroll;
+        }
+
+        // ===== NAVBAR SCROLL =====
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.pageYOffset > 50);
         });
 
         // ===== MOBILE NAV =====
@@ -2097,141 +2112,115 @@
                 return;
             }
 
-            const btn = document.getElementById('submitBtn');
-            btn.textContent = currentMode === 'register' ? 'Creating Account...' : 'Signing In...';
-            btn.disabled = true;
+            submitBtn.textContent = currentMode === 'register' ? 'Creating Account...' : 'Signing In...';
+            submitBtn.disabled = true;
 
             setTimeout(() => {
-                btn.textContent = currentMode === 'register' ? '✓ Account Created!' : '✓ Signed In!';
-                btn.style.background = 'linear-gradient(135deg, #10b981, #06b6d4)';
+                submitBtn.textContent = currentMode === 'register' ? '✓ Account Created!' : '✓ Signed In!';
+                submitBtn.style.background = 'linear-gradient(135deg, #10b981, #06b6d4)';
                 setTimeout(() => {
                     closeModal();
-                    btn.disabled = false;
-                    btn.style.background = '';
-                    btn.textContent = currentMode === 'register' ? 'Create Account' : 'Sign In';
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = '';
+                    submitBtn.textContent = currentMode === 'register' ? 'Create Account' : 'Sign In';
                 }, 1500);
             }, 1500);
         }
 
         // ===== SCROLL REVEAL =====
-        const revealElements = document.querySelectorAll('.reveal');
-
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        revealElements.forEach(el => revealObserver.observe(el));
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
         // ===== PARTICLES =====
         const canvas = document.getElementById('particles-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
+        const ctx = canvas?.getContext('2d');
+        let particlesArr = [];
         let animationId;
 
-        function resizeCanvas() {
-            canvas.width = canvas.parentElement.offsetWidth;
-            canvas.height = canvas.parentElement.offsetHeight;
-        }
-
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        class Particle {
-            constructor() {
-                this.reset();
+        if (canvas && ctx) {
+            function resizeCanvas() {
+                canvas.width = canvas.parentElement.offsetWidth;
+                canvas.height = canvas.parentElement.offsetHeight;
             }
 
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.5 + 0.1;
-            }
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
 
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-
-                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                    this.reset();
+            class Particle {
+                constructor() { this.reset(); }
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.5;
+                    this.speedY = (Math.random() - 0.5) * 0.5;
+                    this.opacity = Math.random() * 0.5 + 0.1;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(59, 130, 246, ${this.opacity})`;
+                    ctx.fill();
                 }
             }
 
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(59, 130, 246, ${this.opacity})`;
-                ctx.fill();
+            function initParticles() {
+                const count = Math.min(80, Math.floor(canvas.width * canvas.height / 15000));
+                particlesArr = [];
+                for (let i = 0; i < count; i++) particlesArr.push(new Particle());
             }
-        }
 
-        function initParticles() {
-            const count = Math.min(80, Math.floor(canvas.width * canvas.height / 15000));
-            particles = [];
-            for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
-            }
-        }
-
-        function drawConnections() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < 120) {
-                        const opacity = (1 - dist / 120) * 0.15;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`;
-                        ctx.lineWidth = 0.5;
-                        ctx.stroke();
+            function drawConnections() {
+                for (let i = 0; i < particlesArr.length; i++) {
+                    for (let j = i + 1; j < particlesArr.length; j++) {
+                        const dx = particlesArr[i].x - particlesArr[j].x;
+                        const dy = particlesArr[i].y - particlesArr[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            const opacity = (1 - dist / 120) * 0.15;
+                            ctx.beginPath();
+                            ctx.moveTo(particlesArr[i].x, particlesArr[i].y);
+                            ctx.lineTo(particlesArr[j].x, particlesArr[j].y);
+                            ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
                     }
                 }
             }
-        }
 
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            drawConnections();
-            animationId = requestAnimationFrame(animateParticles);
-        }
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particlesArr.forEach(p => { p.update(); p.draw(); });
+                drawConnections();
+                animationId = requestAnimationFrame(animateParticles);
+            }
 
-        initParticles();
-        animateParticles();
+            initParticles();
+            animateParticles();
+        }
 
         // ===== COUNTER ANIMATION =====
         function animateCounter(element, target, suffix = '') {
             const duration = 2000;
-            const start = 0;
             const startTime = performance.now();
-
             function update(currentTime) {
                 const elapsed = currentTime - startTime;
                 const progress = Math.min(elapsed / duration, 1);
                 const eased = 1 - Math.pow(1 - progress, 3);
-                const current = Math.floor(start + (target - start) * eased);
-                element.textContent = current + suffix;
-                if (progress < 1) {
-                    requestAnimationFrame(update);
-                }
+                element.textContent = Math.floor(target * eased) + suffix;
+                if (progress < 1) requestAnimationFrame(update);
             }
-
             requestAnimationFrame(update);
         }
 
@@ -2241,7 +2230,7 @@
                     animateCounter(document.getElementById('statAgents'), 50, '+');
                     animateCounter(document.getElementById('statUsers'), 12, 'K+');
                     animateCounter(document.getElementById('statTasks'), 2, 'M+');
-                    animateCounter(document.getElementById('statUptime'), 99.9, '%');
+                    document.getElementById('statUptime').textContent = '99.9%';
                     statsObserver.disconnect();
                 }
             });
@@ -2249,25 +2238,6 @@
 
         const heroStats = document.querySelector('.hero-stats');
         if (heroStats) statsObserver.observe(heroStats);
-
-        // ===== SMOOTH SCROLL =====
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                e.preventDefault();
-                const target = document.querySelector(targetId);
-                if (target) {
-                    const offset = 80;
-                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                    window.scrollTo({
-                        top: targetPosition,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
     </script>
 </body>
 </html>
-
