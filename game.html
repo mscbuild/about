@@ -50,17 +50,52 @@ button {
 }
 </style>
 </head>
-
 <body>
 
 <div id="startScreen">
+  <div class="birdArt">🐦</div>
   <h1>ANGRY BIRDS</h1>
-  <button onclick="startGame()">START</button>
+  <div class="subtitle">HTML5 EDITION</div>
+  <div id="instructions">
+    DRAG THE BIRD BACK ON THE SLINGSHOT<br>
+    RELEASE TO LAUNCH AND DESTROY THE PIGS!<br>
+    DESTROY ALL PIGS TO WIN
+  </div>
+  <button class="btn btn-primary" onclick="startGame()">START GAME</button>
+</div>
+
+<div id="gameContainer">
+  <canvas id="gameCanvas"></canvas>
+  <div id="ui">
+    <div class="level">LEVEL <span id="levelNum">1</span></div>
+    <div class="score">SCORE: <span id="scoreNum">0</span></div>
+    <div class="birdsLeft">BIRDS: <span id="birdsNum">5</span></div>
+  </div>
+  <div id="overlay">
+    <h1 id="overlayTitle">LEVEL COMPLETE!</h1>
+    <h2 id="overlaySubtitle">All pigs destroyed!</h2>
+    <div class="finalScore">Score: <span id="finalScore">0</span></div>
+    <button class="btn btn-primary" id="nextBtn" onclick="nextLevel()">NEXT LEVEL</button>
+    <button class="btn btn-secondary" onclick="restartLevel()">RETRY</button>
+   </div>
 </div>
 
 <canvas id="gameCanvas"></canvas>
 
 <script>
+  const sounds = {
+  launch: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arrow-shot-1464.mp3'),
+  hit: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wood-hit-2019.mp3'),
+  pig: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-cartoon-pig-squeal-1044.mp3'),
+  win: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-game-level-completed-2059.mp3'),
+};
+
+function playSound(name) {
+  const s = sounds[name];
+  if (!s) return;
+  s.currentTime = 0;
+  s.play().catch(()=>{});
+}
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
