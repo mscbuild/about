@@ -2,341 +2,242 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Angry Birds - HTML5 Game</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Angry Birds HTML5</title>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fontsource-press-start-2p@5.0.0/latin.css">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#e94560">
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  background: #0f3460;
-  font-family: 'Press Start 2P', monospace;
+  margin: 0;
   overflow: hidden;
-  overscroll-behavior: none;
+  background: #0f3460;
+  font-family: sans-serif;
 }
 
 canvas {
   display: block;
   touch-action: none;
 }
-
-#startScreen {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #0f3460;
-  z-index: 10;
-  color: white;
-}
-
-button {
-  margin-top: 20px;
-  padding: 15px 25px;
-  font-family: inherit;
-  border: none;
-  background: #e94560;
-  color: white;
-  border-radius: 10px;
-  font-size: 12px;
-}
 </style>
 </head>
+
 <body>
 
-<div id="startScreen">
-  <div class="birdArt">🐦</div>
-  <h1>ANGRY BIRDS</h1>
-  <div class="subtitle">HTML5 EDITION</div>
-  <div id="instructions">
-    DRAG THE BIRD BACK ON THE SLINGSHOT<br>
-    RELEASE TO LAUNCH AND DESTROY THE PIGS!<br>
-    DESTROY ALL PIGS TO WIN
-  </div>
-  <button class="btn btn-primary" onclick="startGame()">START GAME</button>
-</div>
+<canvas id="game"></canvas>
 
-<div id="gameContainer">
-  <canvas id="gameCanvas"></canvas>
-  <div id="ui">
-    <div class="level">LEVEL <span id="levelNum">1</span></div>
-    <div class="score">SCORE: <span id="scoreNum">0</span></div>
-    <div class="birdsLeft">BIRDS: <span id="birdsNum">5</span></div>
-  </div>
-  <div id="overlay">
-    <h1 id="overlayTitle">LEVEL COMPLETE!</h1>
-    <h2 id="overlaySubtitle">All pigs destroyed!</h2>
-    <div class="finalScore">Score: <span id="finalScore">0</span></div>
-    <button class="btn btn-primary" id="nextBtn" onclick="nextLevel()">NEXT LEVEL</button>
-    <button class="btn btn-secondary" onclick="restartLevel()">RETRY</button>
-   </div>
-</div>
-
-<canvas id="gameCanvas"></canvas>
+<script src="main.js"></script>
 
 <script>
-  const sounds = {
-  launch: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arrow-shot-1464.mp3'),
-  hit: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wood-hit-2019.mp3'),
-  pig: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-cartoon-pig-squeal-1044.mp3'),
-  win: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-game-level-completed-2059.mp3'),
-};
-
-function playSound(name) {
-  const s = sounds[name];
-  if (!s) return;
-  s.currentTime = 0;
-  s.play().catch(()=>{});
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
 }
-const canvas = document.getElementById('gameCanvas');
+</script>
+  <script>const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
 let W, H;
 
-function resizeCanvas() {
+function resize() {
   W = window.innerWidth;
   H = window.innerHeight;
 
   const dpr = window.devicePixelRatio || 1;
-
-  canvas.style.width = W + 'px';
-  canvas.style.height = H + 'px';
-
   canvas.width = W * dpr;
   canvas.height = H * dpr;
-
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-  updateLayout();
+  canvas.style.width = W + "px";
+  canvas.style.height = H + "px";
+  ctx.setTransform(dpr,0,0,dpr,0,0);
 }
+window.addEventListener('resize', resize);
+resize();
 
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
+let GROUND, SLING_X, SLING_Y;
 
-let GROUND_Y, SLING_X, SLING_Y;
-
-function updateLayout() {
-  GROUND_Y = H - 80;
+function layout() {
+  GROUND = H - 80;
   SLING_X = W * 0.2;
-  SLING_Y = GROUND_Y - 100;
+  SLING_Y = GROUND - 100;
 }
+layout();
 
 const GRAVITY = 0.4;
 
-let bird = null;
-let isDragging = false;
-let dragPos = {x:0,y:0};
+let bird = {
+  x: SLING_X,
+  y: SLING_Y,
+  vx: 0,
+  vy: 0,
+  r: 20,
+  launched: false
+};
 
-class Bird {
-  constructor() {
-    this.x = SLING_X;
-    this.y = SLING_Y;
-    this.vx = 0;
-    this.vy = 0;
-    this.radius = 20;
-    this.launched = false;
-  }
+let pigs = [
+  {x: W*0.7, y: GROUND-20, r:20, alive:true}
+];
+
+let isDrag = false;
+let drag = {x:0,y:0};
+
+// звук
+const snd = {
+  shoot: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arrow-shot-1464.mp3'),
+  hit: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wood-hit-2019.mp3'),
+};
+
+function play(s){
+  snd[s].currentTime=0;
+  snd[s].play().catch(()=>{});
 }
 
-function startGame() {
-  document.getElementById('startScreen').style.display = 'none';
-  bird = new Bird();
+// вибрация
+function vib(ms=20){
+  navigator.vibrate && navigator.vibrate(ms);
 }
 
-function draw() {
-  ctx.clearRect(0,0,W,H);
-
-  // ground
-  ctx.fillStyle = "#3d7a34";
-  ctx.fillRect(0, GROUND_Y, W, H);
-
-  // sling
-  ctx.fillStyle = "#5D3A1A";
-  ctx.fillRect(SLING_X - 10, SLING_Y - 50, 20, 60);
-
-  // bird
-  if (bird) {
-    ctx.beginPath();
-    ctx.fillStyle = "#e94560";
-    ctx.arc(bird.x, bird.y, bird.radius, 0, Math.PI*2);
-    ctx.fill();
-  }
-
-  // trajectory
-  if (isDragging) {
-    ctx.fillStyle = "white";
-    let dx = SLING_X - dragPos.x;
-    let dy = SLING_Y - dragPos.y;
-
-    let vx = dx * 0.2;
-    let vy = dy * 0.2;
-
-    let px = bird.x;
-    let py = bird.y;
-
-    for (let i=0;i<20;i++) {
-      vy += GRAVITY;
-      px += vx;
-      py += vy;
-      ctx.beginPath();
-      ctx.arc(px, py, 3, 0, Math.PI*2);
-      ctx.fill();
-    }
-  }
-}
-
-function update() {
-  if (bird && bird.launched) {
-    bird.vy += GRAVITY;
-    bird.x += bird.vx;
-    bird.y += bird.vy;
-
-    if (bird.y > GROUND_Y - bird.radius) {
-      bird.y = GROUND_Y - bird.radius;
-      bird.vy *= -0.4;
-    }
-  }
-}
-
-function loop() {
+// цикл
+function loop(){
   update();
   draw();
   requestAnimationFrame(loop);
 }
 loop();
 
-function getTouchPos(e) {
-  const rect = canvas.getBoundingClientRect();
-  const t = e.touches[0] || e.changedTouches[0];
+function update(){
+  if(bird.launched){
+    bird.vy += GRAVITY;
+    bird.x += bird.vx;
+    bird.y += bird.vy;
 
+    if(bird.y > GROUND - bird.r){
+      bird.y = GROUND - bird.r;
+      bird.vy *= -0.4;
+    }
+
+    pigs.forEach(p=>{
+      if(!p.alive) return;
+      let dx = bird.x - p.x;
+      let dy = bird.y - p.y;
+      if(Math.hypot(dx,dy) < bird.r + p.r){
+        p.alive = false;
+        play('hit');
+        vib(40);
+      }
+    });
+  }
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+
+  ctx.fillStyle="#3d7a34";
+  ctx.fillRect(0,GROUND,W,H);
+
+  // sling
+  ctx.fillStyle="#5D3A1A";
+  ctx.fillRect(SLING_X-10, SLING_Y-50,20,60);
+
+  // bird
+  ctx.beginPath();
+  ctx.fillStyle="#e94560";
+  ctx.arc(bird.x,bird.y,bird.r,0,Math.PI*2);
+  ctx.fill();
+
+  // pigs
+  pigs.forEach(p=>{
+    if(!p.alive) return;
+    ctx.beginPath();
+    ctx.fillStyle="green";
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+  });
+
+  // trajectory
+  if(isDrag){
+    let dx = SLING_X - drag.x;
+    let dy = SLING_Y - drag.y;
+
+    let vx = dx*0.2;
+    let vy = dy*0.2;
+
+    let px = bird.x;
+    let py = bird.y;
+
+    ctx.fillStyle="white";
+
+    for(let i=0;i<20;i++){
+      vy+=GRAVITY;
+      px+=vx;
+      py+=vy;
+      ctx.beginPath();
+      ctx.arc(px,py,3,0,Math.PI*2);
+      ctx.fill();
+    }
+  }
+}
+
+// touch
+function getPos(e){
+  const r=canvas.getBoundingClientRect();
+  const t=e.touches[0]||e.changedTouches[0];
   return {
-    x: (t.clientX - rect.left) * (canvas.width / rect.width) / (window.devicePixelRatio || 1),
-    y: (t.clientY - rect.top) * (canvas.height / rect.height) / (window.devicePixelRatio || 1)
+    x:(t.clientX-r.left)*(canvas.width/r.width)/(window.devicePixelRatio||1),
+    y:(t.clientY-r.top)*(canvas.height/r.height)/(window.devicePixelRatio||1)
   };
 }
 
-// TOUCH
-canvas.addEventListener('touchstart', (e)=>{
+canvas.addEventListener('touchstart',e=>{
   e.preventDefault();
-  if (!bird || bird.launched) return;
-
-  const pos = getTouchPos(e);
-  const dist = Math.hypot(pos.x - bird.x, pos.y - bird.y);
-
-  if (dist < 60) {
-    isDragging = true;
-    dragPos = pos;
+  const p=getPos(e);
+  if(Math.hypot(p.x-bird.x,p.y-bird.y)<60){
+    isDrag=true;
+    drag=p;
   }
 },{passive:false});
 
-canvas.addEventListener('touchmove', (e)=>{
+canvas.addEventListener('touchmove',e=>{
   e.preventDefault();
-  if (!isDragging) return;
+  if(!isDrag) return;
 
-  const pos = getTouchPos(e);
+  const p=getPos(e);
 
-  let dx = pos.x - SLING_X;
-  let dy = pos.y - SLING_Y;
+  let dx=p.x-SLING_X;
+  let dy=p.y-SLING_Y;
 
-  const max = 100;
-  const dist = Math.hypot(dx,dy);
+  const max=100;
+  const d=Math.hypot(dx,dy);
 
-  if (dist > max) {
-    dx = dx/dist*max;
-    dy = dy/dist*max;
+  if(d>max){
+    dx=dx/d*max;
+    dy=dy/d*max;
   }
 
-  dragPos.x = SLING_X + dx;
-  dragPos.y = SLING_Y + dy;
+  drag.x=SLING_X+dx;
+  drag.y=SLING_Y+dy;
 
-  bird.x = dragPos.x;
-  bird.y = dragPos.y;
+  bird.x=drag.x;
+  bird.y=drag.y;
 },{passive:false});
 
-canvas.addEventListener('touchend', (e)=>{
-  e.preventDefault();
-  if (!isDragging) return;
+canvas.addEventListener('touchend',()=>{
+  if(!isDrag) return;
+  isDrag=false;
 
-  isDragging = false;
+  let dx=SLING_X-drag.x;
+  let dy=SLING_Y-drag.y;
 
-  let dx = SLING_X - dragPos.x;
-  let dy = SLING_Y - dragPos.y;
+  let p=Math.min(Math.hypot(dx,dy)*0.2,25);
+  let a=Math.atan2(dy,dx);
 
-  const power = Math.min(Math.hypot(dx,dy)*0.2, 25);
-  const angle = Math.atan2(dy,dx);
+  bird.vx=Math.cos(a)*p;
+  bird.vy=Math.sin(a)*p;
+  bird.launched=true;
 
-  bird.vx = Math.cos(angle)*power;
-  bird.vy = Math.sin(angle)*power;
-  bird.launched = true;
-},{passive:false});
-
-canvas.addEventListener('touchcancel', ()=>{
-  isDragging = false;
-});
-
-// MOUSE (для ПК)
-canvas.addEventListener('mousedown', (e)=>{
-  if (!bird || bird.launched) return;
-
-  const rect = canvas.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-
-  const dist = Math.hypot(x - bird.x, y - bird.y);
-  if (dist < 60) {
-    isDragging = true;
-    dragPos = {x,y};
-  }
-});
-
-canvas.addEventListener('mousemove', (e)=>{
-  if (!isDragging) return;
-
-  const rect = canvas.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-
-  let dx = x - SLING_X;
-  let dy = y - SLING_Y;
-
-  const max = 100;
-  const dist = Math.hypot(dx,dy);
-
-  if (dist > max) {
-    dx = dx/dist*max;
-    dy = dy/dist*max;
-  }
-
-  dragPos.x = SLING_X + dx;
-  dragPos.y = SLING_Y + dy;
-
-  bird.x = dragPos.x;
-  bird.y = dragPos.y;
-});
-
-canvas.addEventListener('mouseup', ()=>{
-  if (!isDragging) return;
-
-  isDragging = false;
-
-  let dx = SLING_X - dragPos.x;
-  let dy = SLING_Y - dragPos.y;
-
-  const power = Math.min(Math.hypot(dx,dy)*0.2, 25);
-  const angle = Math.atan2(dy,dx);
-
-  bird.vx = Math.cos(angle)*power;
-  bird.vy = Math.sin(angle)*power;
-  bird.launched = true;
+  play('shoot');
+  vib(20);
 });
 </script>
+
 </body>
 </html>
