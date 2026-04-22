@@ -204,19 +204,6 @@ canvas {
 </div>
 
 <script>
-  const sounds = {
-  launch: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arrow-shot-1464.mp3'),
-  hit: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-wood-hit-2019.mp3'),
-  pig: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-cartoon-pig-squeal-1044.mp3'),
-  win: new Audio('https://assets.mixkit.co/sfx/preview/mixkit-game-level-completed-2059.mp3'),
-};
-
-function playSound(name) {
-  const s = sounds[name];
-  if (!s) return;
-  s.currentTime = 0;
-  s.play().catch(()=>{});
-}
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 let W = window.innerWidth;
