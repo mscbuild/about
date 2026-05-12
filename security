@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Руководство по защите от мошенников — ЕС и Латвия | 2026</title>
+<style>
+  :root { --bg: #0f172a; --card: #1e293b; --border: #334155; --accent: #38bdf8; --red: #ef4444; --green: #22c55e; --yellow: #eab308; --text: #f1f5f9; --muted: #94a3b8 }
+  * { margin: 0; padding: 0; box-sizing: border-box }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 0 }
+  .container { max-width: 900px; margin: 0 auto; padding: 24px 16px }
+  header { text-align: center; padding: 48px 0 32px }
+  h1 { font-size: 2rem; color: var(--accent); margin-bottom: 8px }
+  header p { color: var(--muted); font-size: 1.05rem }
+  .badge { display: inline-block; background: var(--red); color: #fff; padding: 4px 14px; border-radius: 20px; font-size: .8rem; font-weight: 700; margin-bottom: 12px }
+  .flag-badge { display: inline-flex; gap: 6px; align-items: center; justify-content: center; margin-bottom: 12px }
+  .flag-badge span { background: #1e293b; border: 1px solid var(--border); padding: 3px 10px; border-radius: 6px; font-size: .75rem; font-weight: 600 }
+  section { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin-bottom: 20px }
+  h2 { font-size: 1.3rem; margin-bottom: 16px; display: flex; align-items: center; gap: 10px }
+  h2 .icon { font-size: 1.4rem }
+  .rule { background: rgba(56,189,248,.08); border-left: 4px solid var(--accent); padding: 14px 16px; border-radius: 8px; margin-bottom: 14px }
+  .rule h3 { color: var(--accent); font-size: 1.05rem; margin-bottom: 6px }
+  .rule p { color: #cbd5e1; font-size: .95rem }
+  .signs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0 }
+  @media (max-width:600px) { .signs { grid-template-columns: 1fr } }
+  .sign { border-radius: 8px; padding: 12px 14px }
+  .sign.red { background: rgba(239,68,68,.08); border: 1px solid rgba(239,68,68,.2) }
+  .sign.green { background: rgba(34,197,94,.08); border: 1px solid rgba(34,197,94,.2) }
+  .sign .label { font-size: .75rem; text-transform: uppercase; letter-spacing: .5px; font-weight: 700; margin-bottom: 4px }
+  .sign.red .label { color: var(--red) }
+  .sign.green .label { color: var(--green) }
+  .sign p { font-size: .9rem; color: #cbd5e1 }
+  .sign p + p { margin-top: 4px }
+  .phrases li { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: .95rem }
+  .phrases li:last-child { border: 0 }
+  .phrases strong { color: var(--yellow) }
+  .steps { counter-reset: step }
+  .step { counter-increment: step; padding: 12px 0 12px 40px; position: relative; border-bottom: 1px solid var(--border) }
+  .step:last-child { border: 0 }
+  .step::before { content: counter(step); position: absolute; left: 0; top: 12px; width: 28px; height: 28px; background: var(--accent); color: #0f172a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .85rem }
+  .step strong { display: block }
+  .step p { color: #cbd5e1; font-size: .9rem }
+  table { width: 100%; border-collapse: collapse; margin-top: 8px }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: .9rem }
+  th { color: var(--accent); font-weight: 600; font-size: .8rem; text-transform: uppercase; letter-spacing: .5px }
+  td { color: #cbd5e1 }
+  .resources { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px }
+  .resources a { display: inline-block; background: rgba(56,189,248,.1); color: var(--accent); padding: 8px 16px; border-radius: 8px; text-decoration: none; font-size: .9rem; border: 1px solid rgba(56,189,248,.2); transition: .2s }
+  .resources a:hover { background: rgba(56,189,248,.2) }
+  footer { text-align: center; color: var(--muted); font-size: .8rem; padding: 24px 0 40px }
+  .note { background: rgba(234,179,8,.08); border: 1px solid rgba(234,179,8,.2); border-radius: 8px; padding: 12px 16px; font-size: .9rem; color: #fde68a; margin-top: 12px }
+  .stat { display: inline-block; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 16px; margin: 4px; text-align: center }
+  .stat .num { font-size: 1.4rem; font-weight: 700; color: var(--accent) }
+  .stat .desc { font-size: .75rem; color: var(--muted) }
+  .stats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 12px 0 }
+  @media print { body { background: #fff; color: #000 } section { background: #f8fafc; border-color: #e2e8f0 } .stat { background: #f1f5f9 } .rule { border-left-color: #2563eb } .sign.red { background: #fef2f2 } .sign.green { background: #f0fdf4 } th { color: #2563eb } .note { color: #92400e } footer { color: #64748b } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="flag-badge">
+    <span>&#127466;&#127464; ЛАТВИЯ</span>
+    <span>&#127466;&#127482; ЕВРОПЕЙСКИЙ СОЮЗ</span>
+  </div>
+  <h1>Руководство по защите от мошенников</h1>
+  <p>Телефонное и интернет-мошенничество: как распознать, противостоять и защитить себя &bull; Издание 2026</p>
+</header>
+
+<!-- СТАТИСТИКА -->
+<section>
+<h2><span class="icon">&#128202;</span> Мошенничество в Латвии — цифры</h2>
+<div class="stats">
+  <div class="stat"><div class="num">&euro;23,7 млн</div><div class="desc">потеряно жертвами в 2023 году</div></div>
+  <div class="stat"><div class="num">71%</div><div class="desc">жителей сталкивались с телефонным мошенничеством (2025)</div></div>
+  <div class="stat"><div class="num">&euro;4,16 млн</div><div class="desc">потеряно за 1-й квартал 2026</div></div>
+  <div class="stat"><div class="num">637</div><div class="desc">случаев телефонного мошенничества в Q1 2026</div></div>
+  <div class="stat"><div class="num">2,4 млн</div><div class="desc">мошеннических звонков заблокировано оператором Bite в 2025 г.</div></div>
+</div>
+<p style="color:var(--muted);font-size:.9rem;text-align:center">Источники: Finance Latvia Association, Госполиция, опрос Luminor/Norstat</p>
+</section>
+
+<!-- РАСПОЗНАВАНИЕ -->
+<section>
+<h2><span class="icon">&#9888;</span> Как распознать мошенника</h2>
+
+<div class="signs">
+  <div class="sign red">
+    <div class="label">КРАСНЫЕ ФЛАГИ — МОШЕННИК</div>
+    <p>&#8226; Звонок неожиданный, вас торопят</p>
+    <p>&#8226; Просят назвать PIN от Smart-ID / Mobile-ID, код карты или код из SMS</p>
+    <p>&#8226; Требуют перевести деньги на «безопасный счёт»</p>
+    <p>&#8226; Оплата только: подарочные карты, криптовалюта, денежный перевод</p>
+    <p>&#8226; Угрожают: «счёт заблокируют», «возбудят уголовное дело»</p>
+    <p>&#8226; Просят установить AnyDesk, HopToDesk или подобную программу удалённого доступа</p>
+    <p>&#8226; Переводят разговор в WhatsApp / Messenger</p>
+    <p>&#8226; Просят никому не рассказывать о разговоре</p>
+  </div>
+  <div class="sign green">
+    <div class="label">ЧТО ДЕЛАЮТ НАСТОЯЩИЕ БАНКИ И ОРГАНЫ</div>
+    <p>&#8226; Никогда не просят PIN, коды Smart-ID или полный номер карты</p>
+    <p>&#8226; Никогда не предлагают «безопасный счёт»</p>
+    <p>&#8226; Не требуют срочных переводов по телефону</p>
+    <p>&#8226; Не угрожают и не оказывают давление</p>
+    <p>&#8226; Не просят устанавливать программы удалённого доступа</p>
+    <p>&#8226; Говорят на латышском и знают ваше имя</p>
+    <p>&#8226; Никогда не пишут в WhatsApp / Messenger</p>
+  </div>
+</div>
+</section>
+
+<!-- ФРАЗЫ -->
+<section>
+<h2><span class="icon">&#128227;</span> 10 фраз, по которым можно сразу узнать мошенника</h2>
+<ul class="phrases">
+  <li><span class="flag-badge" style="margin:0;display:inline;font-size:.75rem"><span style="padding:1px 6px;font-size:.65rem">МОШЕННИК</span></span> <strong>«Я из службы безопасности банка»</strong> — настоящие банки в Латвии и ЕС так не звонят</li>
+  <li><span class="flag-badge" style="margin:0;display:inline;font-size:.75rem"><span style="padding:1px 6px;font-size:.65rem">МОШЕННИК</span></span> <strong>«Подтвердите PIN от Smart-ID / Mobile-ID прямо сейчас»</strong> — никогда не называйте PIN по телефону</li>
+  <li><span class="flag-badge" style="margin:0;display:inline;font-size:.75rem"><span style="padding:1px 6px;font-size:.65rem">МОШЕННИК</span></span> <strong>«Переведите деньги на безопасный / резервный счёт»</strong> — таких счетов не существует</li>
+  <li><span class="flag-badge" style="margin:0;display:inline;font-size:.75rem"><span style="padding:1px 6px;font-size:.65rem">МОШЕННИК</span></span> <strong>«На ваше имя пытаются оформить кредит»</strong> — классический запугивающий сценарий</li>
+  <li><span class="flag-badge" style="margin:0;display:inline;font-size:.75rem"><span style="padding:1px 6px;font-size:.65rem">МОШЕННИК</span></span> <strong>«Срок действия вашей SIM-карты истекает — продлите сейчас»</strong> — массовый обзвон, популярный в Латвии</li>
+  <li><span class="flag-badge" style="margin:0;display:inline;font-size:.75rem"><span style="padding:1px 6px;font-size:.65rem">МОШЕННИК</span></span> <strong>«Установите это приложение, чтобы помочь поймать мошенников»</strong> — AnyDesk / HopToDesk даёт им полный доступ к вашему устройству</li>
+  <li><span class="flag-badge" style="margin:0;display:inline;font-size:.75rem"><span style="padding:1px 6px;font-size:.65rem">МОШЕННИК</span></span> <strong>«Я звоню из полиции / Госполиции / Europol»</strong> — правоохранители никогда не просят деньги или коды по телефону</li>
+  <li><span class="flag-badge" style="margin:0;display:inline;font-size:.75rem"><span style="padding:1px 6px;font-size:.65rem">МОШЕННИК</span></span> <strong>«Вам положена компенсация / выплата — заплатите пошлину»</strong> — предоплата = 100% обман</li>
+  <li><span class="flag-badge" style="margin:0;display:inline;font-size:.75rem"><span style="padding:1px 6px;font-size:.65rem">МОШЕННИК</span></span> <strong>«Продолжим разговор в WhatsApp»</strong> — настоящие организации так не делают</li>
+  <li><span class="flag-badge" style="margin:0;display:inline;font-size:.75rem"><span style="padding:1px 6px;font-size:.65rem">МОШЕННИК</span></span> <strong>«Никому не говорите об этом звонке»</strong> — изоляция жертвы — ключевой приём мошенников</li>
+</ul>
+</section>
+
+<!-- ЗОЛОТЫЕ ПРАВИЛА -->
+<section>
+<h2><span class="icon">&#128737;</span> 5 золотых правил защиты</h2>
+
+<div class="rule">
+  <h3>&#9312; Никому не называйте коды и пароли по телефону</h3>
+  <p>PIN от Smart-ID, PIN от Mobile-ID, CVC/CVV2 карты, коды из SMS, пароли от интернет-банка — ни одна организация не будет спрашивать их по телефону, email или в SMS. Кто просит — тот мошенник.</p>
+</div>
+
+<div class="rule">
+  <h3>&#9313; Положите трубку и перезвоните сами</h3>
+  <p>Если звонящий представился сотрудником банка, полиции или коммунальной службы — прервите разговор. Сами наберите официальный номер с обратной стороны карты, с сайта банка или из последней выписки. Не используйте номер, который дал звонящий.</p>
+</div>
+
+<div class="rule">
+  <h3>&#9314; Не переходите по ссылкам из SMS и email</h3>
+  <p>Мошенники присылают ссылки на поддельные сайты, которые выглядят в точности как настоящие (Swedbank, SEB, Luminor и др.). Всегда заходите через официальное приложение или вручную набирайте адрес сайта.</p>
+</div>
+
+<div class="rule">
+  <h3>&#9315; Договоритесь о кодовом слове с близкими</h3>
+  <p>ИИ-клонирование голоса набирает обороты. Придумайте секретное слово с семьёй. Если «родственник» звонит в панике и просит денег — попросите назвать кодовое слово. Не может — значит, мошенник.</p>
+</div>
+
+<div class="rule">
+  <h3>&#9316; Не платите необычными способами</h3>
+  <p>Подарочные карты (Steam, iTunes и др.), криптовалюта, Western Union, MoneyGram, наличные через курьера — это способы оплаты, которые используют только мошенники. Ни одна настоящая компания или госорган их не требует.</p>
+</div>
+</section>
+
+<!-- ПОШАГОВЫЙ ПЛАН -->
+<section>
+<h2><span class="icon">&#128200;</span> Что делать — пошаговая инструкция</h2>
+<div class="steps">
+  <div class="step">
+    <strong>Подозрительный звонок? Немедленно положите трубку.</strong>
+    <p>Не спорьте, не отвечайте на вопросы, не нажимайте «1, чтобы связаться с оператором». Просто повесьте трубку. Любое взаимодействие подтверждает, что номер активен.</p>
+  </div>
+  <div class="step">
+    <strong>Заблокируйте номер и сообщите о нём</strong>
+    <p>Заблокируйте номер в телефоне. Сообщите о мошенническом номере своему мобильному оператору и Госполиции (vp.gov.lv). Подозрительные SMS можно пересылать на 7726 (бесплатно).</p>
+  </div>
+  <div class="step">
+    <strong>Проверьте информацию самостоятельно</strong>
+    <p>Позвоните в банк по номеру с официального сайта или из приложения. Используйте контакты, которые вы знаете, а не те, что дал звонящий.</p>
+  </div>
+  <div class="step">
+    <strong>Если вы уже перевели деньги или сообщили данные</strong>
+    <p>1. Немедленно позвоните в банк — заблокировать карты и отменить транзакции.<br>2. Сохраните все доказательства (скриншоты, записи звонков, SMS).<br>3. Подайте заявление в Госполицию (vp.gov.lv).<br>4. Сообщите в CERT (cert@cert.lv).</p>
+  </div>
+  <div class="step">
+    <strong>Расскажите тому, кому доверяете</strong>
+    <p>Мошенники рассчитывают на тайну. Поговорите с другом или родственником — взгляд со стороны поможет увидеть обман.</p>
+  </div>
+</div>
+</section>
+
+<!-- ТЕХНИЧЕСКАЯ ЗАЩИТА -->
+<section>
+<h2><span class="icon">&#128295;</span> Технические меры защиты</h2>
+<table>
+  <tr><th>Мера</th><th>Действие</th></tr>
+  <tr><td>Определитель номера и блокировка спама</td><td>Подключите бесплатную антиспам-услугу вашего оператора (Bite, LMT, Tele2 — все предлагают). Установите приложения для блокировки звонков.</td></tr>
+  <tr><td>Безопасность Smart-ID / Mobile-ID</td><td>Никогда не вводите PIN1/PIN2 по чьей-либо просьбе по телефону. Вводите коды только когда вы САМИ инициировали действие.</td></tr>
+  <tr><td>Двухфакторная аутентификация (2FA)</td><td>Используйте приложения-аутентификаторы (Google Authenticator, Microsoft Authenticator) вместо SMS-кодов, когда возможно.</td></tr>
+  <tr><td>Регистрация SIM-карт (с октября 2026)</td><td>С 1 октября 2026 все предоплаченные SIM-карты в Латвии должны быть зарегистрированы. Это поможет полиции отслеживать мошенников.</td></tr>
+  <tr><td>Push-уведомления банка</td><td>Включите мгновенные уведомления о всех операциях. Вы сразу заметите несанкционированный платёж.</td></tr>
+  <tr><td>Запрет на удалённый доступ</td><td>Никогда не устанавливайте AnyDesk, HopToDesk, TeamViewer или аналоги по просьбе звонящего.</td></tr>
+  <tr><td>Проверка подмены номера</td><td>Если звонок выглядит как местный латвийский номер, но качество связи плохое или у звонящего иностранный акцент — будьте осторожны. С января 2026 латвийские операторы блокируют многие подменные номера из-за границы.</td></tr>
+</table>
+</section>
+
+<!-- СХЕМЫ -->
+<section>
+<h2><span class="icon">&#128270;</span> Основные схемы мошенничества</h2>
+<table>
+  <tr><th>Схема</th><th>Признаки</th><th>Защита</th></tr>
+  <tr><td>Звонок из «службы безопасности банка»</td><td>Говорят о подозрительной операции, просят коды / PIN / данные карты</td><td>Положить трубку. Позвонить в банк по официальному номеру.</td></tr>
+  <tr><td>Звонок из «Фонда здоровья» / возврат пособия</td><td>«У вас есть неиспользованные медицинские выплаты — мы их переведём». Затем просят подтвердить Smart-ID.</td><td>Положить трубку. Фонд здоровья никогда не звонит с предложением возврата.</td></tr>
+  <tr><td>Продление SIM-карты</td><td>«Срок действия вашей SIM-карты истекает» — просят подтвердить код</td><td>Связаться с оператором напрямую через официальную поддержку.</td></tr>
+  <tr><td>Звонок от «полиции» / «следователя»</td><td>«Мы расследуем ваше дело / отмывание денег». Могут показать фальшивое удостоверение по видеосвязи.</td><td>Настоящая полиция никогда не просит переводы и коды по телефону. Положить трубку, позвонить 110.</td></tr>
+  <tr><td>«Безопасный счёт»</td><td>Просят взять кредит и перевести всё на «специальный счёт»</td><td>Таких счетов не существует. Немедленно прекратить разговор.</td></tr>
+  <tr><td>Фишинг в SMS / email</td><td>«Ваш банковский счёт заблокирован», «Обновите Smart-ID» — ссылка на поддельный сайт</td><td>Никогда не переходить. Проверить через официальное приложение банка. Переслать SMS на 7726.</td></tr>
+  <tr><td>ИИ-клон голоса / «родственник в беде»</td><td>Звонок от «родственника» в панике: «Я попал в беду, срочно нужны деньги»</td><td>Перезвонить родственнику на его настоящий номер. Спросить кодовое слово.</td></tr>
+  <tr><td>Фальшивые инвестиции</td><td>«Гарантированная высокая доходность», «ограниченное предложение», агрессивные продажи</td><td>Проверить через Finance Latvia Association или Банк Латвии. Слишком хорошо, чтобы быть правдой — значит обман.</td></tr>
+  <tr><td>Удалённый доступ через AnyDesk</td><td>Просят установить AnyDesk, HopToDesk, TeamViewer для «помощи»</td><td>Никогда не устанавливать программы удалённого доступа по просьбе звонящего. После установки мошенники управляют вашим устройством.</td></tr>
+  <tr><td>Фальшивый интернет-магазин / объявление</td><td>Слишком низкая цена, полная предоплата, сайт выглядит непрофессионально</td><td>Платить кредитной картой (возможен чарджбэк) или при получении. Проверить отзывы на независимых сайтах.</td></tr>
+</table>
+</section>
+
+<!-- КОНТАКТЫ -->
+<section>
+<h2><span class="icon">&#128222;</span> Полезные контакты — Латвия и ЕС</h2>
+<table>
+  <tr><th>Организация</th><th>Контакты</th></tr>
+  <tr><td>Valsts policija (Госполиция Латвии)</td><td>110 (экстренный) &bull; vp.gov.lv — подать заявление онлайн</td></tr>
+  <tr><td>CERT.LV — реагирование на киберинциденты</td><td>cert@cert.lv &bull; cert.lv</td></tr>
+  <tr><td>Finance Latvia Association (FNA)</td><td>fna.lv — статистика и советы по защите</td></tr>
+  <tr><td>Банк Латвии</td><td>bank.lv — информация для потребителей</td></tr>
+  <tr><td>Горячая линия вашего банка</td><td>Звонить по номеру с обратной стороны карты или из официального приложения</td></tr>
+  <tr><td>SEB banka (поддержка по мошенничеству)</td><td>+371 26668777 / +371 67779988 (срочно)</td></tr>
+  <tr><td>Swedbank (поддержка по мошенничеству)</td><td>+371 67444444</td></tr>
+  <tr><td>Luminor bank (поддержка по мошенничеству)</td><td>+371 67171111</td></tr>
+  <tr><td>Citadele bank (поддержка по мошенничеству)</td><td>+371 67010101</td></tr>
+  <tr><td>Сообщить о мошенническом SMS</td><td>Перешлите на 7726 (бесплатный короткий номер на всех латвийских сетях)</td></tr>
+  <tr><td>Европейский Центр потребителей (ECC Латвия)</td><td>ecclv@ptac.gov.lv &bull; ec.europa.eu/consumers</td></tr>
+  <tr><td>EC3 — Европейский центр киберпреступности</td><td>europol.europa.eu</td></tr>
+  <tr><td>ENISA — агентство кибербезопасности ЕС</td><td>enisa.europa.eu — руководства и лучшие практики</td></tr>
+</table>
+
+<div class="note">
+  <strong>Важно:</strong> С января 2026 года латвийские мобильные операторы блокируют многие звонки с иностранных номеров, подделанных под местные латвийские. Если звонящий представляется сотрудником местной организации, но вызов идёт из-за границы — это сильный признак мошенничества.
+</div>
+</section>
+
+<!-- РЕСУРСЫ -->
+<section>
+<h2><span class="icon">&#128218;</span> Официальные ресурсы</h2>
+<div class="resources">
+  <a href="https://www.vp.gov.lv" target="_blank">Valsts policija (Госполиция)</a>
+  <a href="https://www.cert.lv" target="_blank">CERT.LV — кибербезопасность</a>
+  <a href="https://www.fna.lv" target="_blank">Finance Latvia Association</a>
+  <a href="https://www.bank.lv" target="_blank">Банк Латвии</a>
+  <a href="https://www.seb.lv/en/infohub/financial-scam-traps-how-protect-yourself" target="_blank">SEB — руководство по защите</a>
+  <a href="https://eng.lsm.lv" target="_blank">LSM — новости Латвии</a>
+  <a href="https://www.enisa.europa.eu" target="_blank">ENISA — кибербезопасность ЕС</a>
+  <a href="https://www.europol.europa.eu" target="_blank">Europol — EC3</a>
+  <a href="https://www.itvaatlik.ee/en/common-scams/scam-calls/" target="_blank">IT Vaatlik — мошеннические звонки (EE)</a>
+  <a href="https://consumer.ftc.gov/articles/phone-scams" target="_blank">FTC — руководство по телефонным scams</a>
+</div>
+</section>
+
+<!-- КОРОТКО -->
+<section style="background: rgba(34,197,94,.06); border-color: rgba(34,197,94,.2)">
+<h2><span class="icon">&#9989;</span> Запомните главное</h2>
+<table>
+  <tr><th>НИКОГДА</th><th>ВСЕГДА</th></tr>
+  <tr><td>Не называйте PIN от Smart-ID / Mobile-ID по телефону</td><td>Кладите трубку, если что-то кажется подозрительным</td></tr>
+  <tr><td>Не переводите на «безопасные счета»</td><td>Звоните в банк по официальному номеру для проверки</td></tr>
+  <tr><td>Не переходите по ссылкам из SMS и email</td><td>Пользуйтесь официальными приложениями и сайтами банков</td></tr>
+  <tr><td>Не устанавливайте AnyDesk / TeamViewer по просьбе звонящего</td><td>Подключите бесплатную антиспам-услугу вашего оператора</td></tr>
+  <tr><td>Не платите подарочными картами, криптовалютой или переводами</td><td>Используйте 2FA через приложение-аутентификатор</td></tr>
+  <tr><td>Не храните всё в тайне — советуйтесь с близкими</td><td>Сохраняйте доказательства и заявляйте в полицию (110 / vp.gov.lv)</td></tr>
+</table>
+</section>
+
+<section style="text-align:center;padding:16px">
+  <p style="color:var(--muted);font-size:.95rem">
+    Создано в образовательных целях на основе данных Valsts policija, Finance Latvia Association, CERT.LV, SEB, Luminor, FTC и ENISA.<br>
+    Если вы стали жертвой мошенников — немедленно звоните <strong>110</strong> или пишите на <strong>vp.gov.lv</strong>.
+  </p>
+</section>
+
+</div>
+</body>
+</html>
