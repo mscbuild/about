@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Как распознать дипфейк: признаки, экспресс-проверка в прямом эфире и сервисы для выявления сгенерированных видео, изображений и аудио.">
+<title>Как распознать дипфейк — чек-лист</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/manrope@latest/index.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/css/unbounded@latest/index.css">
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#f4f1ec;
+    --surface:#ffffff;
+    --ink:#161513;
+    --muted:#6d675f;
+    --accent:#e2481d;
+    --accent-dark:#c1121f;
+    --border:#e5ded4;
+    --soft:#fbeae3;
+    --header-h:72px;
+  }
+  html{scroll-behavior:smooth}
+  body{font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;overflow-x:hidden}
+  body.no-scroll{overflow:hidden}
+  .container{width:min(1120px,92%);margin-inline:auto}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  button{font-family:inherit}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+  /* ---------- HEADER ---------- */
+  .site-header{position:sticky;top:0;z-index:50;background:rgba(244,241,236,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);transition:box-shadow .3s}
+  .site-header.scrolled{box-shadow:0 8px 30px rgba(20,18,12,.08)}
+  .header-inner{display:flex;align-items:center;justify-content:space-between;height:var(--header-h);gap:24px}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:'Unbounded',sans-serif;font-weight:700;font-size:1.02rem;letter-spacing:.02em}
+  .logo-mark{width:34px;height:34px;flex:none}
+  .nav{display:flex;gap:4px;align-items:center}
+  .nav a{padding:10px 14px;border-radius:999px;text-decoration:none;font-weight:700;font-size:.9rem;transition:background .25s,color .25s;white-space:nowrap}
+  .nav a:hover{background:#e9e2d8}
+  .nav a.cta{background:var(--ink);color:#fff}
+  .nav a.cta:hover{background:var(--accent)}
+  .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:10px;z-index:70;position:relative}
+  .burger-line{width:26px;height:3px;background:var(--ink);border-radius:3px;transition:transform .35s,opacity .3s,background .3s}
+  .burger.open .burger-line:nth-child(1){transform:translateY(8px) rotate(45deg)}
+  .burger.open .burger-line:nth-child(2){opacity:0}
+  .burger.open .burger-line:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+  .burger.open .burger-line{background:#fff}
+  .overlay{position:fixed;inset:0;background:rgba(10,8,6,.5);opacity:0;pointer-events:none;transition:opacity .35s;z-index:55}
+  .overlay.show{opacity:1;pointer-events:auto}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:76px 0 44px}
+  .badge{display:inline-flex;align-items:center;gap:8px;background:#ece5da;border:1px solid var(--border);border-radius:999px;padding:7px 16px;font-size:.78rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+  .badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent);animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.4}}
+  .hero h1{font-family:'Unbounded',sans-serif;font-weight:800;text-transform:uppercase;font-size:clamp(1.75rem,5vw,3.5rem);line-height:1.1;letter-spacing:-.01em;max-width:16ch}
+  .glitch{position:relative;display:inline-block;color:var(--accent)}
+  .glitch::before,.glitch::after{content:attr(data-text);position:absolute;left:0;top:0;width:100%;opacity:0;pointer-events:none}
+  .glitch::before{color:var(--accent-dark);clip-path:inset(0 0 52% 0);animation:glitchShift 5s infinite}
+  .glitch::after{color:#2ea8ff;clip-path:inset(52% 0 0 0);animation:glitchShift 5s infinite reverse}
+  @keyframes glitchShift{
+    0%,90%,100%{opacity:0;transform:none}
+    91%{opacity:.85;transform:translate(-4px,-2px)}
+    93%{opacity:.85;transform:translate(4px,2px)}
+    95%{opacity:.85;transform:translate(-3px,1px)}
+    97%{opacity:0;transform:none}
+  }
+  .hero p{margin-top:20px;max-width:52ch;color:var(--muted);font-size:1.06rem;font-weight:600}
+
+  /* ---------- SIGNS ---------- */
+  .signs{padding:26px 0 64px}
+  .signs-grid{display:grid;grid-template-columns:1.02fr 1fr;gap:56px;align-items:start}
+  .portrait{position:relative;border-radius:24px;overflow:hidden;box-shadow:0 26px 60px rgba(20,18,12,.2);background:#d8d2c8}
+  .portrait img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/4.4}
+  .portrait::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(255,255,255,.04) 3px 4px);pointer-events:none}
+  .live-tag{position:absolute;top:16px;left:16px;display:flex;align-items:center;gap:8px;background:rgba(20,18,12,.6);color:#fff;border-radius:999px;padding:6px 14px;font-size:.72rem;font-weight:800;letter-spacing:.14em;backdrop-filter:blur(6px)}
+  .live-tag i{width:8px;height:8px;border-radius:50%;background:#ff3b30;animation:pulse 1.4s infinite}
+  .call-bar{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);display:flex;gap:12px}
+  .call-btn{width:48px;height:48px;border-radius:50%;border:none;display:grid;place-items:center;background:rgba(20,18,12,.55);color:#fff;backdrop-filter:blur(6px);cursor:pointer;transition:transform .25s,background .25s}
+  .call-btn svg{width:20px;height:20px}
+  .call-btn:hover{transform:translateY(-3px)}
+  .call-btn.end{background:var(--accent-dark)}
+  .col-title{font-family:'Unbounded',sans-serif;font-size:1.15rem;text-transform:uppercase;font-weight:700;margin-bottom:26px;display:flex;align-items:center;gap:14px}
+  .col-title::after{content:"";height:2px;flex:1;background:var(--border)}
+  .sign{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--border);align-items:start}
+  .sign:first-of-type{padding-top:0}
+  .sign:last-of-type{border-bottom:none}
+  .sign-icon{width:64px;height:64px;border-radius:16px;background:var(--surface);border:1px solid var(--border);display:grid;place-items:center;color:var(--ink);transition:transform .3s,border-color .3s}
+  .sign:hover .sign-icon{transform:rotate(-4deg) scale(1.06);border-color:var(--accent)}
+  .sign-icon svg{width:38px;height:38px}
+  .sign h3{font-family:'Unbounded',sans-serif;color:var(--accent);font-size:.95rem;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+  .sign p{color:#3c3833;font-weight:600;font-size:.98rem}
+
+  /* ---------- CHECK BANNER ---------- */
+  .check{padding:10px 0 64px}
+  .check-card{display:flex;gap:22px;align-items:flex-start;background:var(--surface);border:2px solid var(--accent);border-radius:22px;padding:30px 32px;box-shadow:0 18px 44px rgba(226,72,29,.12)}
+  .check-card .excl{flex:0 0 46px;width:46px;height:46px}
+  .check-card p{font-weight:800;text-transform:uppercase;letter-spacing:.03em;font-size:1.02rem;line-height:1.5}
+
+  /* ---------- LIVE CHECK ---------- */
+  .live{padding:0 0 64px}
+  .section-intro{color:var(--muted);font-weight:600;max-width:70ch;margin:-6px 0 30px;font-size:1rem}
+  .live-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+  .live-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
+  .live-card:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(20,18,12,.12)}
+  .live-card::before{content:attr(data-num);position:absolute;top:16px;right:20px;font-family:'Unbounded',sans-serif;font-weight:800;font-size:2.3rem;color:#efe8dd;line-height:1}
+  .live-icon{width:58px;height:58px;border-radius:16px;background:var(--soft);color:var(--accent);display:grid;place-items:center;margin-bottom:18px}
+  .live-icon svg{width:32px;height:32px}
+  .live-card h3{font-family:'Unbounded',sans-serif;font-size:1rem;text-transform:uppercase;margin-bottom:10px;padding-right:44px}
+  .live-card p{color:var(--muted);font-weight:600;font-size:.95rem}
+
+  /* ---------- SERVICES ---------- */
+  .services{padding:0 0 64px}
+  .services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px}
+  .svc-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:12px;transition:transform .3s,box-shadow .3s}
+  .svc-card:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(20,18,12,.12)}
+  .svc-head{display:flex;align-items:baseline;gap:12px}
+  .svc-num{font-family:'Unbounded',sans-serif;color:var(--accent);font-weight:800;font-size:.85rem}
+  .svc-card h3{font-family:'Unbounded',sans-serif;font-size:1.02rem;line-height:1.3}
+  .svc-card p{color:var(--muted);font-weight:600;font-size:.95rem;flex:1}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{background:#efe8dd;border-radius:999px;padding:5px 12px;font-size:.7rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#7a7266}
+  .chip.hot{background:var(--soft);color:var(--accent)}
+
+  .sub-title{font-family:'Unbounded',sans-serif;font-size:1.05rem;text-transform:uppercase;margin:52px 0 20px;display:flex;align-items:center;gap:14px}
+  .sub-title::after{content:"";height:2px;flex:1;background:var(--border)}
+  .audio-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start}
+  .audio-text p{color:var(--muted);font-weight:600;margin-bottom:14px;font-size:.98rem}
+  .audio-cards{display:grid;gap:16px}
+  .audio-card{display:flex;gap:16px;align-items:center;background:var(--ink);color:#f4f1ec;border-radius:18px;padding:20px 22px;transition:transform .3s}
+  .audio-card:hover{transform:translateY(-4px)}
+  .a-icon{width:46px;height:46px;flex:none;border-radius:12px;background:rgba(226,72,29,.2);color:#ff7a52;display:grid;place-items:center}
+  .a-icon svg{width:24px;height:24px}
+  .audio-card h4{font-family:'Unbounded',sans-serif;font-size:.98rem;margin-bottom:4px}
+  .audio-card small{font-size:.85rem;color:#b9b2a8;font-weight:600;display:block}
+
+  .note{display:flex;gap:12px;align-items:center;color:var(--muted);font-size:.92rem;font-weight:600;padding:26px 6px 0;border-top:1px solid var(--border);margin-top:52px}
+  .note svg{width:22px;height:22px;flex:none;color:var(--muted)}
+
+  /* ---------- FOOTER ---------- */
+  .site-footer{background:var(--ink);color:#b9b2a8;padding:36px 0;margin-top:64px}
+  .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+  .footer-logo{display:flex;align-items:center;gap:10px;color:#fff;font-family:'Unbounded',sans-serif;font-weight:700;font-size:.95rem}
+  .footer-inner small{font-size:.85rem}
+
+  /* ---------- REVEAL ---------- */
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:1020px){
+    .nav a{padding:10px 10px;font-size:.85rem}
+  }
+  @media(max-width:960px){
+    .signs-grid{grid-template-columns:1fr;gap:40px}
+    .portrait img{aspect-ratio:4/3.4}
+    .audio-wrap{grid-template-columns:1fr}
+  }
+  @media(max-width:880px){
+    .burger{display:flex}
+    .nav{position:fixed;top:0;right:0;height:100dvh;width:min(320px,86%);background:var(--ink);flex-direction:column;align-items:stretch;padding:100px 28px 36px;gap:6px;transform:translateX(105%);transition:transform .45s cubic-bezier(.22,1,.36,1);z-index:60;box-shadow:-20px 0 60px rgba(0,0,0,.35)}
+    .nav.open{transform:translateX(0)}
+    .nav a{color:#f4f1ec;font-size:1.08rem;border-radius:14px;padding:14px 18px;white-space:normal}
+    .nav a:hover{background:rgba(255,255,255,.08)}
+    .nav a.cta{background:var(--accent);color:#fff;margin-top:10px;text-align:center}
+  }
+  @media(max-width:560px){
+    .hero{padding-top:52px}
+    .check-card{flex-direction:column;gap:16px;padding:24px}
+    .sign{grid-template-columns:52px 1fr;gap:16px}
+    .sign-icon{width:52px;height:52px;border-radius:14px}
+    .sign-icon svg{width:32px;height:32px}
+    .footer-inner{justify-content:center;text-align:center}
+  }
+</style>
+</head>
+<body id="top">
+
+<header class="site-header" id="header">
+  <div class="container header-inner">
+    <a class="logo" href="#top" aria-label="mscbuild — на главную">
+      <svg class="logo-mark" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+        <path d="M32 10a16.5 16.5 0 1 0 0 24" stroke="#c1121f" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="8.5 4.5"/>
+        <circle cx="26" cy="22" r="4" fill="#161513"/>
+      </svg>
+      mscbuild
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Основная навигация">
+      <a href="#signs">Признаки</a>
+      <a href="#check">Проверка</a>
+      <a href="#live">Прямой эфир</a>
+      <a href="#services">Сервисы</a>
+      <a href="#services" class="cta">Инструменты</a>
+    </nav>
+
+    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav">
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+    </button>
+  </div>
+</header>
+<div class="overlay" id="overlay"></div>
+
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <span class="badge reveal">чек-лист видеозвонка</span>
+      <h1 class="reveal">Как распознать <span class="glitch" data-text="дипфейк">дипфейк</span></h1>
+      <p class="reveal">Ключевые признаки синтетического видео, простые приёмы проверки собеседника в прямом эфире и сервисы, которым можно доверить анализ.</p>
+    </div>
+  </section>
+
+  <!-- SIGNS -->
+  <section class="signs" id="signs">
+    <div class="container signs-grid">
+
+      <div class="portrait reveal">
+        <img src="https://image.qwenlm.ai/public_source/ac478a4d-7a77-42a9-a63b-930f26bc38da/10702b40c-b5f6-462d-8e3d-aa8aa3a6408f.png" alt="Мужчина в очках, часть изображения распадается на пиксели — эффект дипфейка">
+        <span class="live-tag"><i></i>VIDEO CALL</span>
+        <div class="call-bar">
+          <button class="call-btn" type="button" aria-label="Микрофон">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg>
+          </button>
+          <button class="call-btn" type="button" aria-label="Камера">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 7a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/><path d="M16 10.5 21 8v8l-5-2.5v-3z"/></svg>
+          </button>
+          <button class="call-btn end" type="button" aria-label="Завершить звонок">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 9c-4.2 0-8 1.7-10.5 4.4L4 16c2-2.2 4.9-3.5 8-3.5s6 1.3 8 3.5l2.5-2.6C20 10.7 16.2 9 12 9z"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="col-title reveal">Основные признаки</h2>
+
+        <article class="sign reveal">
+          <div class="sign-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 41c-3-19 6-30 15-30s18 11 15 30"/>
+              <path d="M21 42c2.5-3.5 2.5-7 0-10.5"/>
+              <path d="M28 44c2.5-3.5 2.5-8 0-11.5"/>
+              <path d="M35 44c2.5-3.5 2.5-8 0-11.5"/>
+              <path d="M42 42c2.5-3.5 2.5-7 0-10.5"/>
+              <path d="M12 47c-2.5 3-2.5 6.5 0 9.5"/>
+              <path d="M52 47c2.5 3 2.5 6.5 0 9.5"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Волосы</h3>
+            <p>Неестественно двигаются единым целым — как «слитая» маска, а не отдельные пряди.</p>
+          </div>
+        </article>
+
+        <article class="sign reveal">
+          <div class="sign-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+              <circle cx="21" cy="37" r="9.5"/>
+              <circle cx="43" cy="37" r="9.5"/>
+              <path d="M30.5 35c.8-2 2.2-2 3 0"/>
+              <path d="M11.5 35 7 30.5"/>
+              <path d="M52.5 35 57 30.5"/>
+              <path d="M40.5 34.5l5 5" opacity=".5"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Лицо</h3>
+            <p>Плывут контуры, зубы и линия волос — особенно при поворотах головы.</p>
+          </div>
+        </article>
+
+        <article class="sign reveal">
+          <div class="sign-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="5 5">
+              <path d="M41 10c-11-2-20 5-21 15 0 4 1 7 3 10l-6 9h6v7c0 3 2 5 5 5h6v8"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Движения</h3>
+            <p>Волосы, серьги и складки одежды реагируют неестественно на движение тела.</p>
+          </div>
+        </article>
+
+        <article class="sign reveal">
+          <div class="sign-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+              <path d="M10 28v8"/><path d="M17 24v16"/><path d="M24 18v28"/><path d="M31 26v12"/>
+              <path d="M38 12v40" stroke="#e2481d"/><path d="M45 24v16"/><path d="M52 20v24"/><path d="M58 29v6"/>
+            </svg>
+          </div>
+          <div>
+            <h3>Голос</h3>
+            <p>Ровная речь, странные паузы и повторяющийся фоновый шум.</p>
+          </div>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CHECK BANNER -->
+  <section class="check" id="check">
+    <div class="container">
+      <h2 class="col-title reveal">Экспресс-проверка</h2>
+      <div class="check-card reveal">
+        <svg class="excl" viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="24" cy="24" r="22" fill="#e2481d"/>
+          <rect x="21.4" y="10" width="5.2" height="18" rx="2.6" fill="#fff"/>
+          <circle cx="24" cy="35" r="3.4" fill="#fff"/>
+        </svg>
+        <p>Попросите собеседника неожиданно повернуться в профиль, провести рукой перед лицом или повторить случайную фразу</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE CHECK -->
+  <section class="live" id="live">
+    <div class="container">
+      <h2 class="col-title reveal">Как легко проверить собеседника в прямом эфире</h2>
+      <p class="section-intro reveal">Если во время видеозвонка вас просят о срочном переводе денег, выдаче паролей или совершении других подозрительных действий, используйте эти простые приёмы:</p>
+
+      <div class="live-grid">
+        <article class="live-card reveal" data-num="01">
+          <div class="live-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 34V16a4 4 0 0 1 8 0v14"/>
+              <path d="M30 30V12a4 4 0 0 1 8 0v18"/>
+              <path d="M38 30V16a4 4 0 0 1 8 0v18"/>
+              <path d="M46 34v-4a4 4 0 0 1 8 0v12c0 10-7 16-16 16h-4c-6 0-10-3-14-9l-6-9c-1.5-2.4-.6-5 1.6-6.2 2-1.1 4.4-.4 5.7 1.6L22 40"/>
+            </svg>
+          </div>
+          <h3>Проверка жестом</h3>
+          <p>Попросите собеседника приложить ладонь ко лбу или провести рукой поперёк лица. Из-за особенностей наложения цифровой маски рука начнёт «пропадать», искажаться или неестественно проходить сквозь синтетическое лицо.</p>
+        </article>
+
+        <article class="live-card reveal" data-num="02">
+          <div class="live-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="32" cy="22" r="9"/>
+              <path d="M18 50c2-8 8-12 14-12s12 4 14 12"/>
+              <path d="M50 29c3-3 3-8 0-11M50 18h-5M50 18v5"/>
+              <path d="M14 29c-3-3-3-8 0-11M14 18h5M14 18v5"/>
+            </svg>
+          </div>
+          <h3>Смена ракурса</h3>
+          <p>Попросите человека посмотреть в сторону, наклонить голову или повернуться в профиль. Качественные модели тренируются на анфасных фото, поэтому при повороте на 90 градусов дипфейк начнёт искажаться или терять очертания.</p>
+        </article>
+
+        <article class="live-card reveal" data-num="03">
+          <div class="live-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 16a4 4 0 0 1 4-4h32a4 4 0 0 1 4 4v18a4 4 0 0 1-4 4H30l-9 8v-8h-5a4 4 0 0 1-4-4V16z"/>
+              <path d="M32 16.5a5.5 5.5 0 1 1 3.5 9.7c-1.3 1.1-1.8 2.3-1.8 3.8"/>
+              <circle cx="33.7" cy="34.5" r="1.8" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <h3>Сложные вопросы</h3>
+          <p>Задайте вопрос, ответ на который знаете только вы двое. Нейросети, клонирующие голос по коротким аудиозаписям, часто звучат монотонно, механически и делают неестественные паузы.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="container">
+      <h2 class="col-title reveal">Сервисы для определения сгенерированных изображений и видео</h2>
+      <p class="section-intro reveal">Определить фейковые картинки и ролики «на глаз» даже человеку с экспертизой становится всё сложнее. Если есть сомнения, лучше доверить это специальным сервисам. Вот пять инструментов для проверки видео и изображений:</p>
+
+      <div class="services-grid">
+        <article class="svc-card reveal">
+          <div class="svc-head"><span class="svc-num">01</span><h3>Sensity</h3></div>
+          <p>Универсальный сервис, подходит для выявления фейковых изображений, видео и аудио.</p>
+          <div class="chips"><span class="chip hot">изображения</span><span class="chip hot">видео</span><span class="chip hot">аудио</span></div>
+        </article>
+
+        <article class="svc-card reveal">
+          <div class="svc-head"><span class="svc-num">02</span><h3>Reality Defender</h3></div>
+          <p>Помогает защитить важные каналы связи от дипфейков в формате аудио, видео и изображений в режиме реального времени.</p>
+          <div class="chips"><span class="chip hot">реальное время</span><span class="chip">аудио</span><span class="chip">видео</span><span class="chip">изображения</span></div>
+        </article>
+
+        <article class="svc-card reveal">
+          <div class="svc-head"><span class="svc-num">03</span><h3>Deepfake-o-meter</h3></div>
+          <p>Бесплатная платформа от лаборатории судебной экспертизы медиа университета Буффало — для исследовательских целей и личного использования.</p>
+          <div class="chips"><span class="chip hot">бесплатно</span><span class="chip">видео</span><span class="chip">изображения</span></div>
+        </article>
+
+        <article class="svc-card reveal">
+          <div class="svc-head"><span class="svc-num">04</span><h3>DuckDuckGoose.AI</h3></div>
+          <p>Платный сервис для бизнеса, который выявляет дипфейки с точностью до 96%.</p>
+          <div class="chips"><span class="chip hot">точность 96%</span><span class="chip">для бизнеса</span></div>
+        </article>
+
+        <article class="svc-card reveal">
+          <div class="svc-head"><span class="svc-num">05</span><h3>AI-Generated Content Detection</h3></div>
+          <p>От Hive Moderation — сканирует изображения, текст, видео, аудио и проводит оценку достоверности.</p>
+          <div class="chips"><span class="chip hot">изображения</span><span class="chip">текст</span><span class="chip">видео</span><span class="chip">аудио</span></div>
+        </article>
+      </div>
+
+      <h3 class="sub-title reveal">Сервисы для определения сгенерированного аудио</h3>
+      <div class="audio-wrap">
+        <div class="audio-text reveal">
+          <p>Изначально сервисы для генерации аудио имитировали голос достаточно топорно. Сгенерированный текст было легко отличить по нелогичным паузам, неправильным интонациям и неестественно ровному темпу речи. Если поддельный голос подставляли в видео, он часто не совпадал с движением губ.</p>
+          <p>Сейчас, если человек не знает, что слышит робота, отличить его от реального человека практически невозможно. Но проверить аудио можно в специализированных сервисах.</p>
+        </div>
+        <div class="audio-cards">
+          <div class="audio-card reveal">
+            <span class="a-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></svg>
+            </span>
+            <div><h4>Resemble Detect</h4><small>Анализ аудио на сгенерированный голос</small></div>
+          </div>
+          <div class="audio-card reveal">
+            <span class="a-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></svg>
+            </span>
+            <div><h4>Pindrop Pulse</h4><small>Проверка подлинности голоса в реальном времени</small></div>
+          </div>
+        </div>
+      </div>
+
+      <p class="note reveal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><path d="M12 10.5V17" stroke-linecap="round"/><circle cx="12" cy="7.3" r="1.4" fill="currentColor" stroke="none"/>
+        </svg>
+        Стопроцентного способа распознать дипфейк пока нет — используйте признаки и сервисы в совокупности.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span class="footer-logo">
+      <svg viewBox="0 0 44 44" fill="none" aria-hidden="true" style="width:28px;height:28px">
+        <path d="M32 10a16.5 16.5 0 1 0 0 24" stroke="#e2481d" stroke-width="6.5" stroke-linecap="round" stroke-dasharray="8.5 4.5"/>
+        <circle cx="26" cy="22" r="4" fill="#fff"/>
+      </svg>
+      mscbuild
+    </span>
+    <small>© 2026 mscbuild · Медиаграмотность: как распознать дипфейк</small>
+  </div>
+</footer>
+
+<script>
+  // ----- Mobile menu -----
+  const burger  = document.getElementById('burger');
+  const nav     = document.getElementById('nav');
+  const overlay = document.getElementById('overlay');
+
+  function setMenu(open){
+    nav.classList.toggle('open', open);
+    overlay.classList.toggle('show', open);
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    document.body.classList.toggle('no-scroll', open);
+  }
+  burger.addEventListener('click', () => setMenu(!nav.classList.contains('open')));
+  overlay.addEventListener('click', () => setMenu(false));
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setMenu(false); });
+
+  // ----- Header shadow -----
+  const header = document.getElementById('header');
+  addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > 10), {passive:true});
+
+  // ----- Reveal on scroll -----
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting){ en.target.classList.add('visible'); io.unobserve(en.target); }
+    });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i % 4) * 0.07 + 's';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
